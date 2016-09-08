@@ -1,12 +1,10 @@
 <?php
 
 use common\models\Content;
-use common\models\Languages;
-use common\models\Category;
-use yii\helpers\Html;
-use kartik\grid\GridView;
 use kartik\form\ActiveForm;
+use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ContentSearch */
@@ -20,83 +18,21 @@ $this->registerJs('UITree.init();');
 \common\assets\ToastAsset::config($this, [
     'positionClass' => \common\assets\ToastAsset::POSITION_TOP_RIGHT
 ]);
-$publishStatus=\common\models\Content::STATUS_PENDING;
+$publishStatus = \common\models\Content::STATUS_PENDING;
 // $unPublishStatus=\common\models\Content::STATUS_DRAFT;
-$unPublishStatus=\common\models\Content::STATUS_INVISIBLE;
-$hideStatus= \common\models\Content::STATUS_INVISIBLE;
-$showStatus= \common\models\Content::STATUS_ACTIVE;
-$deleteStatus= \common\models\Content::STATUS_DELETE;
+$unPublishStatus = \common\models\Content::STATUS_INACTIVE;
+$showStatus = \common\models\Content::STATUS_ACTIVE;
+$deleteStatus = \common\models\Content::STATUS_DELETE;
 ?>
 
-<?php
-$approveUrl = \yii\helpers\Url::to(['content/approve']);
-$rejectUrl = \yii\helpers\Url::to(['content/reject']);
-
-
-$js = <<<JS
-    function approveContent(){
-    feedbacks = $("#content-index-grid").yiiGridView("getSelectedRows");
-    if(feedbacks.length <= 0){
-    alert("Chưa chọn content! Xin vui lòng chọn ít nhất một content để duyệt.");
-    return;
-    }
-
-    jQuery.post(
-        '{$approveUrl}',
-        { ids:feedbacks }
-    )
-    .done(function(result) {
-    if(result.success){
-    toastr.success(result.message);
-    jQuery.pjax.reload({container:'#content-index-grid'});
-    }else{
-    toastr.error(result.message);
-    }
-    })
-    .fail(function() {
-    toastr.error("server error");
-    });
-    }
-JS;
-
-$this->registerJs($js, \yii\web\View::POS_END);
-
-$js = <<<JS
-    function rejectContent(){
-    feedbacks = $("#content-index-grid").yiiGridView("getSelectedRows");
-    if(feedbacks.length <= 0){
-    alert("Chưa chọn content! Xin vui lòng chọn ít nhất một content để duyệt.");
-    return;
-    }
-
-    jQuery.post(
-    '{$rejectUrl}',
-    { ids:feedbacks }
-    )
-    .done(function(result) {
-    if(result.success){
-    toastr.success(result.message);
-    jQuery.pjax.reload({container:'#content-index-grid'});
-    }else{
-    toastr.error(result.message);
-    }
-    })
-    .fail(function() {
-    toastr.error("server error");
-    });
-    }
-JS;
-
-$this->registerJs($js, \yii\web\View::POS_END);
-?>
 
 <?php
 $updateLink = \yii\helpers\Url::to(['content/update-status-content']);
 
 $js = <<<JS
     function updateStatusContent(newStatus){
-        feedbacks = $("#content-index-grid").yiiGridView("getSelectedRows");
 
+        feedbacks = $("#content-index-grid").yiiGridView("getSelectedRows");
         if(feedbacks.length <= 0){
             alert("Chưa chọn content! Xin vui lòng chọn ít nhất một content để cập nhật.");
             return;
@@ -164,7 +100,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
         <?php
         // truong hop SP view
         // if ($site_id && !$dealer_id):
-            if(false):?>
+        if (false):?>
             <div class="portlet light">
                 <div class="portlet-title">
                     <div class="caption">
@@ -241,7 +177,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
             </div>
             <div class="portlet-body">
                 <p>
-                    <?php  echo Html::a('Tạo ' , Yii::$app->urlManager->createUrl(['content/create']), ['class' => 'btn btn-success']) ?>
+                    <?php echo Html::a('Tạo ', Yii::$app->urlManager->createUrl(['content/create']), ['class' => 'btn btn-success']) ?>
                 </p>
                 <?php
                 $gridColumn = [
@@ -262,37 +198,20 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                         'class' => '\kartik\grid\DataColumn',
                         'attribute' => 'display_name',
                         'value' => function ($model, $key, $index) {
-                            return Html::a($model->display_name, ['view', 'id' => $model->id],['class'=>'label label-primary']);
+                            return Html::a($model->display_name, ['view', 'id' => $model->id], ['class' => 'label label-primary']);
                         },
                     ],
                     [
                         'format' => 'raw',
                         'class' => '\kartik\grid\DataColumn',
-                        'width'=>'15%',
+                        'width' => '15%',
                         'label' => 'Ngày tạo',
                         'filterType' => GridView::FILTER_DATE,
                         'attribute' => 'created_at',
-                        'value' => function($model){
+                        'value' => function ($model) {
                             return date('d-m-Y H:i:s', $model->created_at);
                         }
                     ],
-                    // [
-                    //     'class' => '\kartik\grid\DataColumn',
-                    //     'attribute' => 'language',
-                    //     'width'=>'15%',
-                    //     'filterType' => GridView::FILTER_SELECT2,
-                    //     'filter' => Languages::$language,
-                    //     'filterWidgetOptions' => [
-                    //         'pluginOptions' => ['allowClear' => true],
-                    //     ],
-                    //     'filterInputOptions' => ['placeholder' => 'Tất cả'],
-                    //     'value' => function($model, $key, $index){
-                    //         /**
-                    //          * @var $model Content
-                    //          */
-                    //         return isset(Languages::$language[$model->language])?Languages::$language[$model->language]:'N/A';
-                    //     },
-                    // ],
                     [
                         'class' => 'kartik\grid\EditableColumn',
                         'attribute' => 'status',
@@ -302,7 +221,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                             return [
                                 'header' => 'Trạng thái',
                                 'size' => 'md',
-                                'displayValueConfig' =>\common\models\Content::getListStatus('filter'),
+                                'displayValueConfig' => \common\models\Content::getListStatus('filter'),
                                 'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                                 'data' => \common\models\Content::getListStatus('filter'),
                                 'placement' => \kartik\popover\PopoverX::ALIGN_LEFT,
@@ -322,27 +241,20 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
 
                 ];
 
-//                    $gridColumn[] = [
-//                        'class' => '\kartik\grid\DataColumn',
-//                        'attribute' => 'is_series',
-//                        'width' => '200px',
-//                        'filterType' => GridView::FILTER_SELECT2,
-//                        'filter' => \common\models\Content::$filmType,
-//                        'filterWidgetOptions' => [
-//                            'pluginOptions' => ['allowClear' => true],
-//                        ],
-//                        'filterInputOptions' => ['placeholder' => 'Tất cả'],
-//                        'value' => function ($model, $key, $index) {
-//                            /** @var $model \common\models\Content */
-//                            return \common\models\Content::$filmType[$model->is_series];
-//                        }
-//                    ];
-
-
 
                 $gridColumn[] = [
                     'class' => 'kartik\grid\ActionColumn',
-                    'template' => '{view}&nbsp;{update}',
+                    'buttons' => [
+                        'delete' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>',
+                                Yii::$app->urlManager->createUrl(['content/delete', 'id' => $model->id]), [
+                                    'title' => Yii::t('yii', 'Delete'),
+                                    'data-confirm' => Yii::t('yii', 'Bạn có chắc chắn xóa add-on này?'),
+                                    'data-method' => 'post',
+                                    'data-pjax' => '0',
+                                ]);
+                        }
+                    ],
                 ];
                 $gridColumn[] = [
                     'class' => 'kartik\grid\CheckboxColumn',
@@ -352,7 +264,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
 
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
-                    'id'=>'content-index-grid',
+                    'id' => 'content-index-grid',
                     'filterModel' => $searchModel,
                     'responsive' => true,
                     'pjax' => true,
@@ -362,33 +274,13 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                         'heading' => 'Danh sách Nội dung'
                     ],
                     'toolbar' => [
-                        // [
-                        //     'content' =>
-                        //         Html::button('<i class="glyphicon glyphicon-ok"></i> Approve', [
-                        //             'type' => 'button',
-                        //             'title' => 'Duyệt content',
-                        //             'class' => 'btn btn-success',
-                        //             'onclick' => 'approveContent();'
-                        //         ])
-                        //
-                        // ],
-                        // [
-                        //     'content' =>
-                        //         Html::button('<i class="glyphicon glyphicon-minus"></i> Reject', [
-                        //             'type' => 'button',
-                        //             'title' => 'Từ chối content',
-                        //             'class' => 'btn btn-danger',
-                        //             'onclick' => 'rejectContent();'
-                        //         ])
-                        //
-                        // ],
                         [
                             'content' =>
                                 Html::button('<i class="glyphicon glyphicon-ok"></i> Publish', [
                                     'type' => 'button',
                                     'title' => 'Publish',
                                     'class' => 'btn btn-success',
-                                    'onclick' => 'updateStatusContent("'.$showStatus.'");'
+                                    'onclick' => 'updateStatusContent("' . $showStatus . '");'
                                 ])
 
                         ],
@@ -398,37 +290,17 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                                     'type' => 'button',
                                     'title' => 'Unpublish',
                                     'class' => 'btn btn-danger',
-                                    'onclick' => 'updateStatusContent("'.$unPublishStatus.'");'
+                                    'onclick' => 'updateStatusContent("' . $unPublishStatus . '");'
                                 ])
 
                         ],
-                        // [
-                        //     'content' =>
-                        //         Html::button('<i class="glyphicon glyphicon-eye-close"></i> Hide', [
-                        //             'type' => 'button',
-                        //             'title' => 'Hide',
-                        //             'class' => 'btn bg-grey-gallery',
-                        //             'onclick' => 'updateStatusContent("'.$hideStatus.'");'
-                        //         ])
-
-                        // ],
-                        // [
-                        //     'content' =>
-                        //         Html::button('<i class="glyphicon glyphicon-eye-open"></i> Show', [
-                        //             'type' => 'button',
-                        //             'title' => 'Unpublish',
-                        //             'class' => 'btn bg-green-jungle',
-                        //             'onclick' => 'updateStatusContent("'.$showStatus.'");'
-                        //         ])
-
-                        // ],
                         [
                             'content' =>
                                 Html::button('<i class="glyphicon glyphicon-trash"></i> Delete', [
                                     'type' => 'button',
                                     'title' => 'Delete',
                                     'class' => 'btn btn-danger',
-                                    'onclick' => 'updateStatusContent("'.$deleteStatus.'");'
+                                    'onclick' => 'updateStatusContent("' . $deleteStatus . '");'
                                 ])
 
                         ],

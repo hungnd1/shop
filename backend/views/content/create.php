@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Content */
 
-$this->title = 'Tạo '.\common\models\Category::getTypeName($model->type);
-$this->params['breadcrumbs'][] = ['label' => \common\models\Category::getTypeName($model->type), 'url' => Yii::$app->urlManager->createUrl(['content/index','type'=>$model->type])];
+$this->title = 'Tạo content';
+$this->params['breadcrumbs'][] = ['label' => 'Content', 'url' => Yii::$app->urlManager->createUrl(['content/index'])];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="portlet box green">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-gift"></i>Tạo <?php echo \common\models\Category::getTypeName($type);?>
+                    <i class="fa fa-gift"></i>Tạo content
                 </div>
             </div>
             <div class="portlet-body form">
@@ -27,13 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'thumbnail_epgPreview'=>$thumbnail_epgPreview,
                     'thumbnail_epgInit'=>$thumbnail_epgInit,
                     'thumbnailInit' => $thumbnailInit,
+                    'slideInit' => $slideInit,
+                    'slidePreview' => $slidePreview,
                     'thumbnailPreview' => $thumbnailPreview,
                     'screenshootInit' => $screenshootInit,
                     'screenshootPreview' => $screenshootPreview,
-                    'type' => $model->type,
                     'selectedCats' => $selectedCats,
-                    'site_id' => $site_id,
-                    'parent' => $parent
                 ]) ?>
             </div>
         </div>

@@ -7,14 +7,10 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Content */
 /* @var $cat_selected array */
 /* @var $imageProvider \yii\data\ArrayDataProvider */
-/* @var $imageModel \sp\models\Image */
+/* @var $imageModel \backend\models\Image */
 
 $this->title = $model->display_name;
-$this->params['breadcrumbs'][] = ['label' => \common\models\Category::getTypeName($model->type), 'url' => Yii::$app->urlManager->createUrl(['content/index', 'type' => $model->type])];
-if($model->parent){
-    $this->params['breadcrumbs'][] = ['label' => $model->parent->display_name, 'url' => ['view', 'id' => $model->parent->id]];
-
-}
+$this->params['breadcrumbs'][] = ['label' => 'Content', 'url' => Yii::$app->urlManager->createUrl(['content/index'])];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <p>
@@ -42,36 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             <a href="#tab_info" data-toggle="tab">
                                 Thông tin</a>
                         </li>
-                        <?php if ($model->type == \common\models\Category::TYPE_LIVE) { ?>
-                            <li class="<?php echo $active == 2 ? 'active' : ''; ?>">
-                                <a href="#tab_live" data-toggle="tab">
-                                    EPG Programs </a>
-                            </li>
-                        <?php } ?>
                         <li class="<?php echo $active==2? 'active':'';?>">
                             <a href="#tab_images" data-toggle="tab">
                                 Ảnh </a>
                         </li>
-                        <?php if ($model->type != \common\models\Category::TYPE_NEWS && !$model->is_series) { ?>
-                            <li class="<?php echo $active==2? 'active':'';?>">
-                                <a href="#tab_streams" data-toggle="tab">
-                                    Content Profile </a>
-                            </li>
-                        <?php } ?>
-                        <li class="<?php echo $active==4? 'active':'';?>">
-                            <a href="#tab_feedback" data-toggle="tab">
-                                Content Feedback </a>
-                        </li>
-                        <?php if ($model->is_series) { ?>
-                            <li class="<?php echo $active==5? 'active':'';?>">
-                                <a href="#tab_episodes" data-toggle="tab">
-                                    Episodes </a>
-                            </li>
-                        <?php } ?>
-                        <li class="<?php echo $active==4? 'active':'';?>">
-                            <a href="#tab_transfer" data-toggle="tab">
-                                Phân phối nội dung </a>
-                        </li>
+
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane <?php echo $active==1? 'active':'';?>" id="tab_info">
@@ -79,16 +50,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'model' => $model,
                             ]) ?>
                         </div>
-                        <?php if ($model->type == \common\models\Category::TYPE_LIVE): ?>
-                        <div class="tab-pane <?php echo $active==2? 'active':'';?>" id="tab_live">
-                            <?= $this->render('_broadcast', [
-                                'model' => $model,
-                                'liveModel' => $liveModel,
-                                'liveProvider' => $liveProvider,
-                                'id' => $id,
-                            ]) ?>
-                        </div>
-                        <?php endif ?>
 
                         <div class="tab-pane <?php echo $active==2? 'active':'';?>" id="tab_images">
                             <?= $this->render('_images', [
@@ -98,41 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             ]) ?>
                         </div>
-                        <?php if ($model->type != \common\models\Category::TYPE_NEWS && !$model->is_series) { ?>
-                            <div class="tab-pane <?php echo $active==3? 'active':'';?>" id="tab_streams">
-                                <?= $this->render('_profile', [
-                                    'model' => $model,
-                                    'profile' => $profileModel,
-                                    'profileProvider' => $profileProvider
 
-                                ]) ?>
-                            </div>
-                        <?php } ?>
-                        <div class="tab-pane <?php echo $active==4? 'active':'';?>" id="tab_feedback">
-                            <?= $this->render('_feedback', [
-                                'dataProvider' => $feedbackProvider,
-                                'feedbackSearch'=>$feedbackSearch
-
-                            ]) ?>
-                        </div>
-
-                        <?php if ($model->is_series) { ?>
-                            <div class="tab-pane <?php echo $active==5? 'active':'';?>" id="tab_episodes">
-                                <?= $this->render('_episode', [
-                                    'model' => $model,
-                                    'episode' => $episodeModel,
-                                    'episodeProvider' => $episodeProvider,
-                                    'episodeSearch'=>$episodeSearch
-
-                                ]) ?>
-                            </div>
-                        <?php } ?>
-                        <div class="tab-pane <?php echo $active==4? 'active':'';?>" id="tab_transfer">
-                            <?= $this->render('_transfer', [
-                                    'contentSiteProvider' => $contentSiteProvider,
-                                    'id' => $id,
-                            ]) ?>
-                        </div>
                     </div>
                 </div>
             </div>

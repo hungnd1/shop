@@ -67,15 +67,5 @@ $contentId=$model->id;
 
         ],
 
-//        [
-//            'class' => 'kartik\grid\ActionColumn',
-//              'buttons' => [
-//                'image-delete' =>  function ($url, $model) use ($contentId) {
-//                    $url = \yii\helpers\Url::to(['content/delete-image','content_id'=>$contentId,'name'=>$model->name]);
-//                    return Html::a('<i class="glyphicon glyphicon-remove"></i>', $url, ['onclick'=> 'return deleteImage(this);']);
-//                }
-//            ],
-//            'template' => '{image-delete}'
-//        ],
     ],
 ]); ?>

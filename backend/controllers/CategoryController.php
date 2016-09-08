@@ -5,9 +5,7 @@ namespace backend\controllers;
 use common\components\ActionLogTracking;
 use common\helpers\CVietnameseTools;
 use common\models\Category;
-use common\models\CategorySiteAsm;
 use common\models\User;
-use common\models\UserActivity;
 use kartik\form\ActiveForm;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -33,8 +31,7 @@ class CategoryController extends BaseBEController
             ],
             [
                 'class'              => ActionLogTracking::className(),
-                'user'               => Yii::$app->user,
-                'model_type_default' => UserActivity::ACTION_TARGET_TYPE_PRICING,
+                'user'               => Yii::$app->user
             ],
         ]);
     }

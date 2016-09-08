@@ -57,7 +57,8 @@ class StringUtils {
      */
     public static function camel2Dash($s) {
 
-        $s2 = preg_replace("%([A-Z])%se", "'-' . strtolower('\\1')",$s);
+//        $s2 = preg_replace("%([A-Z])%se", "'-' . strtolower('\\1')",$s);
+        $s2 = $s;
         if (!StringUtils::startsWith($s, '-')) {
             $s2 = StringUtils::removeHead($s2, '-');
         }

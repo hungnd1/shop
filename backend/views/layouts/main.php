@@ -140,51 +140,6 @@ $menuItems = [
         ]
     ],
     [
-        'label' => 'Quản lý danh mục',
-        'url' => 'javascript:;',
-        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
-        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
-        'items' => [
-            [
-                'label' => 'Quản lý danh mục',
-                'items' => [
-                    [
-                        'encode' => false,
-                        'label' => '<i class="icon-film"></i>Danh mục Phim',
-                        'url' => ['category/index'],
-                        'require_auth' => true,
-                    ],
-
-                ]
-            ],
-            [
-                'label' => 'Content activity',
-
-                'items' => [
-
-                    [
-                        'encode' => false,
-                        'label' => '<i class="icon-docs"></i>Content Log',
-                        'url' => ['content-log/index'],
-                        'require_auth' => true,
-                    ],
-                    [
-                        'encode' => false,
-                        'label' => '<i class="icon-list"></i>Quản lý Content Feedback',
-                        'url' => ['content-feedback/index'],
-                        'require_auth' => true,
-                    ],
-                    [
-                        'encode' => false,
-                        'label' => '<i class="icon-list"></i>Quản lý Thuộc tính nội dung',
-                        'url' => ['content-attribute/index'],
-                        'require_auth' => true,
-                    ],
-                ]
-            ],
-        ]
-    ],
-    [
         'label' => 'Hệ thống',
         'url' => 'javascript:;',
         'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
@@ -192,20 +147,8 @@ $menuItems = [
         'items' => [
             [
                 'encode' => false,
-                'label' => '<i class="fa fa-server"></i> Quản lý địa chỉ phân phối nội dung',
-                'url' => ['streaming-server/index'],
-                'require_auth' => true,
-            ],
-            [
-                'encode' => false,
                 'label' => '<i class="icon-users"></i> QL người dùng',
                 'url' => ['user/index'],
-                'require_auth' => true,
-            ],
-            [
-                'encode' => false,
-                'label' => '<i class=" icon-eyeglasses"></i> Lịch sử tương tác',
-                'url' => ['user-activity/index'],
                 'require_auth' => true,
             ],
             [
@@ -215,18 +158,6 @@ $menuItems = [
                         'encode' => false,
                         'label' => '<i class="icon-key"></i> QL quyền trang backend',
                         'url' => ['rbac-backend/permission'],
-                        'require_auth' => true,
-                    ],
-                    [
-                        'encode' => false,
-                        'label' => '<i class="icon-key"></i> QL quyền trang nhà cung cấp dịch vụ',
-                        'url' => ['rbac-sp/permission'],
-                        'require_auth' => true,
-                    ],
-                    [
-                        'encode' => false,
-                        'label' => '<i class="icon-key"></i> QL quyền trang đại lý',
-                        'url' => ['rbac-cp/permission'],
                         'require_auth' => true,
                     ],
                 ]
@@ -240,49 +171,10 @@ $menuItems = [
                         'url' => ['rbac-backend/role'],
                         'require_auth' => true,
                     ],
-                    [
-                        'encode' => false,
-                        'label' => '<i class="icon-lock-open"></i> QL nhóm quyền trang nhà cung cấp dịch vụ',
-                        'url' => ['rbac-sp/role'],
-                        'require_auth' => true,
-                    ],
-                    [
-                        'encode' => false,
-                        'label' => '<i class="icon-lock-open"></i> QL nhóm quyền trang đại lý',
-                        'url' => ['rbac-cp/role'],
-                        'require_auth' => true,
-                    ],
                 ]
             ],
         ]
     ],
-    [
-        'label' => 'Quản lý Kodi',
-        'url' => 'javascript:;',
-        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
-        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
-        'items' => [
-            [
-                'encode' => false,
-                'label' => '<i class="fa fa-server"></i> Quản lý Group',
-                'url' => ['kodi-category/index'],
-                'require_auth' => true,
-            ],
-            [
-                'encode' => false,
-                'label' => '<i class="fa fa-server"></i> Quản lý add-on',
-                'url' => ['kodi-addon/index'],
-                'require_auth' => true,
-            ],
-            [
-                'encode' => false,
-                'label' => '<i class="icon-users"></i> Quản lý item',
-                'url' => ['item-kodi/index'],
-                'require_auth' => true,
-            ],
-
-        ]
-    ]
 ];
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav'],

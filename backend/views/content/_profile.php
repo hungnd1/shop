@@ -18,7 +18,6 @@ ToastAsset::config($this, [
 ]);
 //\common\assets\ModalAsset::register($this);
 $contentId = $model->id;
-$siteId = $model->default_site_id || 5;
 $url = \yii\helpers\Url::to(['transcode/search']);
 $urlCreate = \yii\helpers\Url::to(['content-profile/create']);
 $streamQuality = json_encode(\common\models\ContentProfile::$stream_quality);
@@ -30,7 +29,6 @@ $js = <<<JS
 $(document).ready(function(){
     var streamQuality = {$streamQuality};
     var contentId = {$contentId};
-    var siteId = {$siteId};
     // console.table(streamQuality);
 
     $('#search_file').keyup(function(){

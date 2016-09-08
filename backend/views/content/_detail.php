@@ -28,6 +28,11 @@ $grid = [
                 'value' => date('d-m-Y H:i:s', $model->created_at)
             ],
             [
+                'attribute' => 'expired_at',
+                // 'label' => 'Ngày tạo',
+                'value' => date('d-m-Y H:i:s', $model->expired_at)
+            ],
+            [
                 'attribute' => 'updated_at',
                 // 'label' => 'Ngày cập nhật',
                 'value' => date('d-m-Y H:i:s', $model->updated_at)
@@ -44,18 +49,7 @@ $grid = [
             ],
         ];
 
-if($model->type == common\models\Category::TYPE_LIVE_CONTENT){
-    array_splice($grid, 1, 0, [
-        [
-            'label' => 'Live Channel',
-            'format' => 'html',
-            'value' => Html::a(common\models\Content::findOne($model->livePrograms0[0]->channel_id)->display_name,
-                Url::to(['content/view', 'id' => $model->livePrograms0[0]->channel_id]),
-                ['class' => 'label label-primary'])
-        ]
-    ]);
-    // var_dump($grid);die;
-}
+
 $grid = array_merge($grid, $model->viewAttr);
 
  ?>

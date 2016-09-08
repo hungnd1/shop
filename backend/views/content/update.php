@@ -6,11 +6,8 @@ use yii\helpers\Html;
 /* @var $model common\models\Content */
 
 $this->title = 'Cập nhật nội dung: ' . ' ' . $model->display_name;
-$this->params['breadcrumbs'][] = ['label' => \common\models\Category::getTypeName($model->type), 'url' => Yii::$app->urlManager->createUrl(['content/index','type'=>$model->type])];
-if($model->parent){
-    $this->params['breadcrumbs'][] = ['label' => $model->parent->display_name, 'url' => ['view', 'id' => $model->parent->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Content', 'url' => Yii::$app->urlManager->createUrl(['content/index'])];
 
-}
 $this->params['breadcrumbs'][] = ['label' => $model->display_name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
@@ -42,8 +39,9 @@ $this->params['breadcrumbs'][] = 'Update';
                     'screenshootInit' => $screenshootInit,
                     'screenshootPreview' => $screenshootPreview,
                     'type' => $model->type,
+                    'slideInit' => $slideInit,
+                    'slidePreview' => $slidePreview,
                     'selectedCats' => $selectedCats,
-                    'site_id' => $site_id,
                     'parent' => null,
                 ]) ?>
             </div>

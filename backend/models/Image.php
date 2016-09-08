@@ -6,7 +6,7 @@
  * Time: 21:59
  */
 
-namespace sp\models;
+namespace backend\models;
 
 
 use common\helpers\CUtils;
@@ -54,7 +54,7 @@ class Image extends Model
      */
     public function getImageUrl()
     {
-        return Yii::getAlias('@web') . DIRECTORY_SEPARATOR . Yii::getAlias('@content_images') . DIRECTORY_SEPARATOR . $this->name;
+        return Yii::getAlias('@web').'/'.Yii::getAlias('@content_images') . '/' . $this->name;
     }
 
     public function getImageType()
