@@ -253,11 +253,6 @@ class Category extends \yii\db\ActiveRecord
     {
         if (empty(self::$catTree[$type])) {
             $query = Category::find();
-            // if ($cp_id != null) {
-            //     $query->innerJoin('content_provider_category_asm', 'category.id=content_provider_category_asm.category_id')
-            //         ->andWhere(['content_provider_category_asm.content_provider_id' => $cp_id]);
-            //
-            // }
             $query->andWhere(['category.level' => 0]);
             $query->andWhere(['category.status' => self::STATUS_ACTIVE]);
             $query->orderBy(['category.order_number' => SORT_ASC]);
@@ -367,52 +362,6 @@ class Category extends \yii\db\ActiveRecord
      * API của anh Cường tạm thời comment lại để viết lại và bổ sung
      */
 
-    public static function getApiRootCategories( $id)
-    {
-        $res = [];
-
-        $root_cats = Category::find()
-            ->andWhere(['level' => 0])
-            ->orderBy(['order_number' => SORT_DESC])->all();
-        /**
-         * API này bị lỗi, không lấy được danh sách phim gắn với category. Logic hiện tại là đang gắn với rootCat chứ không phải CatID
-         */
-
-        if ($root_cats) {
-            foreach ($root_cats as $cat) {
-                /* @var $cat Category */
-                $cat->path_name      = $cat->display_name;
-                $cat_array           = $cat->getAttributes(null, ['show_on_portal', 'show_on_client', 'order_number', 'admin_note', 'path', 'updated_at', 'created_at']);
-                $cat_array['images'] = $cat->getImageLink();
-                $content_return      = [];
-                $contents            = Content::find()
-                    ->select(['content.display_name', 'content.id', 'content.is_free', 'content.images'])
-                    ->innerJoin('content_category_asm', 'content_category_asm.content_id=content.id')
-                    ->andWhere(['status' => Content::STATUS_ACTIVE])
-                    ->andWhere(['content_category_asm.category_id' => $cat->id])
-                    ->limit(10)->all();
-                /** @var  $content  Content */
-                foreach ($contents as $content) {
-                    $content_array['id']           = $content->id;
-                    $content_array['display_name'] = $content->display_name;
-                    if (Category::checkApp(($content->id))) {
-                        $content_array['is_free'] = 1;
-                    } else {
-                        $content_array['is_free'] = 0;
-                    }
-                    $content_array['images'] = $content->getFirstImageLink();
-                    $content_array['image']  = $content->getFirstImageLink();
-                    $content_return[]        = $content_array;
-                }
-
-                $cat_array['contents'] = $content_return;
-
-                $res[] = $cat_array;
-            }
-        }
-
-        return $res;
-    }
 
 
     public static function countContent($cat_id)
@@ -447,8 +396,5 @@ class Category extends \yii\db\ActiveRecord
         return $listCat;
     }
 
-    public static function GetCategory(){
-
-    }
 
 }

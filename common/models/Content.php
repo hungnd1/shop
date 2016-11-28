@@ -77,6 +77,7 @@ class Content extends \yii\db\ActiveRecord
     const STATUS_DELETE = 2; // Xóa
     const STATUS_PENDING = 3; // CHỜ DUYỆT
 
+    const ORDER_NEWEST = 1;
     const HONOR_ALL = 0;
     const HONOR_SLIDE = 4;
     const HONOR_FEATURED = 1;
