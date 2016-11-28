@@ -31,10 +31,6 @@ use yii\web\NotFoundHttpException;
  * @property Category $parent
  * @property Category[] $categories
  * @property ContentCategoryAsm[] $contentCategoryAsms
- * @property CategorySiteAsm[] $categorySiteAsms
- * @property ContentViewLog[] $contentViewLogs
- * @property ReportContent[] $reportContents
- * @property ServiceCategoryAsm[] $serviceCategoryAsms
  *
  */
 class Category extends \yii\db\ActiveRecord
@@ -130,42 +126,12 @@ class Category extends \yii\db\ActiveRecord
     public function getBECategories()
     {
             return $this->hasMany(Category::className(), ['parent_id' => 'id'])
-            // ->andWhere(['category_site_asm.site_id' => $site_id])
                 ->orderBy(['order_number' => SORT_DESC])->all();
 
     }
 
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCategorySiteAsms()
-    {
-        return $this->hasMany(CategorySiteAsm::className(), ['category_id' => 'id']);
-    }
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getContentViewLogs()
-    {
-        return $this->hasMany(ContentViewLog::className(), ['category_id' => 'id']);
-    }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getReportContents()
-    {
-        return $this->hasMany(ReportContent::className(), ['category_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getServiceCategoryAsms()
-    {
-        return $this->hasMany(ServiceCategoryAsm::className(), ['category_id' => 'id']);
-    }
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -392,28 +358,6 @@ class Category extends \yii\db\ActiveRecord
                 }
             }
         } else {
-//            $root_cats = Category::find()->andWhere(['level' => 0,'status'=>Category::STATUS_ACTIVE])->andWhere('type=:p_type', [':p_type' => $type])
-            //                ->andFilterWhere(['site_id' => $site_id])
-            //                ->orderBy(['order_number' => SORT_DESC])->all();
-            $root_cats = Category::find()
-                ->joinWith('categorySiteAsms')
-                ->andWhere(['category_site_asm.site_id' => $site_id])
-                ->andWhere(['category.level' => 0, 'category.status' => Category::STATUS_ACTIVE, 'category.type' => $type])
-                ->all();
-
-            if ($root_cats) {
-                foreach ($root_cats as $cat) {
-                    /* @var $cat Category */
-                    $cat->path_name         = $cat->display_name;
-                    $cat_array              = $cat->getAttributes(null, ['tvod1_id', 'is_content_service', 'show_on_portal', 'show_on_client', 'order_number', 'admin_note', 'path', 'updated_at', 'created_at']);
-                    $cat_array['shortname'] = CUtils::parseTitleToKeyword($cat->display_name);
-                    $cat_array['images']    = $cat->getImageLink();
-                    if ($recursive) {
-                        $cat_array['children'] = Category::getApiAllCategories($cat->id, $recursive, $type, $site_id);
-                    }
-                    $res[] = $cat_array;
-                }
-            }
         }
 
         return $res;
@@ -470,40 +414,6 @@ class Category extends \yii\db\ActiveRecord
         return $res;
     }
 
-    public static function checkApp($id)
-    {
-        UserHelpers::manualLogin();
-        $subscriber = Yii::$app->user->identity;
-        if (!$subscriber) {
-            return 0;
-        }
-
-        /* @var $model Content */
-        /* @var $subscriber Subscriber */
-
-        if ($subscriber->checkMyApp($id)) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    public function saveCategorySiteAsm()
-    {
-        CategorySiteAsm::deleteAll(['category_id' => $this->id]);
-        if ($this->assignment_sites) {
-            foreach ($this->assignment_sites as $site_id) {
-                $siteAsm              = new CategorySiteAsm();
-                $siteAsm->category_id = $this->id;
-                $siteAsm->site_id     = $site_id;
-                $siteAsm->save();
-            }
-
-            return true;
-        }
-
-        return true;
-    }
 
     public static function countContent($cat_id)
     {
@@ -514,12 +424,6 @@ class Category extends \yii\db\ActiveRecord
             return count($count);
         }
         return false;
-    }
-
-    public static function findCategoryBySiteContent($site_id, $content_type)
-    {
-//        return Category::find()->andWhere(['status' => Service::STATUS_ACTIVE, 'site_id'=>$site_id,'type'=>$content_type])->all();
-        return Category::getAllCategories(null, $content_type, $content_type, $site_id);
     }
 
     public static function getAllChildCats( $parent = null)
@@ -541,6 +445,10 @@ class Category extends \yii\db\ActiveRecord
         }
 
         return $listCat;
+    }
+
+    public static function GetCategory(){
+
     }
 
 }

@@ -108,7 +108,26 @@ NavBar::begin([
     'toggleBtn' => false
 ]);
 $menuItems = [
-
+    [
+        'label' => 'Quản lý API Keys',
+        'url' => 'javascript:;',
+        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
+        'items' => [
+            [
+                'encode' => false,
+                'label' => '<i class="icon-list"></i>Danh mục API keys',
+                'url' => ['credential/index'],
+                'require_auth' => true,
+            ],
+            [
+                'encode' => false,
+                'label' => '<i class="icon-key"></i>Tạo API Key',
+                'url' => ['credential/create'],
+                'require_auth' => true,
+            ],
+        ]
+    ],
     [
         'label' => 'Quản lý Danh mục',
         'url' => 'javascript:;',

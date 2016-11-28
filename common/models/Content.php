@@ -3,7 +3,6 @@
 namespace common\models;
 
 use api\models\ListContent;
-use common\helpers\CUtils;
 use common\helpers\CVietnameseTools;
 use Yii;
 use yii\base\InvalidParamException;
@@ -19,6 +18,7 @@ use yii\helpers\Url;
  * @property string $display_name
  * @property string $code
  * @property string $ascii_name
+ * @property string $title_short
  * @property int $type
  * @property string $tags
  * @property string $short_description
@@ -65,30 +65,12 @@ class Content extends \yii\db\ActiveRecord
     public $screenshoot;
     public $slide;
     public $image_tmp;
-    public $live_channel;
     public $started_at;
+    public $url_thumbnail;
+    public $url_slide;
     public $ended_at;
-    public $content_related_asm;
-    public $channel_name;
-    public $channel_id;
-    public $pricing_content;
-    public $related_content = [];
-    public $related_name;
-    public $contentAttr = [];
     public $viewAttr = [];
-    public $validAttr = [];
-    public $live_status;
-    public $content_actors;
-    public $content_directors;
-    public $site_name;
-    public $content_site_asm_status;
-    public $site_id;
-    public $pricing_id;
-    public $is_free;
 
-    public $price_coin;
-    public $price_sms;
-    public $watching_period;
 
     const STATUS_ACTIVE = 10; // Đã duyệt
     const STATUS_INACTIVE = 0; // khóa
@@ -104,19 +86,23 @@ class Content extends \yii\db\ActiveRecord
     const HONOR_ESPECIAL = 3;
 
 
-
     const MAX_SIZE_UPLOAD = 10485760; // 10 * 1024 * 1024
 
     public static $list_honor = [
         self::HONOR_ALL => 'Tất cả',
-        self::HONOR_FEATURED => 'Đặc sắc',
+        self::HONOR_FEATURED => 'Nổi bật',
         self::HONOR_SLIDE => 'Slide',
         self::HONOR_HOT => 'Hot',
         self::HONOR_NEW => 'Mới nhất',
         self::HONOR_PRICE => 'Giá tốt',
-        self::HONOR_ESPECIAL => 'Đặc biệt',
+        self::HONOR_ESPECIAL => 'Dành cho bạn',
     ];
 
+     public static $list_type = [
+         self::HONOR_ALL => 'Bình thường',
+         self::HONOR_FEATURED => 'Slide phải',
+         self::HONOR_SLIDE => 'Slide dưới',
+     ];
 
     public $list_cat_id;
     public $assignment_sites;
@@ -135,7 +121,7 @@ class Content extends \yii\db\ActiveRecord
     public function rules()
     {
         return array_merge([
-            [['display_name', 'code', 'status', 'list_cat_id','price'], 'required', 'on' => 'adminModify', 'message' => '{attribute} không được để trống'],
+            [['display_name', 'code', 'status', 'list_cat_id', 'price'], 'required', 'on' => 'adminModify', 'message' => '{attribute} không được để trống'],
             [['started_at', 'ended_at'], 'required', 'message' => '{attribute} không được để trống', 'on' => 'adminModifyLiveContent'],
             [['ended_at'], 'validEnded', 'on' => 'adminModifyLiveContent'],
             [['display_name', 'code'], 'required', 'message' => '{attribute} không được để trống'],
@@ -161,19 +147,18 @@ class Content extends \yii\db\ActiveRecord
                     'order',
                 ], 'integer',
             ],
-            [['description', 'content', 'condition', 'images', 'short_description', 'images', 'highlight'], 'string'],
+            [['description','url_thumbnail','url_slide', 'content', 'condition', 'images', 'short_description', 'images', 'highlight','title_short'], 'string'],
             [['rating'], 'number'],
             [['display_name', 'ascii_name', 'country'], 'string', 'max' => 128],
             [['code'], 'string', 'max' => 20],
-            [['tags','address'], 'string', 'max' => 500],
+            [['tags', 'address'], 'string', 'max' => 500],
             [['version'], 'string', 'max' => 64],
             [['language'], 'string', 'max' => 10],
             [['code'], 'unique', 'message' => '{attribute} đã tồn tại trên hệ thống. Vui lòng thử lại'],
-            [['thumbnail', 'screenshoot','slide'],
+            [['thumbnail', 'screenshoot', 'slide'],
                 'file',
                 'tooBig' => '{attribute} vượt quá dung lượng cho phép. Vui lòng thử lại',
                 'wrongExtension' => '{attribute} không đúng định dạng',
-                'uploadRequired' => '{attribute} không được để trống',
                 'extensions' => 'png, jpg, jpeg, gif',
                 'maxSize' => self::MAX_SIZE_UPLOAD],
             [['thumbnail'], 'validateThumb', 'on' => ['adminModify', 'adminModifyLiveContent']],
@@ -267,6 +252,7 @@ class Content extends \yii\db\ActiveRecord
             'display_name' => Yii::t('app', 'Tiêu đề'),
             'code' => 'Mã code',
             'ascii_name' => 'Ascii Name',
+            'title_short' => 'Tiêu đề ngắn',
             'type' => 'Type',
             'tags' => 'Đánh dấu',
             'short_description' => 'Mô tả ngắn',
@@ -654,10 +640,6 @@ class Content extends \yii\db\ActiveRecord
     }
 
 
-
-
-
-
     /**
      * HungNV edition: 15/03/16.
      * HungNV creation: 15/03/16.
@@ -690,21 +672,6 @@ class Content extends \yii\db\ActiveRecord
             ->all();
     }
 
-    public static function listLive()
-    {
-        $lives = self::findAll(['type' => self::TYPE_LIVE]);
-        $listLives = [];
-        foreach ($lives as $live) {
-            $listLives[$live->id] = $live->display_name;
-        }
-        arsort($listLives);
-
-        return $listLives;
-    }
-
-
-
-
 
     public function getRelatedContents()
     {
@@ -714,10 +681,6 @@ class Content extends \yii\db\ActiveRecord
         }
         return $this->related_content = $output;
     }
-
-
-
-
 
 
     /**
@@ -734,6 +697,26 @@ class Content extends \yii\db\ActiveRecord
      * @param $site_id
      * @return int
      */
+
+    public function spUpdateStatus($newStatus, $sp_id)
+    {
+        $oldStatus = $this->status;
+        $listStatusNew = self::getListStatus('filter');
+        $this->status = $newStatus;
+        $this->updated_at = time();
+        return $this->update(false);
+//        Yii::trace('aa',$listStatusNew);
+//        if (isset($listStatusNew[$newStatus]) || ($newStatus == self::STATUS_DELETE && $oldStatus != self::STATUS_ACTIVE)) {
+//            $this->status = $newStatus;
+//            Yii::trace('bb',$listStatusNew);
+//            // tao log
+//            $description = 'UPDATE STATUS CONTENT';
+//             $this->status = $newStatus;
+//        $this->updated_at = time();
+//        return $this->update(false);
+//        }
+//        return false;
+    }
 
     public function getCssStatus()
     {

@@ -34,9 +34,6 @@ use yii\web\IdentityInterface;
  *
  * @property AuthAssignment[] $authAssignments
  * @property AuthItem[] $itemNames
- * @property ContentLog[] $contentLogs
- * @property Dealer $dealer
- * @property Site $site
  * @property User $parent
  * @property User $userRef
  * @property User[] $users
@@ -50,8 +47,6 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      *  1 - Admin
-     * 2 - SP
-     * 3 - Dealer
      */
     const USER_TYPE_ADMIN = 1;
     const USER_TYPE_SP = 2;

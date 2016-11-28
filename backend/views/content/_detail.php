@@ -13,6 +13,7 @@ $grid = [
             [
                 'attribute' => 'display_name',
             ],
+            'title_short',
             'short_description:html',
             'description:html',
             'content:html',

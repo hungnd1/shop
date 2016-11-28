@@ -89,7 +89,7 @@ class SiteController extends ApiController
 
     public function actionIndex()
     {
-        return "This is TVod version 2 API";
+        return "This is api shop";
     }
 
 }

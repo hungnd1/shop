@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <p>
     <?= Html::a('Cập nhật', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('Thêm mới',  Yii::$app->urlManager->createUrl(['content/create']), ['class' => 'btn btn-primary']) ?>
 
 </p>
 <div class="row">

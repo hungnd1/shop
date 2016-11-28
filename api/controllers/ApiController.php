@@ -78,13 +78,9 @@ class ApiController extends Controller
             if (!$credential) {
                 throw new UnauthorizedHttpException('Invalid api key');
             }
-           $this->site = Site::findOne(['id' => $credential->site_id, 'status' => Site::STATUS_ACTIVE]);
 
-            if (!$this->site) {
-                throw new UnauthorizedHttpException('Invalid Service Provider');
-            } else {
+
                 /** Set site_id để dùng cho tiện */
-                Yii::$app->params['site_id'] =   $this->site->id;
                 switch ($credential->type) {
                     case SiteApiCredential::TYPE_WEB_APPLICATION:
                         break;
@@ -97,22 +93,10 @@ class ApiController extends Controller
                         }
                         break;
                     case SiteApiCredential::TYPE_ANDROID_APPLICATION:
-//                        $packageName = Yii::$app->request->headers->get(static::HEADER_PACKAGE_NAME);
-//                        $fingerprint = Yii::$app->request->headers->get(static::HEADER_FINGERPRINT);
-//                        if (!$packageName || ($packageName != $credential->package_name)
-//                            || !$fingerprint || ($fingerprint != $credential->certificate_fingerprint)
-//                        ) {
-//                            throw new UnauthorizedHttpException('Invalid package name or certificate fingerprint');
-//                        }
                         break;
                     default:
                         break;
                 }
-//                $this->site = Site::findOne(['id' => $credential->site_id, 'status' => Site::STATUS_ACTIVE]);
-//                if (!$this->site) {
-//                    throw new UnauthorizedHttpException('Invalid Service Provider');
-//                }
-            }
         }
 // goi cai nay truoc de trigger event EVENT_BEFORE_ACTION
         $res = parent::beforeAction($action);

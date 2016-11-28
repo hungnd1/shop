@@ -68,8 +68,20 @@ $this->registerJs($js, \yii\web\View::POS_END);
     </div>
     <div class="row">
         <div class="col-md-12">
+            <?= $form->field($model, 'title_short')->textInput(['maxlength' => 128, 'class' => 'form-control  input-circle']) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <?php $listCheckbox = Content::$list_honor; ?>
             <?= $form->field($model, 'honor')->dropDownList($listCheckbox, ['prompt' => 'Chọn loại nội dung']) ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?php $listCheckbox = Content::$list_type; ?>
+            <?= $form->field($model, 'type')->dropDownList($listCheckbox, ['prompt' => 'Chọn vị trí nội dung']) ?>
         </div>
     </div>
     <div class="row">
@@ -231,7 +243,6 @@ $this->registerJs($js, \yii\web\View::POS_END);
 
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
 
@@ -297,7 +308,6 @@ $this->registerJs($js, \yii\web\View::POS_END);
 
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <?=
