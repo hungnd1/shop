@@ -227,8 +227,7 @@ CREATE TABLE `content` (
   KEY `idx_rating` (`rating`),
   KEY `idx_rating_count` (`rating_count`),
   KEY `idx_comment_count` (`comment_count`),
-  KEY `idx_favorite_count` (`favorite_count`),
-  KEY `idx_is_deleted` (`status`),
+  KEY `idx_favorite_count` (`favorite_count`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='TODO: thong tin ve cac thuoc tinh nhu dao dien, tac gia, ca ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -261,7 +260,7 @@ CREATE TABLE `content_category_asm` (
   `category_id` int(11) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `created_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -295,7 +294,7 @@ CREATE TABLE `site_api_credential` (
   `status` int(11) NOT NULL DEFAULT '10' COMMENT '10 - active, \n0 - suspended, \n...',
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -333,7 +332,7 @@ CREATE TABLE `user` (
   `user_ref_id` int(11) DEFAULT NULL,
   `access_login_token` varchar(255) DEFAULT NULL,
   `phone_number` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='quan ly cac site (tvod viet nam, tvod nga, tvod sec...)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
