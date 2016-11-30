@@ -74,16 +74,22 @@ $this->registerJs($js, \yii\web\View::POS_END);
     <div class="row">
         <div class="col-md-12">
             <?php $listCheckbox = Content::$list_honor; ?>
-            <?= $form->field($model, 'honor')->dropDownList($listCheckbox, ['prompt' => 'Chọn loại nội dung']) ?>
+            <?= $form->field($model, 'honor')->dropDownList($listCheckbox)->label('Loại nội dung') ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <?php $listCheckbox = Content::$listTypeStatus; ?>
+            <?= $form->field($model, 'type_status')->dropDownList($listCheckbox)->label('Hiện trạng sản phẩm') ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <?php $listCheckbox = Content::$listAvailability; ?>
+            <?= $form->field($model, 'availability')->dropDownList($listCheckbox)->label('Tình trạng hàng') ?>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <?php $listCheckbox = Content::$list_type; ?>
-            <?= $form->field($model, 'type')->dropDownList($listCheckbox, ['prompt' => 'Chọn vị trí nội dung']) ?>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-12">
             <?= $form->field($model, 'code')->textInput(['maxlength' => 128, 'class' => 'form-control  input-circle']) ?>
@@ -133,9 +139,18 @@ $this->registerJs($js, \yii\web\View::POS_END);
 
     <div class="row">
         <div class="col-md-12">
+            <?= $form->field($model, 'short_description')->widget(\dosamigos\ckeditor\CKEditor::className(), [
+                'options' => ['rows' => 6],
+                'preset' => 'basic'
+            ]) ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
             <?= $form->field($model, 'description')->widget(\dosamigos\ckeditor\CKEditor::className(), [
                 'options' => ['rows' => 8],
-                'preset' => 'basic'
+                'preset' => 'full'
             ]) ?>
         </div>
     </div>
@@ -163,14 +178,6 @@ $this->registerJs($js, \yii\web\View::POS_END);
         <div class="col-md-12">
             <?= $form->field($model, 'highlight')->widget(\dosamigos\ckeditor\CKEditor::className(), [
                 'options' => ['rows' => 8],
-                'preset' => 'basic'
-            ]) ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <?= $form->field($model, 'short_description')->widget(\dosamigos\ckeditor\CKEditor::className(), [
-                'options' => ['rows' => 6],
                 'preset' => 'basic'
             ]) ?>
         </div>

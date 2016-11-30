@@ -144,14 +144,14 @@ $menuItems = [
         ]
     ],
     [
-        'label' => 'Quản lý Content',
+        'label' => 'Quản lý nội dung',
         'url' => 'javascript:;',
         'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
         'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
         'items' => [
             [
                 'encode' => false,
-                'label' => '<i class="fa fa-server"></i> Content',
+                'label' => '<i class="fa fa-server"></i> Nội dung',
                 'url' => ['content/index'],
                 'require_auth' => true,
             ],

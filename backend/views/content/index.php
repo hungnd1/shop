@@ -10,7 +10,7 @@ use yii\helpers\Html;
 /* @var $searchModel common\models\ContentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Content';
+$this->title = 'Nội dung';
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerJs('UITree.init();');
 
@@ -34,7 +34,7 @@ $js = <<<JS
 
         feedbacks = $("#content-index-grid").yiiGridView("getSelectedRows");
         if(feedbacks.length <= 0){
-            alert("Chưa chọn content! Xin vui lòng chọn ít nhất một content để cập nhật.");
+            alert("Chưa chọn nội dung! Xin vui lòng chọn ít nhất một nội dung để cập nhật.");
             return;
         }
         var delConfirm = true;
@@ -97,24 +97,6 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                 <?= $form->field($searchModel, 'keyword')->textInput(['placeholder' => 'Tìm kiếm theo keyword', 'class' => 'input-circle']); ?>
             </div>
         </div>
-        <?php
-        // truong hop SP view
-        // if ($site_id && !$dealer_id):
-        if (false):?>
-            <div class="portlet light">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-cogs font-green-sharp"></i><?= "Tìm kiếm theo CP" ?>
-                    </div>
-                    <div class="tools">
-                        <a href="javascript:;" class="collapse"> </a>
-                    </div>
-                </div>
-                <div class="portlet-body clearfix">
-                    <?= $form->field($searchModel, 'cp_id')->dropDownList(ArrayHelper::merge(['' => 'Tất cả'], ArrayHelper::map(\common\models\ContentProvider::find()->andWhere(['site_id' => $site_id])->asArray()->all(), 'id', 'name')), ['placeholder' => 'Tìm kiếm theo CP', 'class' => 'input-circle', 'onChange' => 'submitForm(this)']); ?>
-                </div>
-            </div>
-        <?php endif; ?>
 
         <div class="portlet light">
             <div class="portlet-title">
@@ -168,7 +150,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                 <div class="caption">
                     <i class="fa fa-cogs font-green-sharp"></i>
                     <span
-                        class="caption-subject font-green-sharp bold uppercase"> Danh sách content </span>
+                        class="caption-subject font-green-sharp bold uppercase"> Danh sách nội dung </span>
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
@@ -249,7 +231,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                             return Html::a('<span class="glyphicon glyphicon-trash"></span>',
                                 Yii::$app->urlManager->createUrl(['content/delete', 'id' => $model->id]), [
                                     'title' => Yii::t('yii', 'Delete'),
-                                    'data-confirm' => Yii::t('yii', 'Bạn có chắc chắn xóa add-on này?'),
+                                    'data-confirm' => Yii::t('yii', 'Bạn có chắc chắn xóa nội dung này?'),
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ]);

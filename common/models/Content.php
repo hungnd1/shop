@@ -49,6 +49,8 @@ use yii\helpers\Url;
  * @property int $price
  * @property string $language
  * @property int $order
+ * @property int $type_status
+ * @property int $availability
  *
  * @property ContentCategoryAsm[] $contentCategoryAsms
  */
@@ -72,6 +74,13 @@ class Content extends \yii\db\ActiveRecord
     public $viewAttr = [];
 
 
+    const AVAILABILITY_OK = 1;//con hàng
+    const AVAILABILITY_NOK = 0;//hết hàng
+
+    const TYPE_STATUS_NEW = 1; //hang moi
+    const TYPE_STATUS_NEWLIKE = 2; //hang 99%
+    const TYPE_STATUS_OLD = 3; // hang cu
+
     const STATUS_ACTIVE = 10; // Đã duyệt
     const STATUS_INACTIVE = 0; // khóa
     const STATUS_DELETE = 2; // Xóa
@@ -79,20 +88,17 @@ class Content extends \yii\db\ActiveRecord
 
     const ORDER_NEWEST = 1;
     const HONOR_ALL = 0;
-    const HONOR_SLIDE = 4;
     const HONOR_FEATURED = 1;
     const HONOR_NEW = 5;
     const HONOR_PRICE = 6;
     const HONOR_HOT = 2;
     const HONOR_ESPECIAL = 3;
 
-
     const MAX_SIZE_UPLOAD = 10485760; // 10 * 1024 * 1024
 
     public static $list_honor = [
         self::HONOR_ALL => 'Tất cả',
-        self::HONOR_FEATURED => 'Nổi bật',
-        self::HONOR_SLIDE => 'Slide',
+        self::HONOR_FEATURED => 'Bán tốt nhất',
         self::HONOR_HOT => 'Hot',
         self::HONOR_NEW => 'Mới nhất',
         self::HONOR_PRICE => 'Giá tốt',
@@ -102,8 +108,18 @@ class Content extends \yii\db\ActiveRecord
      public static $list_type = [
          self::HONOR_ALL => 'Bình thường',
          self::HONOR_FEATURED => 'Slide phải',
-         self::HONOR_SLIDE => 'Slide dưới',
      ];
+
+    public static $listTypeStatus = [
+        self::TYPE_STATUS_NEW => 'New',
+        self::TYPE_STATUS_NEWLIKE => '99%',
+        self::TYPE_STATUS_OLD => 'Đã qua sử dụng'
+    ];
+
+    public static $listAvailability = [
+        self::AVAILABILITY_OK => 'Còn hàng',
+        self::AVAILABILITY_NOK => 'Hết hàng'
+    ];
 
     public $list_cat_id;
     public $assignment_sites;
@@ -146,6 +162,8 @@ class Content extends \yii\db\ActiveRecord
                     'expired_at',
                     'approved_at',
                     'order',
+                    'type_status',
+                    'availability'
                 ], 'integer',
             ],
             [['description','url_thumbnail','url_slide', 'content', 'condition', 'images', 'short_description', 'images', 'highlight','title_short'], 'string'],
