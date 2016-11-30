@@ -13,7 +13,9 @@ return [
     'bootstrap' => ['log'],
     'language' => 'vi-VN',
     'aliases' => [
-        '@content_images'=>'content_images',
+        '@content_images'=>'staticdata/content_images',
+        '@voucher_image'=>'staticdata/voucher_image',
+        '@category_image'=>'staticdata/category_image',
     ],
     'modules' => [
         'gridview' => [

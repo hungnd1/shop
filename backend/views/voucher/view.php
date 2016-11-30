@@ -1,14 +1,14 @@
 <?php
 
-use common\models\Category;
+use common\models\Voucher;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Category */
+/* @var $model common\models\Voucher */
 
-$this->title = $model->display_name;
-$this->params['breadcrumbs'][] = ['label' => 'Danh mục ', 'url' => Yii::$app->urlManager->createUrl(['category/index'])];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Vouchers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::a(Yii::t('app', 'Xóa'), ['delete', 'id' => $model->id], [
                         'class' => 'btn btn-danger',
                         'data' => [
-                            'confirm' => Yii::t('app', 'Bạn chắc chắn muốn xóa voucher "'.$model->display_name.'"?'),
+                            'confirm' => Yii::t('app', 'Bạn chắc chắn muốn xóa voucher "'.$model->name.'"?'),
                             'method' => 'post',
                         ],
                     ]) ?>
@@ -43,15 +43,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'label' => 'Ảnh đại diện',
                             'format' => 'html',
-                            'value' => $model->images?Html::img(Yii::getAlias('@web') . "/" . Yii::getAlias('@category_image') . "/" .$model->images, ['width' => '200px']):'',
+                            'value' => $model->image?Html::img(Yii::getAlias('@web') . "/" . Yii::getAlias('@voucher_image') . "/" .$model->image, ['width' => '200px']):'',
                         ],
-                        'display_name',
-                        'description:ntext',
+                        'name',
+                        [                      // the owner name of the model
+                            'attribute' => 'sale',
+                            'value' => $model->sale.' %',
+                        ],
                         [
                             'attribute' => 'status',
                             'label' => 'Trạng thái',
                             'format' => 'raw',
-                            'value' => ($model->status == Category::STATUS_ACTIVE) ?
+                            'value' => ($model->status == Voucher::STATUS_ACTIVE) ?
                                 '<span class="label label-success">' . $model->getStatusName() . '</span>' :
                                 '<span class="label label-danger">' . $model->getStatusName() . '</span>',
                             'type' => DetailView::INPUT_SWITCH,
@@ -61,6 +64,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'offText' => 'Delete',
                                 ]
                             ]
+                        ],
+                        [                      // the owner name of the model
+                            'attribute' => 'start_date',
+                            'value' => date('d/m/Y H:i:s', $model->start_date),
+                        ],
+                        [                      // the owner name of the model
+                            'attribute' => 'end_date',
+                            'value' => date('d/m/Y H:i:s', $model->end_date),
                         ],
                         [                      // the owner name of the model
                             'attribute' => 'created_at',

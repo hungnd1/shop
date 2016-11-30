@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'images',
                             'value'=>function ($model, $key, $index, $widget) {
                                 /** @var $model \common\models\Category */
-                                $cat_image=  Yii::getAlias('@cat_image');
+                                $cat_image=  Yii::getAlias('@category_image');
                                 return $model->images ? Html::img('@web/'.$cat_image.'/'.$model->images, ['alt' => 'Thumbnail','width'=>'50','height'=>'50']) : '';
                             },
                         ],

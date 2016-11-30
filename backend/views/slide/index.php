@@ -50,7 +50,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->getViewContent();
                             },
                         ],
-                        'created_at:datetime',
+                        [
+                            'class' => '\kartik\grid\DataColumn',
+                            'attribute'=>'created_at',
+                            'value' => function ($model, $key, $index, $widget) {
+                                return date('d/m/Y H:i:s', $model->created_at);
+                            }
+                        ],
                         [
                             'attribute' => 'status',
                             'class' => '\kartik\grid\DataColumn',

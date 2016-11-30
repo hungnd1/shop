@@ -155,6 +155,12 @@ $menuItems = [
                 'url' => ['content/index'],
                 'require_auth' => true,
             ],
+            [
+                'encode' => false,
+                'label' => '<i class="fa fa-gift"></i> Voucher',
+                'url' => ['voucher/index'],
+                'require_auth' => true,
+            ],
 
         ]
     ],
