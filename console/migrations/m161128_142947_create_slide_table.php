@@ -14,7 +14,8 @@ class m161128_142947_create_slide_table extends Migration
     {
         $this->createTable('slide', [
             'id' => $this->primaryKey(),
-            'id_content' => $this->integer(),
+            'content_id' => $this->integer(),
+            'des'=>$this->string(),
             'status' => $this->integer(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),

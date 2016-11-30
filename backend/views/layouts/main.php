@@ -159,6 +159,10 @@ $menuItems = [
         ]
     ],
     [
+        'label' => 'Quản lý Slide',
+        'url' => ['slide/index'],
+    ],
+    [
         'label' => 'Hệ thống',
         'url' => 'javascript:;',
         'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
