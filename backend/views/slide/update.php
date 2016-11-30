@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\SlideContent */
+/* @var $model common\models\Slide */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Slide Content',
-]) . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Slide Contents'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+]) . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'QL Slide'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Cập nhật');
 ?>
 <div class="row">

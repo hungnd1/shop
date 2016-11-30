@@ -79,8 +79,8 @@ $this->registerJs($js, \yii\web\View::POS_END);
     </div>
     <div class="row">
         <div class="col-md-12">
-            <?php $listCheckbox = Content::$listTypeStatus; ?>
-            <?= $form->field($model, 'type_status')->dropDownList($listCheckbox)->label('Hiện trạng sản phẩm') ?>
+            <?php $listTypeStatus = Content::$listTypeStatus; ?>
+            <?= $form->field($model, 'type_status')->dropDownList($listTypeStatus)->label('Hiện trạng sản phẩm') ?>
         </div>
     </div>
     <div class="row">

@@ -36,6 +36,7 @@ use yii\helpers\Url;
  * @property int $favorite_count
  * @property string $images
  * @property int $status
+ * @property int $is_slide
  * @property int $created_at
  * @property int $expired_at
  * @property int $updated_at
@@ -146,6 +147,7 @@ class Content extends \yii\db\ActiveRecord
                 [
                     'type',
                     'price',
+                    'is_slide',
                     'price_promotion',
                     'version_code',
                     'view_count',
@@ -278,7 +280,7 @@ class Content extends \yii\db\ActiveRecord
             'highlight' => 'Điểm nổi bật',
             'condition' => 'Điều kiện sử dụng',
             'price_promotion' => 'Giá khuyến mãi',
-            'price' => 'Giá bán',
+            'price' => 'Giá gốc',
             'description' => 'Mô tả',
             'content' => 'Nội dung',
             'urls' => 'Urls',

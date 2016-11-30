@@ -48,7 +48,7 @@ $showPreview = !$model->isNewRecord && !empty($model->banner) && ($model->type =
             ->andWhere(['is_slide'=>1])
             ->all();
         foreach($contents as $content){
-            $dataList[$content->id] = $content->display_name.' - ('.Content::$list_type[$content->is_series].')';
+            $dataList[$content->id] = $content->display_name;
         }
         echo $form->field($model, 'content_id')->widget(DepDrop::classname(),
             [

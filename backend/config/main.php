@@ -12,6 +12,9 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'language' => 'vi-VN',
+    'aliases' => [
+        '@content_images'=>'content_images',
+    ],
     'modules' => [
         'gridview' => [
             'class' => '\kartik\grid\Module'

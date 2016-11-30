@@ -104,7 +104,7 @@ class SlideController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
-                $model->saveBannerFile();
+//                $model->saveBannerFile();
                 \Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Thêm mới Slide thành công!'));
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -132,11 +132,7 @@ class SlideController extends Controller
             return ActiveForm::validate($model);
         }
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->type == Slide::SLIDE_TYPE_BANNER) {
-                $model->file_banner = UploadedFile::getInstance($model, 'file_banner');
-            }
             if ($model->update()) {
-                $model->saveBannerFile();
                 \Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Cập nhật Slide thành công!'));
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {

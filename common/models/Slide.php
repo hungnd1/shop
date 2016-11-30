@@ -14,22 +14,9 @@ use yii\helpers\Html;
  * This is the model class for table "slide".
  *
  * @property integer $id
- * @property integer $type
  * @property integer $content_id
- * @property string $name
- * @property string $open_url
- * @property string $description
- * @property integer $weight
- * @property integer $open_count
- * @property double $rating
- * @property integer $rating_count
- * @property string $banner
+ * @property string $des
  * @property integer $status
- * @property integer $is_visible
- * @property integer $is_visible_ios
- * @property integer $is_visible_android
- * @property integer $is_visible_wp
- * @property integer $service_provider_id
  * @property integer $created_at
  * @property integer $updated_at
  *
@@ -47,15 +34,15 @@ class Slide extends \yii\db\ActiveRecord
         self::STATUS_INACTIVE => "Disable"
     ];
 
-    const SLIDE_TYPE_CONTENT = 1;
-    const SLIDE_TYPE_BANNER = 2;
-
-    public static function getListType(){
-        return [
-            self::SLIDE_TYPE_BANNER => Yii::t('app','Banner'),
-            self::SLIDE_TYPE_CONTENT => Yii::t('app','Load from content'),
-        ];
-    }
+//    const SLIDE_TYPE_CONTENT = 1;
+//    const SLIDE_TYPE_BANNER = 2;
+//
+//    public static function getListType(){
+//        return [
+//            self::SLIDE_TYPE_BANNER => Yii::t('app','Banner'),
+//            self::SLIDE_TYPE_CONTENT => Yii::t('app','Load from content'),
+//        ];
+//    }
 
     public $file_banner;
 
@@ -164,27 +151,27 @@ class Slide extends \yii\db\ActiveRecord
         return $this->hasOne(Content::className(), ['id' => 'content_id']);
     }
 
-    public function saveBannerFile(){
-        if($this->type == self::SLIDE_TYPE_BANNER && $this->file_banner != null){
-            /**
-             * Xoa file cu
-             */
-            if($this->file_banner && !$this->isNewRecord){
-                $this->deleteBannerFile();
-            }
-            $ext = end(explode(".", $this->file_banner->name));
-            $file_save = Yii::$app->security->generateRandomString().".{$ext}";
-            $folder = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . Yii::getAlias('@content_banner') . DIRECTORY_SEPARATOR;
-            if (!is_dir($folder)) {
-                FileHelper::createDirectory($folder);
-            }
-            $path = $folder.$file_save;
-            $this->file_banner->saveAs($path);
-//            $this->banner = '@content_banner'.DIRECTORY_SEPARATOR.$file_save;
-            $this->banner = $file_save;
-            $this->update(false);
-        }
-    }
+//    public function saveBannerFile(){
+//        if($this->type == self::SLIDE_TYPE_BANNER && $this->file_banner != null){
+//            /**
+//             * Xoa file cu
+//             */
+//            if($this->file_banner && !$this->isNewRecord){
+//                $this->deleteBannerFile();
+//            }
+//            $ext = end(explode(".", $this->file_banner->name));
+//            $file_save = Yii::$app->security->generateRandomString().".{$ext}";
+//            $folder = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . Yii::getAlias('@content_banner') . DIRECTORY_SEPARATOR;
+//            if (!is_dir($folder)) {
+//                FileHelper::createDirectory($folder);
+//            }
+//            $path = $folder.$file_save;
+//            $this->file_banner->saveAs($path);
+////            $this->banner = '@content_banner'.DIRECTORY_SEPARATOR.$file_save;
+//            $this->banner = $file_save;
+//            $this->update(false);
+//        }
+//    }
 
     public function beforeDelete()
     {
@@ -213,42 +200,42 @@ class Slide extends \yii\db\ActiveRecord
         }
     }
 
-    public function getPlatforms()
-    {
-        $platforms = ($this->is_visible_android)?'Android OS, ':'';
-        $platforms .= ($this->is_visible_ios)?'iOS, ':'';
-        $platforms .= ($this->is_visible_wp)?'Windown Phone ':'';
-        if(empty($platforms)){
-            $platforms = Yii::t('app', 'Invisible');
-        }
-        return $platforms;
-    }
+//    public function getPlatforms()
+//    {
+//        $platforms = ($this->is_visible_android)?'Android OS, ':'';
+//        $platforms .= ($this->is_visible_ios)?'iOS, ':'';
+//        $platforms .= ($this->is_visible_wp)?'Windown Phone ':'';
+//        if(empty($platforms)){
+//            $platforms = Yii::t('app', 'Invisible');
+//        }
+//        return $platforms;
+//    }
 
     public function getViewContent()
     {
         $content = '';
-        if($this->type == self::SLIDE_TYPE_BANNER){
-            $content = Html::img($this->getBannerUrl(),['style' => 'height:120px']);
-        }else{
+//        if($this->type == self::SLIDE_TYPE_BANNER){
+//            $content = Html::img($this->getBannerUrl(),['style' => 'height:120px']);
+//        }else{
             $content = Html::a($this->content->display_name,['content/view', 'id' => $this->content->id], ['class' => 'label label-primary']);
-        }
+//        }
         return $content;
     }
 
-    public function getUrl(){
-        /**
-         * TODO: Get link cua slide tuy theo loai
-         * - Content: thi generate frontend content
-         * - URL: thi lay thang openurl luon
-         */
-       return $this->type == Slide::SLIDE_TYPE_CONTENT ? $this->content->getViewUrl() : $this->open_url;
-    }
+//    public function getUrl(){
+//        /**
+//         * TODO: Get link cua slide tuy theo loai
+//         * - Content: thi generate frontend content
+//         * - URL: thi lay thang openurl luon
+//         */
+//       return $this->type == Slide::SLIDE_TYPE_CONTENT ? $this->content->getViewUrl() : $this->open_url;
+//    }
 
     public function getSlideImage(){
         /**
          * TODO: Neu loai la content thi viet ham lay image link image slide
          */
-        return $this->type == Slide::SLIDE_TYPE_CONTENT ? $this->content->getFirstImageLink() : $this->getBannerUrl() ;
+        return  $this->content->getFirstImageLink();
     }
     public static function getSlider($sp){
         $query = ListContentSlider::find()

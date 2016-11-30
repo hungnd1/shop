@@ -151,418 +151,112 @@ class ContentController extends BaseBEController
      *
      * @return mixed
      */
-    public function actionCreate($type)
+    public function actionCreate()
     {
         $model = new Content();
         $model->loadDefaultValues();
-        $model->type = $type;
-        $model->service_provider_id = $this->cp_user->service_provider_id;
-        $model->content_provider_id = $this->cp_user->content_provider_id;
-        $model->created_user_id     = $this->cp_user->id;
-
-        $model->setScenario('create');
-
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-        $selectedCats = [];
-        // get screenshoot
-        $logoInit = [];
-        $thumbnailInit = [];
-        $screenshootInit = [];
-        $slideInit = [];
-
-        $logoPreview = [];
-        $thumbnailPreview = [];
-        $screenshootPreview = [];
-        $slidePreview = [];
-        $tags = explode(';', $model->tags);
-        $tag_models = TagManage::findAll(['service_provider_id' => $this->cp_user->service_provider_id]);
-        $tagDatas = [];
-        foreach ($tag_models as $tag) {
-            $tagDatas[$tag->value] = $tag->value;
-        }
-
+        $model->setScenario('adminModify');
         if ($model->load(Yii::$app->request->post())) {
-            $thumbnails = UploadedFile::getInstances($model, 'thumbnail');
-            $screenshoots = UploadedFile::getInstances($model, 'screenshoot');
-            $slides = UploadedFile::getInstances($model, 'slide');
-            $images = [];
-            if (count($thumbnails) > 0) {
-
-                foreach ($thumbnails as $image) {
-                    $attribute = 'thumbnail';
-
-                    $files = null;
-
-                    $files = $_FILES['Content'];
-                    $type_thumbnail = Content::IMAGE_TYPE_THUMBNAIL;
-                    Yii::trace($type_thumbnail . '  ' . $attribute);
-                    $file_type = '';
-                    list($width, $height, $file_type, $attr) = getimagesize($files['tmp_name']["$attribute"][0]);
-                    Yii::info($width . 'xxx' . $height);
-
-                    Yii::info($files);
-                    $new_file = [];
-                    $size = $files['size']["$attribute"][0];
-                    if($size > Content::MAX_SIZE_UPLOAD){
-                        Yii::$app->session->setFlash('error', Yii::t('app','Thumbnail dung lượng tối đa cho phép 10MB'));
-                        $model->list_cat_id = '';
-                        return $this->render('create', [
-                            'model' => $model,
-                            'logoInit' => $logoInit,
-                            'logoPreview' => $logoPreview,
-                            'thumbnailInit' => $thumbnailInit,
-                            'thumbnailPreview' => $thumbnailPreview,
-                            'screenshootInit' => $screenshootInit,
-                            'screenshootPreview' => $screenshootPreview,
-                            'slideInit' => $slideInit,
-                            'slidePreview' => $slidePreview,
-                            'selectedCats' => $selectedCats,
-                            'type' => $type,
-                            'tags' => $tags,
-                            'tagDatas' => $tagDatas,
-
-                        ]);
-                    }
-//                    getExtension()
-                    if($image->extension != 'jpg' && $image->extension  !=  'png' && $image->extension != 'gif' && $image->extension !='jpeg' ){
-                        Yii::$app->session->setFlash('error', Yii::t('app','Chỉ các file với phần mở rộng sau đây được phép tải lên: png, jpg, jpeg, gif'));
-                        $model->list_cat_id = '';
-                        return $this->render('create', [
-                            'model' => $model,
-                            'logoInit' => $logoInit,
-                            'logoPreview' => $logoPreview,
-                            'thumbnailInit' => $thumbnailInit,
-                            'thumbnailPreview' => $thumbnailPreview,
-                            'screenshootInit' => $screenshootInit,
-                            'screenshootPreview' => $screenshootPreview,
-                            'slideInit' => $slideInit,
-                            'slidePreview' => $slidePreview,
-                            'selectedCats' => $selectedCats,
-                            'type' => $type,
-                            'tags' => $tags,
-                            'tagDatas' => $tagDatas,
-
-                        ]);
-                    }
-                    $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
-                    if ($image->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@content_images') . "/" . $file_name)) {
-                        $new_file['name'] = $file_name;
-                        $new_file['type'] = Content::IMAGE_TYPE_THUMBNAIL;
-                        $new_file['size'] = $image->size;
-                        $images[] = $new_file;
-                    }
-                }
-
-            }else{
-                if($model->images){
-                    $check = Content::CheckTypeThumbnailTp($model->images);
-//                    echo "<pre>"; print_r($check);die();
-                    if($check == Content::IMAGE_TYPE_THUMBNAIL) {
-                        foreach ($thumbnails as $image) {
-                            $attribute = 'thumbnail';
-
-                            $files = null;
-                            $files = $_FILES['Content'];
-                            $type_thumbnail = Content::IMAGE_TYPE_THUMBNAIL;
-                            Yii::trace($type_thumbnail . '  ' . $attribute);
-                            $file_type = '';
-                            list($width, $height, $file_type, $attr) = getimagesize($files['tmp_name']["$attribute"][0]);
-                            Yii::info($width . 'xxx' . $height);
-
-                            Yii::info($files);
-                            $new_file = [];
-                            $size = $files['size']["$attribute"][0];
-                            if ($size > Content::MAX_SIZE_UPLOAD) {
-                                Yii::$app->session->setFlash('error', Yii::t('app', 'Thumbnail dung lượng tối đa cho phép 10MB'));
-                                $model->list_cat_id = '';
-                                return $this->render('create', [
-                                    'model' => $model,
-                                    'logoInit' => $logoInit,
-                                    'logoPreview' => $logoPreview,
-                                    'thumbnailInit' => $thumbnailInit,
-                                    'thumbnailPreview' => $thumbnailPreview,
-                                    'screenshootInit' => $screenshootInit,
-                                    'screenshootPreview' => $screenshootPreview,
-                                    'slideInit' => $slideInit,
-                                    'slidePreview' => $slidePreview,
-                                    'selectedCats' => $selectedCats,
-                                    'type' => $type,
-                                    'tags' => $tags,
-                                    'tagDatas' => $tagDatas,
-
-                                ]);
-                            }
-//                    getExtension()
-                            if ($image->extension != 'jpg' && $image->extension != 'png' && $image->extension != 'gif' && $image->extension != 'jpeg') {
-                                Yii::$app->session->setFlash('error', Yii::t('app', 'Chỉ các file với phần mở rộng sau đây được phép tải lên: png, jpg, jpeg, gif'));
-                                $model->list_cat_id = '';
-                                return $this->render('create', [
-                                    'model' => $model,
-                                    'logoInit' => $logoInit,
-                                    'logoPreview' => $logoPreview,
-                                    'thumbnailInit' => $thumbnailInit,
-                                    'thumbnailPreview' => $thumbnailPreview,
-                                    'screenshootInit' => $screenshootInit,
-                                    'screenshootPreview' => $screenshootPreview,
-                                    'slideInit' => $slideInit,
-                                    'slidePreview' => $slidePreview,
-                                    'selectedCats' => $selectedCats,
-                                    'type' => $type,
-                                    'tags' => $tags,
-                                    'tagDatas' => $tagDatas,
-
-                                ]);
-                            }
-                            $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
-                            if ($image->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@content_images') . "/" . $file_name)) {
-                                $new_file['name'] = $file_name;
-                                $new_file['type'] = Content::IMAGE_TYPE_THUMBNAIL;
-                                $new_file['size'] = $image->size;
-                                $images[] = $new_file;
-                            }
-                        }
-                    }else{
-                        Yii::$app->session->setFlash('error', Yii::t('app', 'Thumbnail không được để trống'));
-                        $model->list_cat_id = '';
-                        return $this->render('create', [
-                            'model' => $model,
-                            'logoInit' => $logoInit,
-                            'logoPreview' => $logoPreview,
-                            'thumbnailInit' => $thumbnailInit,
-                            'thumbnailPreview' => $thumbnailPreview,
-                            'screenshootInit' => $screenshootInit,
-                            'screenshootPreview' => $screenshootPreview,
-                            'slideInit' => $slideInit,
-                            'slidePreview' => $slidePreview,
-                            'selectedCats' => $selectedCats,
-                            'type' => $type,
-                            'tags' => $tags,
-                            'tagDatas' => $tagDatas,
-
-                        ]);
-                    }
-                }else {
-                    Yii::$app->session->setFlash('error', Yii::t('app', 'Thumbnail không được để trống'));
-                    $model->list_cat_id = '';
-                    return $this->render('create', [
-                        'model' => $model,
-                        'logoInit' => $logoInit,
-                        'logoPreview' => $logoPreview,
-                        'thumbnailInit' => $thumbnailInit,
-                        'thumbnailPreview' => $thumbnailPreview,
-                        'screenshootInit' => $screenshootInit,
-                        'screenshootPreview' => $screenshootPreview,
-                        'slideInit' => $slideInit,
-                        'slidePreview' => $slidePreview,
-                        'selectedCats' => $selectedCats,
-                        'type' => $type,
-                        'tags' => $tags,
-                        'tagDatas' => $tagDatas,
-
-                    ]);
-                }
+            if (isset(Yii::$app->request->post()['Content']['list_cat_id'])) {
+                $model->list_cat_id = Yii::$app->request->post()['Content']['list_cat_id'];
             }
-            if (count($screenshoots) > 0) {
-                foreach ($screenshoots as $image) {
-                    $attribute = 'screenshoot';
-
-                    $files = null;
-
-                    $files = $_FILES['Content'];
-                    $type_thumbnail = Content::IMAGE_TYPE_SCREENSHOOT;
-                    Yii::trace($type_thumbnail . '  ' . $attribute);
-                    $file_type = '';
-                    list($width, $height, $file_type, $attr) = getimagesize($files['tmp_name']["$attribute"][0]);
-                    Yii::info($width . 'xxx' . $height);
-
-                    Yii::info($files);
-                    $new_file = [];
-                    $size = $files['size']["$attribute"][0];
-                    if($size > Content::MAX_SIZE_UPLOAD){
-                        Yii::$app->session->setFlash('error', Yii::t('app','Screenshoot dung lượng tối đa cho phép 10MB'));
-                        $model->list_cat_id = '';
-                        return $this->render('create', [
-                            'model' => $model,
-                            'logoInit' => $logoInit,
-                            'logoPreview' => $logoPreview,
-                            'thumbnailInit' => $thumbnailInit,
-                            'thumbnailPreview' => $thumbnailPreview,
-                            'screenshootInit' => $screenshootInit,
-                            'screenshootPreview' => $screenshootPreview,
-                            'slideInit' => $slideInit,
-                            'slidePreview' => $slidePreview,
-                            'selectedCats' => $selectedCats,
-                            'type' => $type,
-                            'tags' => $tags,
-                            'tagDatas' => $tagDatas,
-
-                        ]);
-                    }
-
-                    if($image->extension != 'jpg' && $image->extension  !=  'png' && $image->extension != 'gif' && $image->extension !='jpeg' ){
-                        Yii::$app->session->setFlash('error', Yii::t('app','Chỉ các file với phần mở rộng sau đây được phép tải lên: png, jpg, jpeg, gif'));
-                        $model->list_cat_id = '';
-                        return $this->render('create', [
-                            'model' => $model,
-                            'logoInit' => $logoInit,
-                            'logoPreview' => $logoPreview,
-                            'thumbnailInit' => $thumbnailInit,
-                            'thumbnailPreview' => $thumbnailPreview,
-                            'screenshootInit' => $screenshootInit,
-                            'screenshootPreview' => $screenshootPreview,
-                            'slideInit' => $slideInit,
-                            'slidePreview' => $slidePreview,
-                            'selectedCats' => $selectedCats,
-                            'type' => $type,
-                            'tags' => $tags,
-                            'tagDatas' => $tagDatas,
-
-                        ]);
-                    }
-                    $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
-                    if ($image->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@content_images') . "/" . $file_name)) {
-                        $new_file['name'] = $file_name;
-                        $new_file['type'] = Content::IMAGE_TYPE_SCREENSHOOT;
-                        $new_file['size'] = $image->size;
-                        $images[] = $new_file;
-                    }
-                }
-            }
-            if (count($slides) > 0) {
-                foreach ($slides as $image) {
-                    $attribute = 'slide';
-
-                    $files = null;
-
-                    if (empty($_FILES['Content'])) {
-                        return Yii::$app->session->setFlash('error', Yii::t('app','Không được để trống '));
-                    }
-
-                    $files = $_FILES['Content'];
-                    $type_thumbnail = Content::IMAGE_TYPE_SLIDE;
-                    Yii::trace($type_thumbnail . '  ' . $attribute);
-                    $file_type = '';
-                    list($width, $height, $file_type, $attr) = getimagesize($files['tmp_name']["$attribute"][0]);
-                    Yii::info($width . 'xxx' . $height);
-
-                    Yii::info($files);
-                    $new_file = [];
-                    $size = $files['size']["$attribute"][0];
-                    if($size > Content::MAX_SIZE_UPLOAD){
-                        Yii::$app->session->setFlash('error', Yii::t('app','Slide dung lượng tối đa cho phép 10MB'));
-                        $model->list_cat_id = '';
-                        return $this->render('create', [
-                            'model' => $model,
-                            'logoInit' => $logoInit,
-                            'logoPreview' => $logoPreview,
-                            'thumbnailInit' => $thumbnailInit,
-                            'thumbnailPreview' => $thumbnailPreview,
-                            'screenshootInit' => $screenshootInit,
-                            'screenshootPreview' => $screenshootPreview,
-                            'slideInit' => $slideInit,
-                            'slidePreview' => $slidePreview,
-                            'selectedCats' => $selectedCats,
-                            'type' => $type,
-                            'tags' => $tags,
-                            'tagDatas' => $tagDatas,
-
-                        ]);
-                    }
-
-                    if($image->extension != 'jpg' && $image->extension  !=  'png' && $image->extension != 'gif' && $image->extension !='jpeg' ){
-                        Yii::$app->session->setFlash('error', Yii::t('app','Chỉ các file với phần mở rộng sau đây được phép tải lên: png, jpg, jpeg, gif'));
-                        $model->list_cat_id = '';
-                        return $this->render('create', [
-                            'model' => $model,
-                            'logoInit' => $logoInit,
-                            'logoPreview' => $logoPreview,
-                            'thumbnailInit' => $thumbnailInit,
-                            'thumbnailPreview' => $thumbnailPreview,
-                            'screenshootInit' => $screenshootInit,
-                            'screenshootPreview' => $screenshootPreview,
-                            'slideInit' => $slideInit,
-                            'slidePreview' => $slidePreview,
-                            'selectedCats' => $selectedCats,
-                            'type' => $type,
-                            'tags' => $tags,
-                            'tagDatas' => $tagDatas,
-
-                        ]);
-                    }
-                    $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
-                    if ($image->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@content_images') . "/" . $file_name)) {
-                        $new_file['name'] = $file_name;
-                        $new_file['type'] = Content::IMAGE_TYPE_SLIDE;
-                        $new_file['size'] = $image->size;
-                        $images[] = $new_file;
-                    }
-                }
-                $model->is_slide = 1;
-            }
-            if($model->list_cat_id == null){
-                Yii::$app->session->setFlash('error', Yii::t('app','Category không được để trống'));
-                return $this->render('create', [
-                    'model' => $model,
-                    'logoInit' => $logoInit,
-                    'logoPreview' => $logoPreview,
-                    'thumbnailInit' => $thumbnailInit,
-                    'thumbnailPreview' => $thumbnailPreview,
-                    'screenshootInit' => $screenshootInit,
-                    'screenshootPreview' => $screenshootPreview,
-                    'slideInit' => $slideInit,
-                    'slidePreview' => $slidePreview,
-                    'selectedCats' => $selectedCats,
-                    'type' => $type,
-                    'tags' => $tags,
-                    'tagDatas' => $tagDatas,
-                ]);
-            }
-            $model->status = Content::STATUS_PENDING;
-            $model->episode_order = $model->episode_order ? $model->episode_order : 0;
+            $model->expired_at = strtotime($model->expired_at);
             $model->ascii_name = CVietnameseTools::makeSearchableStr($model->display_name);
-            $old_images = Content::convertJsonToArray($model->images);
-            $model->images = Json::encode(ArrayHelper::merge($old_images, $images));
+            $model->status =  Content::STATUS_PENDING;
             $tags = $model->tags;
             if (is_array($tags)) {
-                TagManage::addTags($tags, $this->cp_user->service_provider_id);
                 $model->tags = implode(';', $tags);
             }
-            $model->loadHonor();
-//            ContentCategoryAsm::deleteAll(['content_id' => $this->id]);
-
-//            if (empty($this->list_cat_id)) {
-//                Yii::$app->getSession()->setFlash('error', 'Category không được để trống');
-//            } else {
+            $model->created_at = time();
+            $model->updated_at = time();
+            if(!$model->honor){
+                $model->honor = 0;
+            }
             if ($model->save()) {
-
                 $model->createCategoryAsm();
 
+                // lưu loại is_slide để lọc bên quản lý slide
+                $image_slide = Content::convertJsonToArray($model->images);
+                foreach ($image_slide as $key => $row) {
+                    $name = $row['name'];
+                    $type = $row['type'];
+                    if ($row['type'] == Content::IMAGE_TYPE_SLIDE) {
+                        $model->is_slide = 1;
+                        $model->save();
+                    }
+                    //end screenshoot
+                }
                 // tao log
-//                $description = 'CREATE CONTENT';
-//                $ip_address = CUtils::clientIP();
-//                $model->createContentLog(ContentLog::TYPE_CREATE, Yii::$app->user->id, $ip_address, ContentLog::STATUS_SUCCESS, $description, '', $model->display_name);
-
                 \Yii::$app->getSession()->setFlash('success', 'Lưu Content thành công');
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 Yii::info($model->getErrors());
-
                 \Yii::$app->getSession()->setFlash('error', 'Lưu Content thất bại');
             }
-
-//            }
         }
-
-
-        //end screenshoot
-
+        $selectedCats = explode(',', $model->list_cat_id);
+        // get screenshoot
+        $logoInit = [];
+        $thumbnail_epgInit = [];
+        $thumbnailInit = [];
+        $screenshootInit = [];
+        $slideInit = [];
+        $logoPreview = [];
+        $thumbnail_epgPreview = [];
+        $thumbnailPreview = [];
+        $screenshootPreview = [];
+        $slidePreview = [];
+        $tags = explode(';', $model->tags);
+        $thumb_epg = [];
+        $thumb = [];
+        $slide = [];
+        $screenshoot = [];
+        $images = Content::convertJsonToArray($model->images);
+        foreach ($images as $key => $row) {
+            $key = $key + 1;
+            $urlDelete = Yii::$app->urlManager->createAbsoluteUrl(['/content/delete-image', 'name' => $row['name'], 'type' => $row['type'], 'content_id' => $model->id]);
+            $name = $row['name'];
+            $type = $row['type'];
+            $value = ['caption' => $name, 'width' => '120px', 'url' => $urlDelete, 'key' => $key];
+            $host_file = ((strpos($row['name'], 'http') !== false) || (strpos($row['name'], 'https') !== false)) ? $row['name'] : Yii::getAlias('@web') . DIRECTORY_SEPARATOR . Yii::getAlias('@content_images') . DIRECTORY_SEPARATOR . $row['name'];
+            $preview = Html::img($host_file, ['class' => 'file-preview-image']);
+            switch ($row['type']) {
+                case Content::IMAGE_TYPE_LOGO:
+                    $logoPreview[] = $preview;
+                    $logoInit[] = $value;
+                    break;
+                case Content::IMAGE_TYPE_THUMBNAIL_EPG:
+                    $thumbnail_epgInit[] = $value;
+                    $thumbnail_epgPreview[] = $preview;
+                    $thumb_epg[] = $name;
+                    break;
+                case Content::IMAGE_TYPE_SCREENSHOOT:
+                    $screenshootPreview[] = $preview;
+                    $screenshootInit[] = $value;
+                    $screenshoot[] = $name;
+                    break;
+                case Content::IMAGE_TYPE_THUMBNAIL:
+                    $thumbnailPreview[] = $preview;
+                    $thumbnailInit[] = $value;
+                    $thumb[] = $name;
+                    break;
+                case Content::IMAGE_TYPE_SLIDE:
+                    $slidePreview[] = $preview;
+                    $slideInit[] = $value;
+                    $slide[] = $name;
+                    break;
+            }
+            //end screenshoot
+        }
+        $model->thumbnail = $thumb;
+        $model->slide = $slide;
+        $model->screenshoot = $screenshoot;
         return $this->render('create', [
             'model' => $model,
             'logoInit' => $logoInit,
             'logoPreview' => $logoPreview,
+            'thumbnail_epgPreview' => $thumbnail_epgPreview,
+            'thumbnail_epgInit' => $thumbnail_epgInit,
             'thumbnailInit' => $thumbnailInit,
             'thumbnailPreview' => $thumbnailPreview,
             'screenshootInit' => $screenshootInit,
@@ -570,9 +264,7 @@ class ContentController extends BaseBEController
             'slideInit' => $slideInit,
             'slidePreview' => $slidePreview,
             'selectedCats' => $selectedCats,
-            'type' => $type,
             'tags' => $tags,
-            'tagDatas' => $tagDatas,
         ]);
     }
 
