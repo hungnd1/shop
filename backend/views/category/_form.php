@@ -49,7 +49,9 @@ $showPreview = !$model->isNewRecord && !empty($model->images);
     <?= $form->field($model, 'status')->dropDownList(
         \common\models\Category::getListStatus(), ['class' => 'input-circle']
     ) ?>
-
+    <?php $listCheckbox = \common\models\Category::$getListType; ?>
+    <?= $form->field($model, 'type')->dropDownList($listCheckbox)->label('Vị trí menu') ?>
+    ?>
     <?php
     $dataList = \common\models\Category::getTreeCategories();
     $disableId = false;

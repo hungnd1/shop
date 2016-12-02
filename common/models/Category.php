@@ -27,6 +27,7 @@ use yii\web\NotFoundHttpException;
  * @property string $images
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $type
  *
  * @property Category $parent
  * @property Category[] $categories
@@ -41,6 +42,11 @@ class Category extends \yii\db\ActiveRecord
     const CHILD_NODE_PREFIX  = '|--';
     public $path_name;
     private static $catTree  = array();
+
+    const TYPE_MENU_RIGHT = 1;
+    const TYPE_MENU_ABOVE = 2;
+    const TYPE_NONE = 0;
+
 
     /**
      * @inheritdoc
@@ -65,7 +71,8 @@ class Category extends \yii\db\ActiveRecord
                     'level',
                     'child_count',
                     'created_at',
-                    'updated_at'
+                    'updated_at',
+                    'type'
                 ],
                 'integer',
             ],
@@ -129,6 +136,13 @@ class Category extends \yii\db\ActiveRecord
                 ->orderBy(['order_number' => SORT_DESC])->all();
 
     }
+
+    public static  $getListType = [
+        self::TYPE_NONE => 'Menu bình thường',
+        self::TYPE_MENU_ABOVE => 'Menu trên',
+        self::TYPE_MENU_RIGHT => 'Menu trái'
+    ];
+
 
 
 

@@ -131,8 +131,9 @@ class CategoryController extends BaseBEController
             $model->updated_at = time();
             // $model->site_id     = Yii::$app->user->id;
             // $model->order_number = $model->order_number !== null ? $model->order_number : 0;
-
-            if ($model->save()) {
+            if($model->parent_id && $model->type !=  Category::TYPE_NONE ){
+                \Yii::$app->getSession()->setFlash('error', 'Phải chọn menu bình thường nếu là danh mục con');
+            }else if ($model->save()) {
                 if ($model->parent_id != null) {
                     $modelParent = $model->parent;
                     ++$modelParent->child_count;
