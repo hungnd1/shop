@@ -1,9 +1,16 @@
+<?php
+use frontend\widgets\FormLogin;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
+?>
+
 <div id="header" class="header">
     <div class="top-header">
         <div class="container">
             <div class="nav-top-links">
-                <a class="first-item" href="#"><img alt="phone" src="assets/images/phone.png" />00-62-658-658</a>
-                <a href="#"><img alt="email" src="assets/images/email.png" />Contact us today!</a>
+                <a class="first-item" href="#"><img alt="phone" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/images/phone.png" />00-62-658-658</a>
+                <a href="<?= Url::to(['site/index']) ?>"><img alt="email" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/images/email.png" />Contact us today!</a>
             </div>
             <div class="currency ">
                 <div class="dropdown">
@@ -17,12 +24,12 @@
             <div class="language ">
                 <div class="dropdown">
                     <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-                        <img alt="email" src="assets/images/fr.jpg" />French
+                        <img alt="email" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/images/fr.jpg" />French
 
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#"><img alt="email" src="assets/images/en.jpg" />English</a></li>
-                        <li><a href="#"><img alt="email" src="assets/images/fr.jpg" />French</a></li>
+                        <li><a href="#"><img alt="email" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/images/en.jpg" />English</a></li>
+                        <li><a href="#"><img alt="email" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/images/fr.jpg" />French</a></li>
                     </ul>
                 </div>
             </div>
@@ -34,11 +41,29 @@
 
             <div id="user-info-top" class="user-info pull-right">
                 <div class="dropdown">
-                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
+                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>Tài khoản</span></a>
                     <ul class="dropdown-menu mega_dropdown" role="menu">
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="#">Compare</a></li>
-                        <li><a href="#">Wishlists</a></li>
+                        <?php
+                        if(Yii::$app->user->isGuest){
+                            ?>
+                            <li><a  data-toggle="modal" data-target="#myModal" href="javascript:void(0)">Đăng nhập</a></li>
+                            <?php
+                        }else{
+                            ?>
+                            <li><a class="uppercase" href="<?= Url::to(['user/infor']) ?>"><?= Yii::$app->user->identity->fullname?Yii::$app->user->identity->fullname:Yii::$app->user->identity->username ?></a></li>
+                            <li><a href="<?= Url::to(['#']) ?>">Đơn hàng</a></li>
+                            <?php
+                        }
+                        ?>
+                        <li><a href="#">So sánh</a></li>
+                        <li><a href="#">Yêu thích</a></li>
+                        <?php
+                        if(!Yii::$app->user->isGuest){
+                            ?>
+                            <li><a href="<?= \yii\helpers\Url::to(['site/logout']) ?>" data-method="post">Đăng xuất</a></li>
+                            <?php
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -49,7 +74,7 @@
     <div class="container main-header">
         <div class="row">
             <div class="col-xs-12 col-sm-3 logo">
-                <a href="index.html"><img alt="Kute shop - GFXFree.Net" src="assets/images/logo.png" /></a>
+                <a href="<?= Url::to(['site/index']) ?>"><img alt="Kute shop - GFXFree.Net" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/images/logo.png" /></a>
             </div>
             <div class="col-xs-7 col-sm-7 header-search-box">
                 <form class="form-inline">
@@ -311,7 +336,7 @@
                             </div>
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav">
-                                    <li class="active"><a href="#">Home</a></li>
+                                    <li class="active"><a href="<?= Url::to(['site/index']) ?>">Home</a></li>
                                     <li class="dropdown">
                                         <a href="category.html" class="dropdown-toggle" data-toggle="dropdown">Fashion</a>
                                         <ul class="dropdown-menu mega_dropdown" role="menu" style="width: 830px;">
@@ -529,3 +554,16 @@
     </div>
 </div>
 <!-- end header -->
+
+
+<!-- Start Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="box-authentication tp_001">
+                <?= FormLogin::widget()?>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->

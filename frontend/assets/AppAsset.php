@@ -39,6 +39,7 @@ class AppAsset extends AssetBundle
         'lib/jquery.countdown/jquery.countdown.min.js',
         'js/jquery.actual.min.js',
         'js/theme-script.js',
+        'js/tp.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

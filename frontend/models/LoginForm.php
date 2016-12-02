@@ -25,11 +25,21 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            [['username'], 'required', 'message'=>'Tên đăng nhập không được để trống'],
+            [['password'], 'required', 'message'=>'mật khẩu không được để trống'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Tên đăng nhập',
+            'password' => 'Mật khẩu',
+            'rememberMe' => 'Ghi nhớ mật khẩu',
         ];
     }
 
@@ -45,7 +55,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Tên đăng nhập hoặc mật khẩu sai!.');
             }
         }
     }
@@ -73,7 +83,7 @@ class LoginForm extends Model
     {
         if ($this->_user === false) {
 //            $this->_user = User::findSPByUsername($this->username);
-            $this->_user = Subscriber::findOne(['username' => $this->username]);
+            $this->_user = User::findOne(['username' => $this->username]);
         }
 
         return $this->_user;

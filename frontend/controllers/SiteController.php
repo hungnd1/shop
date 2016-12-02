@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\User;
 use Yii;
 use frontend\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -12,12 +13,16 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
+
+    public $successUrl = 'Success';
     /**
      * @inheritdoc
      */
@@ -62,7 +67,33 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this,'successCallback'],
+            ]
         ];
+    }
+
+    public function successCallback($client)
+    {
+        $attributes = $client->getUserAttributes();
+//        die(print_r($attributes));
+
+        $user = User::find()->where(['id_facebook'=>$attributes['id']])->one();
+            if(!empty($user)){
+                Yii::$app->user->login($user);
+            }else{
+                // save to database
+                $model = new User();
+                $model->fullname = $attributes['name'];
+                if($attributes['email'] != ''){
+                    $model->email = $attributes['email'];
+                }
+                $model->id_facebook = $attributes['id'];
+                $model->save(false);
+                // start to login
+                Yii::$app->user->login($user);
+            }
     }
 
     public function actionIndex()
@@ -77,6 +108,10 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
@@ -96,6 +131,7 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
                 Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');

@@ -18,11 +18,14 @@ use yii\web\IdentityInterface;
  * @property string $fullname
  * @property string $phone_number
  * @property string $auth_key
+ * @property string $address
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $access_login_token
  * @property string $email
+ * @property string  $id_facebook
  * @property integer $role
+ * @property string $birthday
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -45,18 +48,25 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     const STATUS_INACTIVE = 0;
 
+//    Gender
+    const GENDER_MALE = 1;
+    const GENDER_FEMALE = 2;
+    public static $gender = [
+        self::GENDER_MALE => 'Nam',
+        self::GENDER_FEMALE => 'Nữ',
+    ];
     /**
      *  1 - Admin
      */
     const USER_TYPE_ADMIN = 1;
-    const USER_TYPE_SP = 2;
-    const USER_TYPE_DEALER = 3;
-    const USER_ACCESS_SP = '__user_access_sp';
+    const USER_TYPE_NORMAL = 2;
+//    const USER_TYPE_DEALER = 3;
+//    const USER_ACCESS_SP = '__user_access_sp';
 
     public static $user_types = [
         self::USER_TYPE_ADMIN => 'Admin',
-        self::USER_TYPE_SP => 'Nhà cung cấp dịch vụ',
-        self::USER_TYPE_DEALER => 'Đại lý',
+        self::USER_TYPE_NORMAL => 'Người dùng',
+//        self::USER_TYPE_DEALER => 'Đại lý',
     ];
     /*
      * @var string password for register scenario
@@ -94,7 +104,9 @@ class User extends ActiveRecord implements IdentityInterface
                 ],
                 'integer'
             ],
-            ['phone_number', 'string', 'max' => 200],
+            [['birthday'],'safe'],
+            [['phone_number','id_facebook'], 'string', 'max' => 200],
+            [['address'], 'string', 'max' => 200],
             [['username', 'password_hash', 'password_reset_token', 'email', 'fullname', 'access_login_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
