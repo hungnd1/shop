@@ -6,6 +6,7 @@
  * Time: 11:20 PM
  */
 use common\models\User;
+use frontend\widgets\UserWidget;
 use yii\helpers\Url;
 
 /* @var $model common\models\User */
@@ -28,18 +29,7 @@ use yii\helpers\Url;
         <div class="page-content">
             <div class="row">
                 <div class="col-sm-3">
-                    <div class="box-authentication">
-                        <div class="text-center">
-                            <img style="width: 80px" src="<?= $model->getImageLink() ?>" alt="<?= $model->fullname?$model->fullname:$model->username ?>">
-                        </div><br>
-                        <h3 class="text-center"><?= $model->fullname?$model->fullname:$model->username ?></h3><br>
-                        <p><b>Giới tính:</b> <?= $model->getGenderName() ?></p><br>
-                        <p><b>Email:</b> <?= $model->email?$model->email:'Đang cập nhật' ?></p><br>
-                        <p><b>Địa chỉ:</b> <?= $model->address?$model->address:'Đang cập nhật' ?></p><br>
-                        <p><b>SDT:</b> <?= $model->phone_number?$model->phone_number:'Đang cập nhật' ?></p><br>
-                        <p><b>Giới thiêu:</b> <?= $model->about?$model->about:'Đang cập nhật' ?></p><br>
-                        <a type="button" href="<?= Url::to(['user/update']) ?>" class="button"><i class="fa fa-user"></i> Cập nhật thông tin</a>
-                    </div>
+                    <?= UserWidget::widget() ?>
                 </div>
                 <div class="col-sm-9">
                     <div class="page-content page-order">
@@ -86,7 +76,7 @@ use yii\helpers\Url;
                                         <span>61,19 €</span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="#"><i class="fa fa-eye"></i></a>
+                                        <a href="<?= Url::to(['user/detail-order','id'=> 1]) ?>"><i class="fa fa-eye"></i></a>
                                     </td>
                                 </tr>
                                 </tbody>

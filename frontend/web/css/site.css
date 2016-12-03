@@ -99,6 +99,12 @@ a.desc:after {
 .tp_001 #signupform-address,
 .tp_001 #signupform-captcha,
 .tp_001 #signupform-captcha-image,
+.tp_001 #user-username,
+.tp_001 #user-fullname,
+.tp_001 #user-address,
+.tp_001 #user-email,
+.tp_001 #user-phone_number,
+.tp_001 #user-image,
 .tp_001 #signupform-username
 {
     width: 100%;
