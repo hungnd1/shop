@@ -50,7 +50,7 @@ use yii\widgets\ActiveForm;
                             <?php
                         }else{
                             ?>
-                            <li><a class="uppercase" href="<?= Url::to(['user/infor']) ?>"><?= Yii::$app->user->identity->fullname?Yii::$app->user->identity->fullname:Yii::$app->user->identity->username ?></a></li>
+                            <li><a class="uppercase" href="<?= Url::to(['user/info']) ?>"><?= Yii::$app->user->identity->fullname?Yii::$app->user->identity->fullname:Yii::$app->user->identity->username ?></a></li>
                             <li><a href="<?= Url::to(['#']) ?>">Đơn hàng</a></li>
                             <?php
                         }
@@ -149,9 +149,9 @@ use yii\widgets\ActiveForm;
             <div class="row">
                 <div class="col-sm-3" id="box-vertical-megamenus">
                     <div class="box-vertical-megamenus">
-                        <h4 class="title">
+                        <h4 class="title active">
                             <span class="title-menu">Categories</span>
-                            <span class="btn-open-mobile pull-right home-page"><i class="fa fa-bars"></i></span>
+                            <span class="btn-open-mobile pull-right"><i class="fa fa-bars"></i></span>
                         </h4>
                         <div class="vertical-menu-content is-home">
                             <ul class="vertical-menu-list">

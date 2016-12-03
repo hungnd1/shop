@@ -11,6 +11,9 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'aliases' => [
+        '@image_avatar'=>'image_avatar',
+    ],
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
