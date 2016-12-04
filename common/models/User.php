@@ -8,6 +8,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 use yii\web\IdentityInterface;
 
 /**
@@ -18,12 +19,18 @@ use yii\web\IdentityInterface;
  * @property string $fullname
  * @property string $phone_number
  * @property string $auth_key
+ * @property string $address
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $access_login_token
  * @property string $email
+ * @property string $image
+ * @property string  $id_facebook
  * @property integer $role
+ * @property string $birthday
+ * @property string $about
  * @property integer $status
+ * @property integer $gender
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $type
@@ -45,18 +52,39 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     const STATUS_INACTIVE = 0;
 
+//    Gender
+    const GENDER_MALE = 1;
+    const GENDER_FEMALE = 2;
+
+    public static function listGender()
+    {
+        $gender = [
+            self::GENDER_MALE => 'Nam',
+            self::GENDER_FEMALE => 'Nữ',
+        ];
+        return $gender;
+    }
+
+    public function getGenderName()
+    {
+        $lst = self::listGender();
+        if (array_key_exists($this->gender, $lst)) {
+            return $lst[$this->gender];
+        }
+        return $this->gender;
+    }
     /**
      *  1 - Admin
      */
     const USER_TYPE_ADMIN = 1;
-    const USER_TYPE_SP = 2;
-    const USER_TYPE_DEALER = 3;
-    const USER_ACCESS_SP = '__user_access_sp';
+    const USER_TYPE_NORMAL = 2;
+//    const USER_TYPE_DEALER = 3;
+//    const USER_ACCESS_SP = '__user_access_sp';
 
     public static $user_types = [
         self::USER_TYPE_ADMIN => 'Admin',
-        self::USER_TYPE_SP => 'Nhà cung cấp dịch vụ',
-        self::USER_TYPE_DEALER => 'Đại lý',
+        self::USER_TYPE_NORMAL => 'Người dùng',
+//        self::USER_TYPE_DEALER => 'Đại lý',
     ];
     /*
      * @var string password for register scenario
@@ -90,11 +118,15 @@ class User extends ActiveRecord implements IdentityInterface
                     'type',
                     'site_id',
                     'parent_id',
-                    'user_ref_id'
+                    'user_ref_id',
+                    'gender'
                 ],
                 'integer'
             ],
-            ['phone_number', 'string', 'max' => 200],
+            [['birthday'],'safe'],
+            [['phone_number','id_facebook'], 'string', 'max' => 200],
+            [['address'], 'string', 'max' => 200],
+            [['about','image'], 'string', 'max' => 500],
             [['username', 'password_hash', 'password_reset_token', 'email', 'fullname', 'access_login_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
@@ -195,6 +227,9 @@ class User extends ActiveRecord implements IdentityInterface
             'confirm_password' => Yii::t('app', ' Xác nhận mật khẩu'),
             'new_password' => Yii::t('app', 'Mật khẩu mới'),
             'old_password' => Yii::t('app', 'Mật khẩu cũ'),
+            'about' => Yii::t('app', 'Giới thiệu'),
+            'gender' => Yii::t('app', 'Giới tính'),
+            'image' => Yii::t('app', 'Ảnh đại diện'),
         ];
     }
 
@@ -656,5 +691,21 @@ class User extends ActiveRecord implements IdentityInterface
         if ($user) {
             return $user->username;
         }
+    }
+
+    public function getImageLink()
+    {
+        $pathLink = Yii::getAlias('@web') . '/' . Yii::getAlias('@image_avatar') . '/';
+        $filename = null;
+        if ($this->image) {
+            $filename = $this->image;
+        }
+        if (!$filename) {
+            $pathLink = Yii::getAlias("@web/images/");
+            $filename = 'avt_df.png';
+        }
+
+        return Url::to($pathLink . $filename, true);
+
     }
 }

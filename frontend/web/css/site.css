@@ -89,3 +89,44 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+
+.tp_001 #loginform-username,
+.tp_001 #loginform-password,
+.tp_001 #signupform-email,
+.tp_001 #signupform-password,
+.tp_001 #signupform-confirm_password,
+.tp_001 #signupform-phone_number,
+.tp_001 #signupform-address,
+.tp_001 #signupform-captcha,
+.tp_001 #signupform-captcha-image,
+.tp_001 #user-username,
+.tp_001 #user-fullname,
+.tp_001 #user-address,
+.tp_001 #user-email,
+.tp_001 #user-phone_number,
+.tp_001 #user-image,
+.tp_001 #signupform-username
+{
+    width: 100%;
+}
+
+.tp_001 #loginform-rememberme,
+.tp_001 #signupform-accept
+{
+    width: 0;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+.tp_login_facebook{
+    margin-left: -14px;
+    margin-top: 4px;
+}
+@media screen and (max-width: 600px) {
+    .box-authentication {
+        border: 1px solid #eaeaea;
+        padding: 10px;
+        min-height: 320px;
+    }
+}
