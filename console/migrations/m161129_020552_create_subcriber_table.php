@@ -25,7 +25,7 @@ class m161129_020552_create_subcriber_table extends Migration
             'address' => $this->string(),
             'phone' => $this->integer(),
             'birthday' => $this->dateTime(),
-            'about' => $this->text(),
+            'about' => $this->string(600),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
         ]);
@@ -36,6 +36,6 @@ class m161129_020552_create_subcriber_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('subcriber_table');
+        $this->dropTable('subcriber');
     }
 }
