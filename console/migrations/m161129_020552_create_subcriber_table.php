@@ -12,7 +12,7 @@ class m161129_020552_create_subcriber_table extends Migration
      */
     public function up()
     {
-        $this->createTable('subcriber_table', [
+        $this->createTable('subcriber', [
             'id' => $this->primaryKey(),
             'user_name' => $this->string(),
             'full_name' => $this->string(),
