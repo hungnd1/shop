@@ -45,7 +45,13 @@ $showPreview = !$model->isNewRecord && !empty($model->images);
             'showPreview' => (!$showPreview) ? true : false,
         ]
     ]); ?>
-
+    <div class="row">
+        <div class="form-group field-content-price" style="padding-left: 27%;color: red;font-size: 15px;">
+            <p>Ảnh danh mục cấp 1 có ảnh tỉ lệ 1.2 chính xác 16x13 </p>
+            <p>Yêu cầu up nội dung chính xác.</p>
+        </div>
+    </div>
+    <br><br>
     <?= $form->field($model, 'status')->dropDownList(
         \common\models\Category::getListStatus(), ['class' => 'input-circle']
     ) ?>

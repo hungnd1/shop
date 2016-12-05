@@ -155,6 +155,7 @@ class ContentController extends BaseBEController
     {
         $model = new Content();
         $model->loadDefaultValues();
+        $model->code = rand(100000,1000000);
         $model->setScenario('adminModify');
         if ($model->load(Yii::$app->request->post())) {
             if (isset(Yii::$app->request->post()['Content']['list_cat_id'])) {
@@ -221,7 +222,7 @@ class ContentController extends BaseBEController
             $host_file = ((strpos($row['name'], 'http') !== false) || (strpos($row['name'], 'https') !== false)) ? $row['name'] : Yii::getAlias('@web') . DIRECTORY_SEPARATOR . Yii::getAlias('@content_images') . DIRECTORY_SEPARATOR . $row['name'];
             $preview = Html::img($host_file, ['class' => 'file-preview-image']);
             switch ($row['type']) {
-                case Content::IMAGE_TYPE_LOGO:
+                case Content::IMAGE_TYPE_SLIDECATEGORY:
                     $logoPreview[] = $preview;
                     $logoInit[] = $value;
                     break;
@@ -344,7 +345,7 @@ class ContentController extends BaseBEController
             $host_file = ((strpos($row['name'], 'http') !== false) || (strpos($row['name'], 'https') !== false)) ? $row['name'] : Yii::getAlias('@web') . DIRECTORY_SEPARATOR . Yii::getAlias('@content_images') . DIRECTORY_SEPARATOR . $row['name'];
             $preview = Html::img($host_file, ['class' => 'file-preview-image']);
             switch ($row['type']) {
-                case Content::IMAGE_TYPE_LOGO:
+                case Content::IMAGE_TYPE_SLIDECATEGORY:
                     $logoPreview[] = $preview;
                     $logoInit[] = $value;
                     break;
@@ -458,7 +459,7 @@ class ContentController extends BaseBEController
             $attribute = 'slide';
         } else {
             $old_value = Yii::$app->request->post('logo_old');
-            $attribute = 'logo';
+            $attribute = 'slide_category';
         }
         $model->load(Yii::$app->request->post());
 

@@ -29,11 +29,6 @@ $grid = [
                 'value' => date('d-m-Y H:i:s', $model->created_at)
             ],
             [
-                'attribute' => 'expired_at',
-                // 'label' => 'Ngày tạo',
-                'value' => date('d-m-Y H:i:s', $model->expired_at)
-            ],
-            [
                 'attribute' => 'updated_at',
                 // 'label' => 'Ngày cập nhật',
                 'value' => date('d-m-Y H:i:s', $model->updated_at)
@@ -41,7 +36,17 @@ $grid = [
             [
                 'attribute' => 'honor',
                 'format'=>'html',
-                'value' =>"<span class='label label-primary'>" . Content::$list_honor[$model->honor]."</span>"
+                'value' =>"<span class='label label-primary'>" . Content::$list_honorDetail[$model->honor]."</span>"
+            ],
+            [
+                'attribute' => 'type_status',
+                'format'=>'html',
+                'value' =>"<span class='label label-primary'>" . Content::$listTypeStatus[$model->type_status] ."</span>"
+            ],
+            [
+                'attribute' => 'availability',
+                'format'=>'html',
+                'value' =>"<span class='label label-primary'>" .Content::$listAvailability[$model->availability]."</span>"
             ],
             'order',
             [

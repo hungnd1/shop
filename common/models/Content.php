@@ -57,7 +57,7 @@ use yii\helpers\Url;
  */
 class Content extends \yii\db\ActiveRecord
 {
-    const IMAGE_TYPE_LOGO = 1;
+    const IMAGE_TYPE_SLIDECATEGORY = 1;
     const IMAGE_TYPE_THUMBNAIL = 2;
     const IMAGE_TYPE_SCREENSHOOT = 3;
     const IMAGE_TYPE_SLIDE = 4;
@@ -65,6 +65,7 @@ class Content extends \yii\db\ActiveRecord
 
     public $logo;
     public $thumbnail;
+    public $slide_category;
     public $screenshoot;
     public $slide;
     public $image_tmp;
@@ -74,7 +75,10 @@ class Content extends \yii\db\ActiveRecord
     public $ended_at;
     public $viewAttr = [];
 
-
+    //type: 1 là bán chạy, 2 là giảm giá, 3 là sản phẩm mới,4 là lasted deal // danh cho phần quản lý seller
+    //type_status: tình trạng hàng 1 là hàng mới, 2 là hàng 99%, 3 là hàng đã qua sử dụng
+    //honor: thể loại hàng: Sản phẩm hot nhất, Sản phẩm mới nhất, Giá tốt, Danh cho bạn
+    //availability là trạng thái hàng: 1 là còn hàng, 0 là hết hàng
     const AVAILABILITY_OK = 1;//con hàng
     const AVAILABILITY_NOK = 0;//hết hàng
 
@@ -88,28 +92,41 @@ class Content extends \yii\db\ActiveRecord
     const STATUS_PENDING = 3; // CHỜ DUYỆT
 
     const ORDER_NEWEST = 1;
-    const HONOR_ALL = 0;
-    const HONOR_FEATURED = 1;
-    const HONOR_NEW = 5;
-    const HONOR_PRICE = 6;
-    const HONOR_HOT = 2;
-    const HONOR_ESPECIAL = 3;
+    const HONOT_NORMAL = 0;
+    const HONOR_HOT = 1;
+    const HONOR_NEWEST = 2;
+    const HONOR_PRICE = 3;
+    const HONOR_FORYOU = 4;
+
+    const TYPE_SELLER = 1;
+    const TYPE_PRICEPROMO = 2;
+    const TYPE_NEWEST = 3;
+    const TYPE_DEAL = 4;
 
     const MAX_SIZE_UPLOAD = 10485760; // 10 * 1024 * 1024
 
-    public static $list_honor = [
-        self::HONOR_ALL => 'Tất cả',
-        self::HONOR_FEATURED => 'Bán tốt nhất',
-        self::HONOR_HOT => 'Hot',
-        self::HONOR_NEW => 'Mới nhất',
-        self::HONOR_PRICE => 'Giá tốt',
-        self::HONOR_ESPECIAL => 'Dành cho bạn',
+    public static $list_type = [
+        self::TYPE_SELLER => 'Bán chạy nhất',
+        self::TYPE_NEWEST => 'Mới nhất',
+        self::TYPE_DEAL => 'Lastest Deal',
+        self::TYPE_PRICEPROMO => 'Giảm giá'
     ];
 
-     public static $list_type = [
-         self::HONOR_ALL => 'Bình thường',
-         self::HONOR_FEATURED => 'Slide phải',
-     ];
+    public static $list_honor = [
+        self::HONOR_HOT => 'Sản phẩm hot nhất',
+        self::HONOR_NEWEST => 'Sản phẩm mới nhất',
+        self::HONOR_PRICE => 'Giá tốt nhất',
+        self::HONOR_FORYOU => 'Dành cho bạn',
+    ];
+
+    public static $list_honorDetail = [
+        self::HONOT_NORMAL => 'Sản phẩm bình thường',
+        self::HONOR_HOT => 'Sản phẩm hot nhất',
+        self::HONOR_NEWEST => 'Sản phẩm mới nhất',
+        self::HONOR_PRICE => 'Giá tốt nhất',
+        self::HONOR_FORYOU => 'Dành cho bạn',
+    ];
+
 
     public static $listTypeStatus = [
         self::TYPE_STATUS_NEW => 'New',
@@ -139,7 +156,7 @@ class Content extends \yii\db\ActiveRecord
     public function rules()
     {
         return array_merge([
-            [['display_name', 'code', 'status', 'list_cat_id', 'price'], 'required', 'on' => 'adminModify', 'message' => '{attribute} không được để trống'],
+            [['display_name', 'code', 'status', 'list_cat_id', 'price','expired_at'], 'required', 'on' => 'adminModify', 'message' => '{attribute} không được để trống'],
             [['started_at', 'ended_at'], 'required', 'message' => '{attribute} không được để trống', 'on' => 'adminModifyLiveContent'],
             [['ended_at'], 'validEnded', 'on' => 'adminModifyLiveContent'],
             [['display_name', 'code'], 'required', 'message' => '{attribute} không được để trống'],
@@ -176,17 +193,17 @@ class Content extends \yii\db\ActiveRecord
             [['version'], 'string', 'max' => 64],
             [['language'], 'string', 'max' => 10],
             [['code'], 'unique', 'message' => '{attribute} đã tồn tại trên hệ thống. Vui lòng thử lại'],
-            [['thumbnail', 'screenshoot', 'slide'],
+            [['thumbnail', 'screenshoot', 'slide','slide_category'],
                 'file',
                 'tooBig' => '{attribute} vượt quá dung lượng cho phép. Vui lòng thử lại',
                 'wrongExtension' => '{attribute} không đúng định dạng',
                 'extensions' => 'png, jpg, jpeg, gif',
                 'maxSize' => self::MAX_SIZE_UPLOAD],
-            [['thumbnail'], 'validateThumb', 'on' => ['adminModify', 'adminModifyLiveContent']],
+            [['thumbnail','slide_category'], 'validateThumb', 'on' => ['adminModify', 'adminModifyLiveContent']],
             [['screenshoot'], 'validateScreen', 'on' => 'adminModify'],
-            [['thumbnail'], 'image', 'extensions' => 'png,jpg,jpeg,gif',
-                'minWidth' => 1, 'maxWidth' => 512,
-                'minHeight' => 1, 'maxHeight' => 512,
+            [['thumbnail','screenshoot', 'slide','slide_category'], 'image', 'extensions' => 'png,jpg,jpeg,gif',
+//                'minWidth' => 1, 'maxWidth' => 512,
+//                'minHeight' => 1, 'maxHeight' => 512,
                 'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'Ảnh show  vượt quá dung lượng cho phép. Vui lòng thử lại',
             ],
             [['image_tmp', 'list_cat_id'], 'safe'],
@@ -270,12 +287,14 @@ class Content extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'display_name' => Yii::t('app', 'Tiêu đề'),
+            'display_name' => Yii::t('app', 'Tên hiển thị'),
             'code' => 'Mã code',
             'ascii_name' => 'Ascii Name',
-            'title_short' => 'Tiêu đề ngắn',
+            'title_short' => 'Tên hiển thị ngắn',
             'type' => 'Type',
-            'tags' => 'Đánh dấu',
+            'tags' => 'Tags',
+            'type_status'=>'Tình trạng hàng',
+            'availability'=>'Trạng thái hàng',
             'short_description' => 'Mô tả ngắn',
             'highlight' => 'Điểm nổi bật',
             'condition' => 'Điều kiện sử dụng',
@@ -308,7 +327,7 @@ class Content extends \yii\db\ActiveRecord
             'language' => 'Language',
             'thumbnail' => 'Ảnh đại diện (*)',
             'screenshoot' => 'Ảnh screen show (*)',
-            'slide' => 'Ảnh Slide ',
+            'slide' => 'Ảnh slide trang chủ ',
             'list_cat_id' => 'Danh mục  nội dung',
             'started_at' => 'Thời gian bắt đầu',
             'ended_at' => 'Thời gian kết thúc',
@@ -413,7 +432,7 @@ class Content extends \yii\db\ActiveRecord
     public static function getListImageType()
     {
         return [
-            self::IMAGE_TYPE_LOGO => 'Logo',
+            self::IMAGE_TYPE_SLIDECATEGORY => 'Slide Category',
             self::IMAGE_TYPE_SCREENSHOOT => 'Screenshoot',
             self::IMAGE_TYPE_THUMBNAIL => 'Thumbnail',
             self::IMAGE_TYPE_SLIDE => 'Slide',

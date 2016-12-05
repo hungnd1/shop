@@ -74,7 +74,7 @@ $this->registerJs($js, \yii\web\View::POS_END);
     <div class="row">
         <div class="col-md-12">
             <?php $listCheckbox = Content::$list_honor; ?>
-            <?= $form->field($model, 'honor')->dropDownList($listCheckbox)->label('Loại nội dung') ?>
+            <?= $form->field($model, 'honor')->dropDownList($listCheckbox,['prompt'=>'Chọn loại sản phẩm'])->label('Loại sản phẩm') ?>
         </div>
     </div>
     <div class="row">
@@ -92,7 +92,7 @@ $this->registerJs($js, \yii\web\View::POS_END);
 
     <div class="row">
         <div class="col-md-12">
-            <?= $form->field($model, 'code')->textInput(['maxlength' => 128, 'class' => 'form-control  input-circle']) ?>
+            <?= $form->field($model, 'code')->textInput(['maxlength' => 128, 'class' => 'form-control  input-circle','readonly' => true]) ?>
         </div>
     </div>
 
@@ -118,22 +118,17 @@ $this->registerJs($js, \yii\web\View::POS_END);
     </div>
     <div class="row">
         <div class="col-md-12">
-            <?= $form->field($model, 'expired_at')->widget(\kartik\widgets\DatePicker::classname(),
-                ['options' => ['placeholder' => 'Ngày hết hạn'],
-                    'value' => date('d-M-Y', strtotime('+2 days')),
-                    'type' => \kartik\widgets\DatePicker::TYPE_INPUT,
-                    'convertFormat' => true,
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'todayHighlight' => true,
-                        'format' => 'dd-M-yyyy'
-                    ]
-                ]); ?>
+            <?= $form->field($model, 'tags')->textInput(['maxlength' => 128, 'class' => 'form-control  input-circle']) ?>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <?= $form->field($model, 'tags')->textInput(['maxlength' => 128, 'class' => 'form-control  input-circle']) ?>
+            <?= $form->field($model, 'rating')->textInput(['maxlength' => 128, 'class' => 'form-control  input-circle'])->label('Đánh giá') ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <?= $form->field($model, 'order')->textInput(['maxlength' => 128, 'class' => 'form-control  input-circle'])->label('Sắp xếp') ?>
         </div>
     </div>
 
@@ -156,32 +151,6 @@ $this->registerJs($js, \yii\web\View::POS_END);
     </div>
 
 
-    <div class="row">
-        <div class="col-md-12">
-            <?= $form->field($model, 'address')->widget(\dosamigos\ckeditor\CKEditor::className(), [
-                'options' => ['rows' => 8],
-                'preset' => 'basic'
-            ]) ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <?= $form->field($model, 'condition')->widget(\dosamigos\ckeditor\CKEditor::className(), [
-                'options' => ['rows' => 8],
-                'preset' => 'basic'
-            ]) ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <?= $form->field($model, 'highlight')->widget(\dosamigos\ckeditor\CKEditor::className(), [
-                'options' => ['rows' => 8],
-                'preset' => 'basic'
-            ]) ?>
-        </div>
-    </div>
 
     <h3 class="form-section">Ảnh </h3>
 
@@ -315,6 +284,72 @@ $this->registerJs($js, \yii\web\View::POS_END);
 
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <?=
+            $form->field($model, 'slide_category[]')->widget(\kartik\widgets\FileInput::classname(), [
+                'options' => [
+                    'multiple' => false,
+                    'id' => 'content-slidecategory',
+                    'accept' => 'image/*'
+                ],
+                'pluginOptions' => [
+                    'uploadUrl' => $upload_url,
+                    'uploadExtraData' => [
+                        'type' => \common\models\Content::IMAGE_TYPE_SLIDECATEGORY,
+                        'logo_old' => $model->slide_category
+                    ],
+                    'language' => 'vi-VN',
+                    'showUpload' => false,
+                    'showUploadedThumbs' => false,
+                    'initialPreview' => $logoPreview,
+                    'initialPreviewConfig' => $logoInit,
+                    'maxFileSize' => 1024 * 1024 * 10,
+                ],
+                'pluginEvents' => [
+                    "fileuploaded" => "function(event, data, previewId, index) {
+                    var response=data.response;
+                    if(response.success){
+                        var current_screenshots=response.output;
+                        var old_value_text=$('#images_tmp').val();
+                        if(old_value_text !=null && old_value_text !='' && old_value_text !=undefined)
+                        {
+                            var old_value=jQuery.parseJSON(old_value_text);
+
+                            if(jQuery.isArray(old_value)){
+                                old_value = old_value.filter(function(v){
+                                    v = jQuery.parseJSON(v)
+                                    console.log(typeof v.type, v.type);
+                                    return v.type !== '2';
+                                })
+                                console.log(old_value);
+                                old_value.push(current_screenshots);
+                                console.log(old_value);
+                            }
+                        }
+                        else{
+                            var old_value= [current_screenshots];
+                        }
+                        $('#images_tmp').val(JSON.stringify(old_value));
+                    }
+                }",
+                    "filedeleted" => "function(event, data) {
+                    var response = data.response
+                    console.log(event);
+                    console.log(data);
+                    // if(response.success){
+                    //     console.log(response.output);
+
+                    // }
+                }",
+                ],
+
+            ]) ?>
+
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             <?=

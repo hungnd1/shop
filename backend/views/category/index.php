@@ -48,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'class' => '\kartik\grid\DataColumn',
                             'format'=>'raw',
+                            'label'=>'Ảnh đại diện',
                             'attribute' => 'images',
                             'value'=>function ($model, $key, $index, $widget) {
                                 /** @var $model \common\models\Category */
@@ -58,6 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'class' => 'kartik\grid\EditableColumn',
                             'attribute' => 'status',
+                            'label'=>'Trạng thái',
                             'refreshGrid' => true,
                             'editableOptions' => function ($model, $key, $index) {
                                 return [
@@ -79,6 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
 
                             'format'=>'raw',
+                            'label'=>'Sắp xếp',
                             'attribute' => 'order_number',
                             'value'=>function ($model, $key, $index, $widget) {
                                 /** @var $model \common\models\Category */

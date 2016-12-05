@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Content */
 
 $this->title = 'Cập nhật nội dung: ' . ' ' . $model->display_name;
-$this->params['breadcrumbs'][] = ['label' => 'Content', 'url' => Yii::$app->urlManager->createUrl(['content/index'])];
+$this->params['breadcrumbs'][] = ['label' => 'Nội dung', 'url' => Yii::$app->urlManager->createUrl(['content/index'])];
 
 $this->params['breadcrumbs'][] = ['label' => $model->display_name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
