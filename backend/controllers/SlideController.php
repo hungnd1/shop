@@ -64,14 +64,15 @@ class SlideController extends Controller
      * Lists all Slide models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($type = Slide::SLIDE_HOME)
     {
         $searchModel = new SlideSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$type);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'type'=>$type
         ]);
     }
 
@@ -92,10 +93,9 @@ class SlideController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($type = Slide::SLIDE_HOME)
     {
         $model = new Slide();
-
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
@@ -103,6 +103,7 @@ class SlideController extends Controller
 
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->type = $type;
             if ($model->save()) {
 //                $model->saveBannerFile();
                 \Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Thêm mới Slide thành công!'));
@@ -114,6 +115,7 @@ class SlideController extends Controller
         }
         return $this->render('create', [
             'model' => $model,
+            'type'  => $type
         ]);
     }
 
@@ -126,7 +128,7 @@ class SlideController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $type = $model->type;
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
@@ -143,6 +145,7 @@ class SlideController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'type' =>$type
             ]);
         }
     }

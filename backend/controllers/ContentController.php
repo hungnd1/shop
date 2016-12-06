@@ -185,6 +185,12 @@ class ContentController extends BaseBEController
                         $model->is_slide = 1;
                         $model->save();
                     }
+                    if($row['type' == Content::IMAGE_TYPE_SLIDECATEGORY]){
+                        $model->is_slide_category = 1;
+                        $model->save();
+
+                    }
+
                     //end screenshoot
                 }
                 // tao log

@@ -19,6 +19,8 @@ use yii\helpers\Html;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $type
+ * @property integer $category_id
  *
  * @property Content $content
  * @property ServiceProvider $serviceProvider
@@ -28,11 +30,23 @@ class Slide extends \yii\db\ActiveRecord
 
     const STATUS_INACTIVE= 0;
     const STATUS_ACTIVE = 1;
+    const SLIDE_CATEGORY = 1;
+    const SLIDE_HOME  = 2;
 
     public static $slide_status = [
         self::STATUS_ACTIVE => 'Active',
         self::STATUS_INACTIVE => "Disable"
     ];
+
+    public static function getListCategory(){
+        $listCategory = Category::find()
+            ->andWhere('parent_id is null') ->orderBy(['id' => SORT_DESC])->all();
+        $array = [];
+        foreach($listCategory as $item){
+            $array[$item->id] = $item->display_name;
+        }
+        return $array;
+    }
 
 //    const SLIDE_TYPE_CONTENT = 1;
 //    const SLIDE_TYPE_BANNER = 2;
@@ -80,7 +94,7 @@ class Slide extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'content_id','created_at','status','updated_at'], 'integer'],
+            [['id', 'content_id','type','category_id','created_at','status','updated_at'], 'integer'],
             [['content_id'], 'required', 'message' => 'Không được để trống sản phẩm làm Banner'],
             ['content_id', 'validateContent'],
             [['des'], 'string', 'max' => 4000],
@@ -111,6 +125,8 @@ class Slide extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'content_id' => Yii::t('app', 'Content ID'),
+            'type' => Yii::t('app', 'Type'),
+            'category_id' => Yii::t('app', 'Danh mục'),
             'des' => Yii::t('app', 'Description'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),

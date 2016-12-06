@@ -33,12 +33,7 @@ $showPreview = !$model->isNewRecord && !empty($model->banner) && ($model->type =
 ]); ?>
     <div class="form-body">
         <?= $form->field($model, 'des')->textarea(['rows' => 6, 'class' => 'input-circle']) ?>
-
-        <div class="form-group field-category-icon">
-            <div class="col-sm-offset-3 col-sm-5">
-                <?php echo Html::img($model->getBannerUrl(), ['class' => 'file-preview-image']) ?>
-            </div>
-        </div>
+    <?php if($type ==  Slide::SLIDE_HOME){ ?>
         <?php
         /**
          * @var $contents Content[]
@@ -62,11 +57,39 @@ $showPreview = !$model->isNewRecord && !empty($model->banner) && ($model->type =
                 ]
             ]);
         ?>
+        <?php }else{ ?>
+            <?php
+            /**
+             * @var $contents Content[]
+             */
+            $dataList = [];
+            $contents =  Content::find()
+                ->andWhere(['is_slide_category'=>1])
+                ->all();
+            foreach($contents as $content){
+                $dataList[$content->id] = $content->display_name;
+            }
+            echo $form->field($model, 'content_id')->widget(DepDrop::classname(),
+                [
+                    'data'=>$dataList,
+                    'type' => 2,
+                    'options'=>['placeholder'=>'-Nội dung-'],
+                    'select2Options'=>['pluginOptions'=>['allowClear'=>true]],
+                    'pluginOptions'=>[
+                        'depends'=>['service-provider-id'],
+                        'url'=>Url::to(['/slide-content/get-content']),
+                    ]
+                ]);
+            ?>
+            <?php
+            echo $form->field($model, 'category_id')->dropDownList(Slide::getListCategory());
+            ?>
+        <?php } ?>
         <?php
         echo $form->field($model, 'status')->dropDownList(Slide::$slide_status);
         ?>
-
     </div>
+
     <div class="form-actions">
         <div class="row">
             <div class="col-md-offset-3 col-md-9">

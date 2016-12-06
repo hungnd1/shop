@@ -37,6 +37,7 @@ use yii\helpers\Url;
  * @property string $images
  * @property int $status
  * @property int $is_slide
+ * @property int $is_slide_category
  * @property int $created_at
  * @property int $expired_at
  * @property int $updated_at
@@ -165,6 +166,7 @@ class Content extends \yii\db\ActiveRecord
                     'type',
                     'price',
                     'is_slide',
+                    'is_slide_category',
                     'price_promotion',
                     'version_code',
                     'view_count',

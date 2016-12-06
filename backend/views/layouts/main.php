@@ -165,8 +165,25 @@ $menuItems = [
         ]
     ],
     [
-        'label' => 'Quản lý Slide',
-        'url' => ['slide/index'],
+        'label' => 'Quản lý slide',
+        'url' => 'javascript:;',
+        'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+        'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
+        'items' => [
+            [
+                'encode' => false,
+                'label' => '<i class="fa fa-server"></i> Slide trang chủ',
+                'url' => ['slide/index','type'=>\common\models\Slide::SLIDE_HOME],
+                'require_auth' => true,
+            ],
+            [
+                'encode' => false,
+                'label' => '<i class="fa fa-gift"></i> Slide trang danh mục',
+                'url' => ['slide/index','type'=>\common\models\Slide::SLIDE_CATEGORY],
+                'require_auth' => true,
+            ],
+
+        ]
     ],
     [
         'label' => 'Hệ thống',

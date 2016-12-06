@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="portlet-body">
                 <p>
-                    <?= Html::a(Yii::t('app', 'Thêm mới Slide'), ['create'], ['class' => 'btn btn-success']) ?>
+                    <?= Html::a(Yii::t('app', 'Thêm mới Slide'), ['create','type'=>$type], ['class' => 'btn btn-success']) ?>
                 </p>
 
                 <?= GridView::widget([
