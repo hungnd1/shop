@@ -49,7 +49,7 @@ $showPreview = !$model->isNewRecord && !empty($model->banner) && ($model->type =
             [
                 'data'=>$dataList,
                 'type' => 2,
-                'options'=>['placeholder'=>'-Nội dung-'],
+                'options'=>['placeholder'=>Yii::t('app','-Nội dung-')],
                 'select2Options'=>['pluginOptions'=>['allowClear'=>true]],
                 'pluginOptions'=>[
                     'depends'=>['service-provider-id'],
@@ -73,7 +73,7 @@ $showPreview = !$model->isNewRecord && !empty($model->banner) && ($model->type =
                 [
                     'data'=>$dataList,
                     'type' => 2,
-                    'options'=>['placeholder'=>'-Nội dung-'],
+                    'options'=>['placeholder'=>Yii::t('app','-Nội dung-')],
                     'select2Options'=>['pluginOptions'=>['allowClear'=>true]],
                     'pluginOptions'=>[
                         'depends'=>['service-provider-id'],
@@ -86,7 +86,7 @@ $showPreview = !$model->isNewRecord && !empty($model->banner) && ($model->type =
             ?>
         <?php } ?>
         <?php
-        echo $form->field($model, 'status')->dropDownList(Slide::$slide_status);
+        echo $form->field($model, 'status')->dropDownList(Slide::getSlideStatus());
         ?>
     </div>
 
@@ -95,7 +95,7 @@ $showPreview = !$model->isNewRecord && !empty($model->banner) && ($model->type =
             <div class="col-md-offset-3 col-md-9">
                 <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Thêm mới') : Yii::t('app', 'Cập nhật'),
                     ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                <?= Html::a(Yii::t('app', 'Back'), ['index'], ['class' => 'btn btn-default']) ?>
+                <?= Html::a(Yii::t('app', 'Trở lại'), ['index'], ['class' => 'btn btn-default']) ?>
             </div>
         </div>
     </div>

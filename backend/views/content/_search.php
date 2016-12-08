@@ -82,8 +82,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'admin_note') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('app','Tìm kiếm'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app','Nhập lại'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

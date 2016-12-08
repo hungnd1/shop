@@ -16,12 +16,12 @@ use common\models\User;
             ['attribute'=>'username', 'format'=>'raw', 'value'=>'<kbd>'.$model->username.'</kbd>', 'displayOnly'=>true],
             [
                 'attribute' => 'type',
-                'label' => 'Loại người dùng',
+                'label' => Yii::t('app','Loại người dùng'),
                 'format' => 'html',
                 'value' =>  $model->getTypeName(),
             ],
             [
-                'label' => 'Quyền người dùng',
+                'label' => Yii::t('app','Quyền người dùng'),
                 'format' => 'html',
                 'value' =>  $model->getRolesName(),
             ],
@@ -29,7 +29,6 @@ use common\models\User;
 //                        'role',
             [
                 'attribute'=>'status',
-                'label'=>'Trạng thái',
                 'format'=>'raw',
                 'value'=>($model->status ==User::STATUS_ACTIVE)  ?
                     '<span class="label label-success">'.$model->getStatusName().'</span>' :
@@ -44,12 +43,10 @@ use common\models\User;
             ],
             [                      // the owner name of the model
                 'attribute'=>'created_at',
-                'label' => 'Ngày tham gia',
                 'value' => date('d/m/Y H:i:s',$model->created_at),
             ],
             [                      // the owner name of the model
                 'attribute'=>'updated_at',
-                'label' => 'Ngày thay đổi thông tin',
                 'value' => date('d/m/Y H:i:s',$model->updated_at),
             ],
 
@@ -63,8 +60,8 @@ use common\models\User;
     <div class="form-actions">
         <div class="row">
             <div class="col-md-offset-3 col-md-9">
-                <?= Html::a('Cập nhật', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('Hủy thao tác', ['index'], ['class' => 'btn btn-default']) ?>
+                <?= Html::a(Yii::t('app','Cập nhật'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a(Yii::t('app','Hủy thao tác'), ['index'], ['class' => 'btn btn-default']) ?>
             </div>
         </div>
     </div>

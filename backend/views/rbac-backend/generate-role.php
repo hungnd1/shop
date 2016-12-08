@@ -24,16 +24,18 @@ ToastAsset::config($this, [
 $tableId = "rbac-role-generator";
 
 $generateUrl = \yii\helpers\Url::to(['rbac-backend/generate-role-confirm']);
-
+$m1 = Yii::t('app','Chưa chọn role nào! Xin vui lòng chọn ít nhất một role để khởi tạo.');
+$m2 = Yii::t('app',"Thao tác này sẽ tự động gán lại các Permission tương ứng vào các Role chọn lựa (ví dụ: MỌI permission bắt đầu bằng 'User.' như 'User.Create', 'User.Update'... sẽ tự động được gán vào Role 'User.*'), bạn có chắc chắn?");
+$m3 = Yii::t('app','Lỗi Sever');
 $js = <<<JS
 function generateRole(){
     actions = $("#$tableId").yiiGridView("getSelectedRows");
     if(actions.length <= 0){
-        alert("Chưa chọn role nào! Xin vui lòng chọn ít nhất một role để khởi tạo.");
+        alert('{$m1}');
         return;
     }
 
-    if (confirm("Thao tác này sẽ tự động gán lại các Permission tương ứng vào các Role chọn lựa (ví dụ: MỌI permission bắt đầu bằng 'User.' như 'User.Create', 'User.Update'... sẽ tự động được gán vào Role 'User.*'), bạn có chắc chắn?")) {
+    if (confirm('{$m2}')) {
         jQuery.post(
             '{$generateUrl}',
             { ids:actions }
@@ -47,7 +49,7 @@ function generateRole(){
                 }
             })
             .fail(function() {
-                toastr.error("server error");
+                toastr.error('{$m3}');
         });
     }
 }
@@ -61,7 +63,7 @@ $this->registerJs($js, View::POS_END);
     <p>
         <?= Html::a('Manage Role', ['rbac-backend'], ['class' => 'btn btn-success']) ?>
         <?=
-        Html::button('<i class="glyphicon glyphicon-ok"></i> Generate', [
+        Html::button('<i class="glyphicon glyphicon-ok"></i> '.Yii::t('app','Generate'), [
             'type' => 'button',
             'title' => 'Generate operations',
             'class' => 'btn btn-success',
@@ -77,7 +79,7 @@ $this->registerJs($js, View::POS_END);
         'hover' => true,
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
-            'heading' => 'Danh sách action chưa tạo permission'
+            'heading' => Yii::t('app','Danh sách action chưa tạo permission')
         ],
         'toolbar' => [
             [

@@ -25,12 +25,10 @@ $grid = [
             'tags',
             [
                 'attribute' => 'created_at',
-                // 'label' => 'Ngày tạo',
                 'value' => date('d-m-Y H:i:s', $model->created_at)
             ],
             [
                 'attribute' => 'updated_at',
-                // 'label' => 'Ngày cập nhật',
                 'value' => date('d-m-Y H:i:s', $model->updated_at)
             ],
             [
@@ -50,7 +48,7 @@ $grid = [
             ],
             'order',
             [
-                'label' => 'Ngày phê duyệt',
+                'label' => Yii::t('app','Ngày phê duyệt'),
                 'value' => $model->approved_at?date('d-m-Y H:i:s', $model->approved_at):''
             ],
         ];

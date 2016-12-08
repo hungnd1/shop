@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\AuthItem */
 
-$this->title = 'Cập nhật quyền: ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Quàn lý quyền backend', 'url' => ['permission']];
+$this->title = Yii::t('app','Cập nhật quyền: ') . ' ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Quản lý quyền backend'), 'url' => ['permission']];
 //$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view-permission', 'name' => $model->name]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-globe"></i>
-                    Thông tin chung
+                    <?= Yii::t('app','Thông tin chung') ?>
                 </div>
             </div>
             <div class="portlet-body">
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-globe"></i>
-                    Quyền và nhóm quyền
+                    <?= Yii::t('app','Quyền và nhóm quyền') ?>
                 </div>
             </div>
             <div class="portlet-body">

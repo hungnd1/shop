@@ -10,7 +10,7 @@ use yii\helpers\Url;
 /* @var $searchModel common\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Quản lý người dùng';
+$this->title = Yii::t('app','Quản lý người dùng');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="portlet-body">
-                <p><?= Html::a('Tạo người dùng', ['create'], ['class' => 'btn btn-success']) ?> </p>
+                <p><?= Html::a(Yii::t('app','Tạo người dùng'), ['create'], ['class' => 'btn btn-success']) ?> </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -63,8 +63,6 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => '\kartik\grid\DataColumn',
                 'attribute'=>'status',
-                'label'=>'Trạng thái',
-//                'width'=>'180px',
                 'width'=>'20%',
                 'format'=>'raw',
                 'value' => function ($model, $key, $index, $widget) {
@@ -83,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' => true],
                 ],
-                'filterInputOptions' => ['placeholder' => "Tất cả"],
+                'filterInputOptions' => ['placeholder' => Yii::t('app',"Tất cả")],
             ],
             // 'created_at',
             // 'updated_at',
@@ -93,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'parent_id',
             [
                 'format' => 'html',
-                'label' => 'Nhóm quyền',
+                'label' => Yii::t('app','Nhóm quyền'),
 //                'vAlign' => 'middle',
                 'value' => function ($model, $key, $index, $widget) {
                     /**
@@ -103,7 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     if($e->superAdmin != $model->username){
                         return $model->getRolesName();
                     }else{
-                        return "Supper Admin";
+                        return Yii::t('app',"Quản trị viên");
                     }
                 },
             ],
@@ -113,21 +111,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons'=>[
                     'view' => function ($url,$model) {
                         return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', Url::toRoute(['user/view','id'=>$model->id]), [
-                            'title' => 'Thông tin user',
+                            'title' => Yii::t('app','Thông tin user'),
                         ]);
 
                     },
                     'update' => function ($url,$model) {
                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::toRoute(['user/update','id'=>$model->id]), [
-                            'title' => 'Cập nhật thông tin user',
+                            'title' => Yii::t('app','Cập nhật thông tin user'),
                         ]);
                     },
                     'delete' => function ($url,$model) {
-//                        Nếu là chính nó thì không cho thay đổi trạng thái
                         if($model->id != Yii::$app->user->getId()){
                             return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['user/delete','id'=>$model->id]), [
-                                'title' => 'Xóa user',
-                                'data-confirm' => Yii::t('app', 'Xóa người dùng này?')
+                                'title' => Yii::t('app','Xóa user'),
+                                'data-confirm' => Yii::t('app', 'Bạn chắc chắn muốn xóa người dùng này?')
                             ]);
                         }
                     }

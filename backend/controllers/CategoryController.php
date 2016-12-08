@@ -55,10 +55,10 @@ class CategoryController extends BaseBEController
                     if ($cat->update()) {
                         echo \yii\helpers\Json::encode(['output' => '', 'message' => '']);
                     } else {
-                        echo \yii\helpers\Json::encode(['output' => '', 'message' => 'Dữ liệu không hợp lệ']);
+                        echo \yii\helpers\Json::encode(['output' => '', 'message' =>Yii::t('app', 'Dữ liệu không hợp lệ')]);
                     }
                 } else {
-                    echo \yii\helpers\Json::encode(['output' => '', 'message' => 'Danh mục không tồn tại']);
+                    echo \yii\helpers\Json::encode(['output' => '', 'message' =>Yii::t('app', 'Danh mục không tồn tại')]);
                 }
             } // else if nothing to do always return an empty JSON encoded output
             else {
@@ -132,7 +132,7 @@ class CategoryController extends BaseBEController
             // $model->site_id     = Yii::$app->user->id;
             // $model->order_number = $model->order_number !== null ? $model->order_number : 0;
             if($model->parent_id && $model->type !=  Category::TYPE_NONE ){
-                \Yii::$app->getSession()->setFlash('error', 'Phải chọn menu bình thường nếu là danh mục con');
+                \Yii::$app->getSession()->setFlash('error',Yii::t('app', 'Phải chọn menu bình thường nếu là danh mục con'));
             }else if ($model->save()) {
                 if ($model->parent_id != null) {
                     $modelParent = $model->parent;
@@ -159,7 +159,7 @@ class CategoryController extends BaseBEController
 
                 Yii::info($model->getErrors());
 
-                \Yii::$app->getSession()->setFlash('success', 'Thêm mới thành công');
+                \Yii::$app->getSession()->setFlash('success',Yii::t('app', 'Thêm mới thành công'));
 
                 return $this->redirect(['index']);
             } else {
@@ -221,7 +221,7 @@ class CategoryController extends BaseBEController
                     $item->save();
                 }
 
-                \Yii::$app->getSession()->setFlash('success', 'Cập nhật thành công');
+                \Yii::$app->getSession()->setFlash('success', Yii::t('app','Cập nhật thành công'));
 
                 return $this->redirect(['index']);
             }
@@ -252,7 +252,7 @@ class CategoryController extends BaseBEController
             $model_parent->status = Category::STATUS_INACTIVE;
             $model_parent->save(false);
         }
-        \Yii::$app->getSession()->setFlash('success', 'Xóa thành công');
+        \Yii::$app->getSession()->setFlash('success',Yii::t('app', 'Xóa thành công'));
         return $this->redirect(['index']);
     }
 
@@ -271,7 +271,7 @@ class CategoryController extends BaseBEController
         if (($model = Category::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app','Không tìm thấy trang'));
         }
     }
 

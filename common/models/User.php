@@ -59,8 +59,8 @@ class User extends ActiveRecord implements IdentityInterface
     public static function listGender()
     {
         $gender = [
-            self::GENDER_MALE => 'Nam',
-            self::GENDER_FEMALE => 'Nữ',
+            self::GENDER_MALE => Yii::t('app','Nam'),
+            self::GENDER_FEMALE =>Yii::t('app', 'Nữ'),
         ];
         return $gender;
     }
@@ -131,40 +131,40 @@ class User extends ActiveRecord implements IdentityInterface
             [['auth_key'], 'string', 'max' => 32],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE,self::STATUS_DELETED]],
-            ['email', 'email','message' => 'Email không đúng định dạng'],
+            ['email', 'email','message' => Yii::t('app','Email không đúng định dạng')],
 //            ['email', 'unique'],
 //            ['username', 'unique','message' => 'Tên tài khoản đã tồn tại trong hệ thống'],
             ['username', 'validateUnique','on' => 'create'],
             //cuongvm
-            [['old_password'],'required','on'=>'change-password','message' => '{attribute} không được phép để trống'],
-            ['password', 'string', 'min' => '8', 'max' => '30', 'tooShort' => '{attribute} không hợp lệ. {attribute} ít nhất 8 ký tự', 'tooLong' =>'{attribute} không hợp lệ. {attribute} ít nhất 8-30 ký tự'],
-            ['old_password', 'string', 'min' => '8', 'max' => '30', 'tooShort' => '{attribute} không hợp lệ. {attribute} ít nhất 8 ký tự', 'tooLong' =>'{attribute} không hợp lệ. {attribute} ít nhất 8-30 ký tự'],
-            ['confirm_password', 'string', 'min' => '8', 'max' => '30', 'tooShort' => '{attribute} không hợp lệ. {attribute} ít nhất 8 ký tự', 'tooLong' =>'{attribute} không hợp lệ. {attribute} ít nhất 8-30 ký tự'],
-            ['new_password', 'string', 'min' => '8', 'max' => '30', 'tooShort' => '{attribute} không hợp lệ. {attribute} ít nhất 8 ký tự', 'tooLong' =>'{attribute} không hợp lệ. {attribute} ít nhất 8-30 ký tự'],
-            [['confirm_password', 'password'], 'required', 'on' => 'create','message' => '{attribute} không được phép để trống'],
+            [['old_password'],'required','on'=>'change-password','message' => Yii::t('app','{attribute} không được phép để trống')],
+            ['password', 'string', 'min' => '8', 'max' => '30', 'tooShort' => Yii::t('app','{attribute} không hợp lệ. {attribute} ít nhất 8 ký tự'), 'tooLong' =>Yii::t('app','{attribute} không hợp lệ. {attribute} ít nhất 8-30 ký tự')],
+            ['old_password', 'string', 'min' => '8', 'max' => '30', 'tooShort' => Yii::t('app','{attribute} không hợp lệ. {attribute} ít nhất 8 ký tự'), 'tooLong' =>Yii::t('app','{attribute} không hợp lệ. {attribute} ít nhất 8-30 ký tự')],
+            ['confirm_password', 'string', 'min' => '8', 'max' => '30', 'tooShort' =>Yii::t('app', '{attribute} không hợp lệ. {attribute} ít nhất 8 ký tự'), 'tooLong' =>Yii::t('app','{attribute} không hợp lệ. {attribute} ít nhất 8-30 ký tự')],
+            ['new_password', 'string', 'min' => '8', 'max' => '30', 'tooShort' => Yii::t('app','{attribute} không hợp lệ. {attribute} ít nhất 8 ký tự'), 'tooLong' =>Yii::t('app','{attribute} không hợp lệ. {attribute} ít nhất 8-30 ký tự')],
+            [['confirm_password', 'password'], 'required', 'on' => 'create','message' => Yii::t('app','{attribute} không được phép để trống')],
             [
                 ['confirm_password'],
                 'compare',
                 'compareAttribute' => 'password',
-                'message' => 'Xác nhận mật khẩu không đúng.',
+                'message' => Yii::t('app','Xác nhận mật khẩu không đúng.'),
                 'on' => 'create'
             ],
             [
                 ['confirm_password'],
                 'compare',
                 'compareAttribute' => 'new_password',
-                'message' => 'Xác nhận mật khẩu không đúng.',
+                'message' => Yii::t('app','Xác nhận mật khẩu không đúng.'),
                 'on' => 'change-password'
             ],
             [
                 ['confirm_password'],
                 'compare',
                 'compareAttribute' => 'new_password',
-                'message' => 'Xác nhận mật khẩu không đúng.',
+                'message' => Yii::t('app','Xác nhận mật khẩu không đúng.'),
                 'on' => 'reset-password'
             ],
-            [['new_password', 'confirm_password'], 'required', 'on' => 'change-password','message' => '{attribute} không được phép để trống'],
-            [['new_password', 'confirm_password'], 'required', 'on' => 'reset-password','message' => '{attribute} không được phép để trống'],
+            [['new_password', 'confirm_password'], 'required', 'on' => 'change-password','message' => Yii::t('app','{attribute} không được phép để trống')],
+            [['new_password', 'confirm_password'], 'required', 'on' => 'reset-password','message' => Yii::t('app','{attribute} không được phép để trống')],
         ];
     }
 
@@ -173,7 +173,7 @@ class User extends ActiveRecord implements IdentityInterface
         if (!$this->hasErrors()) {
             $user = User::findUser($this->username);
             if($user){
-                $this->addError($attribute, 'Tên tài khoản đã tồn tại trong hệ thống');
+                $this->addError($attribute, Yii::t('app','Tên tài khoản đã tồn tại trong hệ thống'));
             }
         }
     }
@@ -182,7 +182,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         if (!$this->hasErrors()) {
             if (!$this->validatePassword($this->old_password)) {
-                $this->addError('old_password', 'Mật khẩu hiện tại không chính xác');
+                $this->addError('old_password', Yii::t('app','Mật khẩu hiện tại không chính xác'));
             }
         }
     }
@@ -592,8 +592,8 @@ class User extends ActiveRecord implements IdentityInterface
     public static function listStatus()
     {
         $lst = [
-            self::STATUS_ACTIVE => 'Kích hoạt',
-            self::STATUS_INACTIVE => 'Tạm dừng',
+            self::STATUS_ACTIVE => Yii::t('app','Kích hoạt'),
+            self::STATUS_INACTIVE => Yii::t('app','Tạm dừng'),
         ];
         return $lst;
     }
@@ -637,9 +637,9 @@ class User extends ActiveRecord implements IdentityInterface
     public static function listType()
     {
         $lst = [
-            self::USER_TYPE_ADMIN => 'Quản trị backend',
-            self::USER_TYPE_SP => 'Nhà cung cấp dịch vụ',
-            self::USER_TYPE_DEALER => 'Đại lý',
+            self::USER_TYPE_ADMIN => Yii::t('app','Admin'),
+            self::USER_TYPE_NORMAL => Yii::t('app','Người dùng'),
+//        self::USER_TYPE_DEALER => 'Đại lý',
 
         ];
         return $lst;

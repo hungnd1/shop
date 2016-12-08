@@ -10,7 +10,7 @@ use yii\web\View;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ArrayDataProvider */
 
-$this->title = 'Tạo quyền admin';
+$this->title = Yii::t('app', 'Tạo quyền admin');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -24,12 +24,12 @@ ToastAsset::config($this, [
 $tableId = "rbac-permission-generator";
 
 $generateUrl = \yii\helpers\Url::to(['rbac-backend/generate-permission-confirm']);
-
+$m = Yii::t('app','Chưa chọn action nào! Xin vui lòng chọn ít nhất một action để tạo permission.');
 $js = <<<JS
 function generatePermission(){
     actions = $("#$tableId").yiiGridView("getSelectedRows");
     if(actions.length <= 0){
-        alert("Chưa chọn action nào! Xin vui lòng chọn ít nhất một action để tạo permission.");
+        alert('{$m}');
         return;
     }
 
@@ -57,9 +57,9 @@ $this->registerJs($js, View::POS_END);
 <div class="user-index">
 
     <p>
-        <?= Html::a('Quản lý quyền', ['permission'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app','Quản lý quyền'), ['permission'], ['class' => 'btn btn-success']) ?>
         <?=
-        Html::button('<i class="glyphicon glyphicon-ok"></i> Tạo', [
+        Html::button('<i class="glyphicon glyphicon-ok"></i>'.Yii::t('app','Tạo'), [
             'type' => 'button',
             'title' => 'Generate operations',
             'class' => 'btn btn-success',
@@ -75,7 +75,7 @@ $this->registerJs($js, View::POS_END);
         'hover' => true,
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
-            'heading' => 'Danh sách action chưa tạo permission'
+            'heading' =>Yii::t('app', 'Danh sách action chưa tạo permission')
         ],
         'toolbar' => [
             [

@@ -8,7 +8,7 @@ use kartik\grid\GridView;
 /* @var $searchModel common\models\VoucherSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Vouchers';
+$this->title = Yii::t('app','Quản lý Vouchers');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -61,7 +61,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'class' => '\kartik\grid\DataColumn',
                             'attribute'=>'status',
-                            'label'=>'Trạng thái',
                             'width'=>'100px',
                             'format'=>'raw',
                             'value' => function ($model, $key, $index, $widget) {

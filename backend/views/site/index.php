@@ -6,8 +6,8 @@ $this->title = 'Shop-Backend';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Welcome to SHOP-Backend!</h1>
-        <p class="lead">You have login successfully to Application..</p>
+        <h1><?= Yii::t('app','Chào mừng đến với trang quản trị SHOP!') ?></h1>
+        <p class="lead"><?= Yii::t('app','Đã đăng nhập thành công') ?></p>
     </div>
 
 </div>

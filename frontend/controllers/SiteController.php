@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Subcriber;
 use common\models\User;
 use Yii;
 use frontend\models\LoginForm;
@@ -79,20 +80,20 @@ class SiteController extends Controller
         $attributes = $client->getUserAttributes();
 //        die(print_r($attributes));
 
-        $user = User::find()->where(['id_facebook'=>$attributes['id']])->one();
-            if(!empty($user)){
-                Yii::$app->user->login($user);
+        $model = Subcriber::find()->where(['id_facebook'=>$attributes['id']])->one();
+            if(!empty($model)){
+                Yii::$app->user->login($model);
             }else{
                 // save to database
-                $model = new User();
-                $model->fullname = $attributes['name'];
-                if($attributes['email'] != ''){
+                $model = new Subcriber();
+                $model->full_name = $attributes['name'];
+                if(isset($attributes['email']) && $attributes['email'] != null){
                     $model->email = $attributes['email'];
                 }
                 $model->id_facebook = $attributes['id'];
                 $model->save(false);
                 // start to login
-                Yii::$app->user->login($user);
+                Yii::$app->user->login($model);
             }
     }
 

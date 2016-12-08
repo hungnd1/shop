@@ -12,8 +12,8 @@ use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
-$this->title = 'Cập nhật thông tin người dùng';
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý người dùng', 'url' => ['index']];
+$this->title = Yii::t('app','Cập nhật thông tin người dùng');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Quản lý người dùng'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="portlet box green">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-gift"></i>Khôi phục mật khẩu
+                    <i class="fa fa-gift"></i><?= Yii::t('app','Khôi phục mật khẩu' ) ?>
                 </div>
             </div>
             <div class="portlet-body form">

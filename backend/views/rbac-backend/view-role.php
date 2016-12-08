@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-md-12">
         <p>
-            <?= Html::a('Cập nhật', ['update-role', 'name' => $model->name], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Xóa', ['delete-role', 'name' => $model->name], [
+            <?= Html::a(Yii::t('app','Cập nhật'), ['update-role', 'name' => $model->name], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app','Xóa'), ['delete-role', 'name' => $model->name], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => 'Are you sure you want to delete this item?',
+                    'confirm' => Yii::t('app','Bạn chắc chắn muốn xóa?'),
                     'method' => 'post',
                 ],
             ]) ?>

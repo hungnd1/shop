@@ -36,7 +36,7 @@ $avatarPreview = !$model->isNewRecord && !empty($model->image);
             'showUpload' => false,
             'browseClass' => 'btn btn-primary btn-block',
             'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-            'browseLabel' => 'Chọn hình ảnh đại diện',
+            'browseLabel' => Yii::t('app','Chọn hình ảnh đại diện'),
             'initialPreview' => $avatarPreview ? [
                 Html::img(Yii::getAlias('@web').'/'.Yii::$app->params['avatar'] . "/" . $model->image, ['class' => 'file-preview-image',]),
 
@@ -49,21 +49,21 @@ $avatarPreview = !$model->isNewRecord && !empty($model->image);
     <?= $form->field($model, 'status')->dropDownList($model->getListStatus()) ?>
 
     <?= $form->field($model, 'date_start')->widget(DateTimePicker::classname(), [
-        'options' => ['placeholder' => 'Thời gian bắt đầu hiệu lực'],
+        'options' => ['placeholder' => Yii::t('app','Thời gian bắt đầu hiệu lực')],
         'pluginOptions' => [
             'autoclose' => true,
             'format' => 'dd-mm-yyyy hh:ii:ss',
         ]
-    ])->label('Thời gian bắt đầu');
+    ]);
     ?>
 
     <?= $form->field($model, 'date_end')->widget(DateTimePicker::classname(), [
-        'options' => ['placeholder' => 'Thời gian kết thúc'],
+        'options' => ['placeholder' => Yii::t('app','Thời gian kết thúc')],
         'pluginOptions' => [
             'autoclose' => true,
             'format' => 'dd-mm-yyyy hh:ii:ss',
         ]
-    ])->label('Thời gian kết thúc');
+    ]);
     ?>
 
     <div class="form-actions">

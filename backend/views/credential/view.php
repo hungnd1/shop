@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\SiteApiCredential */
 
 $this->title = $model->client_name;
-$this->params['breadcrumbs'][] = ['label' => 'Danh sách API KEY', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Danh sách API KEY'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-cogs font-green-sharp"></i>
-                    <span class="caption-subject font-green-sharp bold uppercase">Thông tin API KEY "<?= $model->client_name ?>"</span>
+                    <span class="caption-subject font-green-sharp bold uppercase"><?= Yii::t('app','Thông tin API KEY '). $model->client_name ?>"</span>
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::a('Xóa', ['delete', 'id' => $model->id], [
                         'class' => 'btn btn-danger',
                         'data' => [
-                            'confirm' => 'Are you sure you want to delete this item?',
+                            'confirm' => Yii::t('app','Bạn chắc chắn muốn xóa?'),
                             'method' => 'post',
                         ],
                     ]) ?>

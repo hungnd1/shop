@@ -7,13 +7,13 @@ use kartik\editable\Editable;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Quản lý nhóm quyền trang backend';
+$this->title =Yii::t('app', 'Quản lý nhóm quyền trang backend');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
     <p>
-        <?= Html::a('Tạo nhóm quyền', ['create-role'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app','Tạo nhóm quyền'), ['create-role'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -47,21 +47,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     'view' => function ($url, $model, $key) {
                         return   Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
                             Yii::$app->urlManager->createUrl(['rbac-backend/view-role','name'=>$model->name]),[
-                            'title' => Yii::t('yii', 'View'),
+                            'title' => Yii::t('app', 'Xem'),
                             'data-pjax' => '0',
                         ]) ;
                     },
                     'update' => function ($url, $model, $key) {
                         return   Html::a('<span class="glyphicon glyphicon-pencil"></span>',
                             Yii::$app->urlManager->createUrl(['rbac-backend/update-role','name'=>$model->name]),[
-                                'title' => Yii::t('yii', 'Update'),
+                                'title' => Yii::t('app', 'Cập nhật'),
                                 'data-pjax' => '0',
                             ]) ;
                     },
                    'delete' => function ($url, $model) {
                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', Yii::$app->urlManager->createUrl(['rbac-backend/delete-role','name'=>$model->name]), [
-                           'title' => Yii::t('yii', 'Delete'),
-                           'data-confirm' => Yii::t('yii', 'Bạn có chắc chắn xóa nhóm quyền này?'),
+                           'title' => Yii::t('app', 'Xóa'),
+                           'data-confirm' => Yii::t('app', 'Bạn có chắc chắn xóa nhóm quyền này?'),
                            'data-method' => 'post',
                            'data-pjax' => '0',
                        ]);

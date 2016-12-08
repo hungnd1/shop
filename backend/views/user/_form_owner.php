@@ -27,16 +27,16 @@ $formId = $form->id;
 ?>
 <div class="form-body">
     <?= $form->field($model, 'username')->textInput(['readonly' => true]) ?>
-    <?= $form->field($model, 'email')->textInput(['placeholder' => 'Email', 'maxlength' => 100]) ?>
-    <?= $form->field($model, 'fullname')->textInput(['placeholder' => 'Họ và tên', 'maxlength' => 255]) ?>
+    <?= $form->field($model, 'email')->textInput(['placeholder' => Yii::t('app','Email'), 'maxlength' => 100]) ?>
+    <?= $form->field($model, 'fullname')->textInput(['placeholder' => Yii::t('app','Họ và tên'), 'maxlength' => 255]) ?>
 </div>
 
 <div class="form-actions">
     <div class="row">
         <div class="col-md-offset-3 col-md-9">
-            <?= Html::submitButton('Cập nhật',
+            <?= Html::submitButton(Yii::t('app','Cập nhật'),
                 ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Hủy thao tác', ['view', 'id' => $model->id],
+            <?= Html::a(Yii::t('app','Hủy thao tác'), ['view', 'id' => $model->id],
                 ['class' => 'btn btn-default', 'data-dismiss' => 'modal']) ?>
         </div>
     </div>

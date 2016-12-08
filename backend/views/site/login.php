@@ -7,7 +7,7 @@ use kartik\form\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model LoginForm */
 
-$this->title = 'Login';
+$this->title =Yii::t('app', 'Đăng nhập');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -40,6 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <label class="checkbox">
         <?= $form->field($model, 'rememberMe')->checkbox(['class' => 'checker']) ?>
     </label>
-    <?= Html::submitButton('Đăng nhập <i class="m-icon-swapright m-icon-white"></i>', ['class' => 'btn green-haze pull-right', 'name' => 'login-button']) ?>
+    <?= Html::submitButton(Yii::t('app','Đăng nhập').'<i class="m-icon-swapright m-icon-white"></i>', ['class' => 'btn green-haze pull-right', 'name' => 'login-button']) ?>
 </div>
 <?php ActiveForm::end(); ?>

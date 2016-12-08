@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\VoucherSearch */
+/* @var $model common\models\SubcriberSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="voucher-search">
+<div class="subcriber-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,15 +17,29 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'user_name') ?>
 
-    <?= $form->field($model, 'sale') ?>
+    <?= $form->field($model, 'full_name') ?>
+
+    <?= $form->field($model, 'gender') ?>
 
     <?= $form->field($model, 'status') ?>
 
-    <?= $form->field($model, 'start_date') ?>
+    <?php // echo $form->field($model, 'auth_key') ?>
 
-    <?php // echo $form->field($model, 'end_date') ?>
+    <?php // echo $form->field($model, 'password_hash') ?>
+
+    <?php // echo $form->field($model, 'password_reset_token') ?>
+
+    <?php // echo $form->field($model, 'email') ?>
+
+    <?php // echo $form->field($model, 'address') ?>
+
+    <?php // echo $form->field($model, 'phone') ?>
+
+    <?php // echo $form->field($model, 'birthday') ?>
+
+    <?php // echo $form->field($model, 'about') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

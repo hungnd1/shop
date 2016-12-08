@@ -80,7 +80,7 @@ class CredentialController extends BaseBEController
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Tạo api key client ' . $model->client_name . ' success!');
+            Yii::$app->session->setFlash('success', Yii::t('app','Tạo api key client ' . $model->client_name . ' thành công!'));
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('create', [
@@ -104,7 +104,7 @@ class CredentialController extends BaseBEController
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Cập nhật api key client ' . $model->client_name . ' success!');
+            Yii::$app->session->setFlash('success',Yii::t('app', 'Cập nhật api key client ' . $model->client_name . ' thành công!'));
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('update', [
@@ -122,9 +122,9 @@ class CredentialController extends BaseBEController
     {
         $model = $this->findModel($id);
         if($model->delete()){
-            Yii::$app->session->setFlash('success', 'Xóa api key client ' . $model->client_name . ' success!');
+            Yii::$app->session->setFlash('success', Yii::t('app','Xóa api key client ' . $model->client_name . ' thành công!'));
         }else{
-            Yii::$app->session->setFlash('error', 'Xóa api key client ' . $model->client_name . ' không thành công!');
+            Yii::$app->session->setFlash('error', Yii::t('app','Xóa api key client ' . $model->client_name . ' không thành công!'));
         }
         return $this->redirect(['index']);
     }
@@ -141,7 +141,7 @@ class CredentialController extends BaseBEController
         if (($model = SiteApiCredential::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app','Không tìm thấy trang yêu cầu'));
         }
     }
 }

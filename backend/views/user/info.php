@@ -8,7 +8,7 @@ use common\models\User;
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
 
-$this->title = "Thông tin tài khoản";
+$this->title = Yii::t('app',"Thông tin tài khoản");
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -24,17 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['attribute'=>'username', 'format'=>'raw', 'value'=>'<kbd>'.$model->username.'</kbd>', 'displayOnly'=>true],
                         [
                             'attribute' => 'type',
-//                            'label' => 'Loại người dùng',
                             'format' => 'html',
                             'value' =>  $model->getTypeName(),
                         ],
                         'fullname',
                         'email:email',
-
-//                        'role',
                         [
                             'attribute'=>'status',
-                            'label'=>'Trạng thái',
                             'format'=>'raw',
                             'value'=>($model->status ==User::STATUS_ACTIVE)  ?
                                 '<span class="label label-success">'.$model->getStatusName().'</span>' :
@@ -48,21 +44,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]
                         ],
                         [
-                            'label' => 'Nhóm quyền',
+                            'label' => Yii::t('app','Nhóm quyền'),
                             'format' => 'html',
                             'value' =>  $model->getRolesName(),
                         ],
-//                        [                      // the owner name of the model
-//                            'attribute'=>'created_at',
-//                            'label' => 'Ngày tham gia',
-//                            'value' => date('d/m/Y H:i:s',$model->created_at),
-//                        ],
-//                        [                      // the owner name of the model
-//                            'attribute'=>'updated_at',
-//                            'label' => 'Ngày thay đổi thông tin',
-//                            'value' => date('d/m/Y H:i:s',$model->updated_at),
-//                        ],
-
                     ],
                 ]) ?>
 
@@ -72,8 +57,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php
                             Modal::begin([
                                 'header' => '<h4>Cập nhật</h4>',
-                                'toggleButton' => ['label' => 'Cập nhật', 'class' => 'btn btn-success'],
-                                'closeButton' => ['label' => 'Hủy thao tác']
+                                'toggleButton' => ['label' => Yii::t('app','Cập nhật'), 'class' => 'btn btn-success'],
+                                'closeButton' => ['label' => Yii::t('app','Hủy thao tác')]
                             ]);
                             echo $this->render('_form_owner', ['model' => $model]);
                             Modal::end();
@@ -81,14 +66,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php
                             Modal::begin([
                                 'header' => '<h4>Đổi mật khẩu</h4>',
-                                'toggleButton' => ['label' => 'Đổi mật khẩu', 'class' => 'btn btn-success'],
+                                'toggleButton' => ['label' => Yii::t('app','Đổi mật khẩu'), 'class' => 'btn btn-success'],
                                 'id' => "cuongvm",
-                                'closeButton' => ['label' => 'Hủy thao tác'],
+                                'closeButton' => ['label' => Yii::t('app','Hủy thao tác')],
                             ]);
                             echo $this->render('_form_owner_change_password', ['model' => $model]);
                             Modal::end();
                             ?>
-                            <?= Html::a('Hủy thao tác', ['index'], ['class' => 'btn btn-default']) ?>
+                            <?= Html::a(Yii::t('app','Hủy thao tác'), ['index'], ['class' => 'btn btn-default']) ?>
                         </div>
                     </div>
                 </div>

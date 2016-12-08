@@ -47,8 +47,8 @@ $showPreview = !$model->isNewRecord && !empty($model->images);
     ]); ?>
     <div class="row">
         <div class="form-group field-content-price" style="padding-left: 27%;color: red;font-size: 15px;">
-            <p>Ảnh danh mục cấp 1 có ảnh tỉ lệ 1.2 chính xác 16x13 </p>
-            <p>Yêu cầu up nội dung chính xác.</p>
+            <p><?= Yii::t('app','Ảnh danh mục cấp 1 có ảnh tỉ lệ 1.2 chính xác 16x13') ?> </p>
+            <p><?= Yii::t('app','Yêu cầu up nội dung chính xác.') ?></p>
         </div>
     </div>
     <br><br>
@@ -56,7 +56,7 @@ $showPreview = !$model->isNewRecord && !empty($model->images);
         \common\models\Category::getListStatus(), ['class' => 'input-circle']
     ) ?>
     <?php $listCheckbox = \common\models\Category::$getListType; ?>
-    <?= $form->field($model, 'type')->dropDownList($listCheckbox)->label('Vị trí menu') ?>
+    <?= $form->field($model, 'type')->dropDownList($listCheckbox)->label(Yii::t('app','Vị trí menu')) ?>
     ?>
     <?php
     $dataList = \common\models\Category::getTreeCategories();
@@ -66,7 +66,7 @@ $showPreview = !$model->isNewRecord && !empty($model->images);
     }
     echo $form->field($model, 'parent_id')->dropDownList($dataList,
         [
-            'prompt' => '-Chọn nhóm cha-',
+            'prompt' => Yii::t('app','-Chọn nhóm cha-'),
             'options' => \common\models\Category::getAllChildCats( $model->id) + [$model->id => ['disabled' => true]]
         ]);
     ?>
@@ -76,9 +76,9 @@ $showPreview = !$model->isNewRecord && !empty($model->images);
 <div class="form-actions">
     <div class="row">
         <div class="col-md-offset-3 col-md-9">
-            <?= Html::submitButton($model->isNewRecord ? 'Tạo danh mục' : 'Cập nhật',
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('app','Tạo danh mục') : Yii::t('app','Cập nhật'),
                 ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            <?= Html::a('Quay lại', ['index'], ['class' => 'btn btn-default']) ?>
+            <?= Html::a(Yii::t('app','Quay lại'), ['index'], ['class' => 'btn btn-default']) ?>
         </div>
     </div>
 </div>

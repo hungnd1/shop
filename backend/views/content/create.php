@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Content */
 
-$this->title = 'Tạo nội dung';
+$this->title = Yii::t('app','Tạo nội dung');
 $this->params['breadcrumbs'][] = ['label' => 'Nội dung', 'url' => Yii::$app->urlManager->createUrl(['content/index'])];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="portlet box green">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-gift"></i>Tạo nội dung
+                    <i class="fa fa-gift"></i><?= $this->title ?>
                 </div>
             </div>
             <div class="portlet-body form">

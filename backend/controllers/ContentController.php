@@ -71,10 +71,10 @@ class ContentController extends BaseBEController
                         $description = 'UPDATE STATUS CONTENT';
                         $ip_address = CUtils::clientIP();
 
-                        echo \yii\helpers\Json::encode(['output' => '', 'message' => 'Dữ liệu không hợp lệ']);
+                        echo \yii\helpers\Json::encode(['output' => '', 'message' => Yii::t('app','Dữ liệu không hợp lệ')]);
                     }
                 } else {
-                    echo \yii\helpers\Json::encode(['output' => '', 'message' => 'Danh mục không tồn tại']);
+                    echo \yii\helpers\Json::encode(['output' => '', 'message' => Yii::t('app','Danh mục không tồn tại')]);
                 }
             } // else if nothing to do always return an empty JSON encoded output
             else {
@@ -194,11 +194,11 @@ class ContentController extends BaseBEController
                     //end screenshoot
                 }
                 // tao log
-                \Yii::$app->getSession()->setFlash('success', 'Lưu Content thành công');
+                \Yii::$app->getSession()->setFlash('success', Yii::t('app','Lưu Content thành công'));
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 Yii::info($model->getErrors());
-                \Yii::$app->getSession()->setFlash('error', 'Lưu Content thất bại');
+                \Yii::$app->getSession()->setFlash('error', Yii::t('app','Lưu Content thất bại'));
             }
         }
         $selectedCats = explode(',', $model->list_cat_id);
@@ -313,12 +313,12 @@ class ContentController extends BaseBEController
 
                 // tao log
 
-                \Yii::$app->getSession()->setFlash('success', 'Cập nhật Content thành công');
+                \Yii::$app->getSession()->setFlash('success', Yii::t('app','Cập nhật Content thành công'));
 
                 return $this->redirect(['view', 'id' => $model->id]);
 
             } else {
-                \Yii::$app->getSession()->setFlash('error', 'Cập nhật Content thất bại');
+                \Yii::$app->getSession()->setFlash('error', Yii::t('app','Cập nhật Content thất bại'));
 
             }
         }
@@ -441,7 +441,7 @@ class ContentController extends BaseBEController
         if (($model = Content::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app','Không tìm thấy trang'));
         }
     }
 
@@ -494,11 +494,11 @@ class ContentController extends BaseBEController
         }
 
         if (!in_array($checkExt, $allowExt)) {
-            return ['success' => false, 'error' => "Ảnh không đúng định dạng"];
+            return ['success' => false, 'error' => Yii::t('app',"Ảnh không đúng định dạng")];
         }
 
         if ($size > Content::MAX_SIZE_UPLOAD) {
-            return ['success' => false, 'error' => "Ảnh vượt quá dung lượng cho phép"];
+            return ['success' => false, 'error' => Yii::t('app',"Ảnh vượt quá dung lượng cho phép")];
         }
 
         if (move_uploaded_file($files['tmp_name']["$attribute"][0], $target)) {
@@ -567,12 +567,12 @@ class ContentController extends BaseBEController
 
             return [
                 'success' => true,
-                'message' => 'Duyệt ' . $count . ' content thành công!',
+                'message' => Yii::t('app','Duyệt ' . $count . ' content thành công!'),
             ];
         } else {
             return [
                 'success' => false,
-                'message' => 'Không tìm thấy content trên hệ thống',
+                'message' => Yii::t('app','Không tìm thấy content trên hệ thống'),
             ];
         }
     }
@@ -596,16 +596,16 @@ class ContentController extends BaseBEController
                 }
             }
 
-            $successMess = $newStatus == Content::STATUS_DELETE ? 'Xóa' : 'Cập nhật';
+            $successMess = $newStatus == Content::STATUS_DELETE ? Yii::t('app','Xóa') : Yii::t('app','Cập nhật');
 
             return [
                 'success' => true,
-                'message' => $successMess . ' ' . $count . ' content thành công!',
+                'message' => $successMess . ' ' . $count .Yii::t('app', ' content thành công!'),
             ];
         } else {
             return [
                 'success' => false,
-                'message' => 'Không thành công. Vui lòng thử',
+                'message' => Yii::t('app','Không thành công. Vui lòng thử'),
             ];
         }
     }

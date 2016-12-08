@@ -10,7 +10,7 @@ use yii\helpers\Html;
 /* @var $searchModel common\models\SlideSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Slide Contents');
+$this->title = Yii::t('app', 'Quản lý Slide');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -65,14 +65,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 /**
                                  * @var $model \common\models\Slide
                                  */
-                                return Slide::$slide_status[$model->status];
+                                return $model->getSlideStatusName();
                             },
                             'filterType' => GridView::FILTER_SELECT2,
-                            'filter' => Slide::$slide_status,
+                            'filter' => Slide::getSlideStatus(),
                             'filterWidgetOptions' => [
                                 'pluginOptions' => ['allowClear' => true],
                             ],
-                            'filterInputOptions' => ['placeholder' => Yii::t('app', 'All')],
+                            'filterInputOptions' => ['placeholder' => Yii::t('app', 'Tất cả')],
                         ],
                         [
                             'class' => 'kartik\grid\ActionColumn',

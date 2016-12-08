@@ -202,7 +202,7 @@ class SlideController extends Controller
         if (($model = Slide::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('Slide không tồn tại');
+            throw new NotFoundHttpException(Yii::t('app','Slide không tồn tại'));
         }
     }
 }

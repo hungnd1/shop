@@ -98,7 +98,7 @@ class RbacBackendController extends \yii\web\Controller
         if (($model = AuthItem::findOne(['name' => $name, 'type' => AuthItem::TYPE_PERMISSION])) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app','Không tồn tại trang yêu cầu'));
         }
     }
 
@@ -112,7 +112,7 @@ class RbacBackendController extends \yii\web\Controller
         if (($model = AuthItem::findOne(['name' => $name, 'type' => AuthItem::TYPE_ROLE])) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app','Không tồn tại trang yêu cầu'));
         }
     }
 
@@ -132,7 +132,7 @@ class RbacBackendController extends \yii\web\Controller
                 Yii::error($model->getErrors());
             }
             else {
-                \Yii::$app->getSession()->setFlash('success', 'Tạo 01 quyền thành công');
+                \Yii::$app->getSession()->setFlash('success', Yii::t('app','Tạo 01 quyền thành công'));
                 return $this->redirect(['view-permission', 'name' => $model->name]);
             }
         }
@@ -181,7 +181,7 @@ class RbacBackendController extends \yii\web\Controller
             if (!$model->save()) {
                 Yii::error($model->getErrors());
             } else {
-                \Yii::$app->getSession()->setFlash('success', 'Cập nhật 01 quyền thành công');
+                \Yii::$app->getSession()->setFlash('success', Yii::t('app','Cập nhật 01 quyền thành công'));
                 return $this->redirect(['view-permission', 'name' => $model->name]);
             }
         }
@@ -204,7 +204,7 @@ class RbacBackendController extends \yii\web\Controller
             if (!$model->save()) {
                 Yii::error($model->getErrors());
             } else {
-                \Yii::$app->getSession()->setFlash('success', 'Cập nhật thành công');
+                \Yii::$app->getSession()->setFlash('success',Yii::t('app','Cập nhật thành công'));
                 return $this->redirect(['view-role', 'name' => $model->name]);
             }
         }
@@ -233,7 +233,7 @@ class RbacBackendController extends \yii\web\Controller
     {
         $this->findRole($name)->delete();
 
-        \Yii::$app->getSession()->setFlash('success', 'Xóa thành công');
+        \Yii::$app->getSession()->setFlash('success', Yii::t('app','Xóa thành công'));
         return $this->redirect(['role']);
     }
 
@@ -293,7 +293,7 @@ class RbacBackendController extends \yii\web\Controller
             }
             return [
                 'success' => true,
-                'message' => "Tạo ".$count." quyền thành công!"
+                'message' => Yii::t('app',"Tạo ".$count." quyền thành công!")
             ];
         } else {
             return [
@@ -319,7 +319,7 @@ class RbacBackendController extends \yii\web\Controller
             }
             return [
                 'success' => true,
-                'message' => "Tạo ".$count." chức danh thành công!"
+                'message' =>Yii::t('app',"Tạo ".$count." chức danh thành công!")
             ];
         } else {
             return [
@@ -341,7 +341,7 @@ class RbacBackendController extends \yii\web\Controller
         $post = Yii::$app->request->post();
 
         $success = false;
-        $message = "Tham số không đúng";
+        $message = Yii::t('app',"Tham số không đúng");
 
         if (isset($post['parent']) && isset($post['child'])) {
             $parent = $post['parent'];
@@ -351,12 +351,12 @@ class RbacBackendController extends \yii\web\Controller
             if ($mapping) {
                 if ($mapping->delete()) {
                     $success = true;
-                    $message = "Đã xóa quyền '$child' khỏi nhóm quyền '$parent'!";
+                    $message = Yii::t('app',"Đã xóa quyền '$child' khỏi nhóm quyền '$parent'!");
                 } else {
-                    $message = "Lỗi hệ thống, vui lòng thử lại sau";
+                    $message =Yii::t('app', "Lỗi hệ thống, vui lòng thử lại sau");
                 }
             } else {
-                $message = "Quyền '$child' không có trong nhóm quyền '$parent'!";
+                $message = Yii::t('app',"Quyền '$child' không có trong nhóm quyền '$parent'!");
             }
 
         }
@@ -379,7 +379,7 @@ class RbacBackendController extends \yii\web\Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $success = false;
-        $message = "Quyền/nhóm quyền không tồn tại'";
+        $message = Yii::t('app',"Quyền/nhóm quyền không tồn tại'");
 
         if ($model) {
             $post = Yii::$app->request->post();
@@ -401,7 +401,7 @@ class RbacBackendController extends \yii\web\Controller
 
                 if ($count >0) {
                     $success = true;
-                    $message = "Đã thêm $count quyền/nhóm quyền vào nhóm '$name'";
+                    $message = Yii::t('app',"Đã thêm $count quyền/nhóm quyền vào nhóm '$name'");
 
                 }
             }

@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
 
-$this->title = 'Tạo người dùng';
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý người dùng', 'url' => ['index']];
+$this->title = Yii::t('app','Tạo người dùng');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Quản lý người dùng'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">

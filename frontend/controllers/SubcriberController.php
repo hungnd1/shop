@@ -2,10 +2,13 @@
 
 namespace frontend\controllers;
 
+use api\models\Subscriber;
+use common\models\Subcriber;
 use DateTime;
 use Yii;
 use common\models\User;
 use common\models\UserSearch;
+use yii\behaviors\TimestampBehavior;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Response;
@@ -15,23 +18,33 @@ use yii\widgets\ActiveForm;
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends Controller
+class SubcriberController extends Controller
 {
     public function actionInfo()
     {
         $id = Yii::$app->user->id;
-        $model = User::findOne($id);
+        $model = Subcriber::findOne($id);
         return $this->render('info',[
             'model'=>$model
         ]);
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+            ],
+        ];
+    }
 
     public function actionUpdate()
     {
         $id = Yii::$app->user->id;
 
-        $model = User::find()->andWhere(['id'=>$id])->andWhere(['status' => User::STATUS_ACTIVE])->one();
+        $model = Subcriber::find()->andWhere(['id'=>$id])->andWhere(['status' => Subcriber::STATUS_ACTIVE])->one();
         /* @var $model User */
         if(!$model){
             throw  new BadRequestHttpException('Người dùng không tồn tại');

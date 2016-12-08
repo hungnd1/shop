@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $searchModel common\models\CategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Quản lý danh mục ';
+$this->title = Yii::t('app','Quản lý danh mục ');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-cogs font-green-sharp"></i>
-                    <span class="caption-subject font-green-sharp bold uppercase">Quản lý danh mục</span>
+                    <span class="caption-subject font-green-sharp bold uppercase"><?= $this->title ?></span>
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'class' => '\kartik\grid\DataColumn',
                             'attribute' => 'path_name',
-                            'label' => 'Tên danh mục',
+                            'label' => Yii::t('app','Tên danh mục'),
                             'value'=>function ($model, $key, $index, $widget) {
                                 /** @var $model \common\models\Category */
                                 return $model->path_name;
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'class' => '\kartik\grid\DataColumn',
                             'format'=>'raw',
-                            'label'=>'Ảnh đại diện',
+                            'label'=>Yii::t('app','Ảnh đại diện'),
                             'attribute' => 'images',
                             'value'=>function ($model, $key, $index, $widget) {
                                 /** @var $model \common\models\Category */
@@ -59,11 +59,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'class' => 'kartik\grid\EditableColumn',
                             'attribute' => 'status',
-                            'label'=>'Trạng thái',
                             'refreshGrid' => true,
                             'editableOptions' => function ($model, $key, $index) {
                                 return [
-                                    'header' => 'Trạng thái',
+                                    'header' => Yii::t('app','Trạng thái'),
                                     'size' => 'md',
                                     'displayValueConfig' => $model->listStatus,
                                     'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
@@ -76,12 +75,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             'filterWidgetOptions' => [
                                 'pluginOptions' => ['allowClear' => true],
                             ],
-                            'filterInputOptions' => ['placeholder' => 'Tất cả'],
+                            'filterInputOptions' => ['placeholder' => Yii::t('app','Tất cả')],
                         ],
                         [
 
                             'format'=>'raw',
-                            'label'=>'Sắp xếp',
+                            'label'=>Yii::t('app','Sắp xếp'),
                             'attribute' => 'order_number',
                             'value'=>function ($model, $key, $index, $widget) {
                                 /** @var $model \common\models\Category */
@@ -110,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'delete' => function ($url, $model) {
                                     return Html::a('<span class="glyphicon glyphicon-trash"></span>', Yii::$app->urlManager->createUrl(['category/delete','id'=>$model->id]), [
                                         'title' => Yii::t('yii', 'Delete'),
-                                        'data-confirm' => Yii::t('yii', 'Bạn có chắc chắn xóa danh mục này?'),
+                                        'data-confirm' => Yii::t('app', 'Bạn có chắc chắn xóa danh mục này?'),
                                         'data-method' => 'post',
                                         'data-pjax' => '0',
                                     ]);

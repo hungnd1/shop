@@ -15,9 +15,10 @@ ToastAsset::register($this);
 ToastAsset::config($this, [
     'positionClass' => ToastAsset::POSITION_BOTTOM_RIGHT
 ]);
+$m1 = Yii::t('app','Bạn có chắc chắn muốn xóa ảnh này không');
 $js = <<<JS
     function deleteImage(data){
-        var allow = confirm("Bạn có chắc chắn muốn xóa ảnh này không");
+        var allow = confirm('{$m1}');
         if(allow){
             var url = jQuery(data).attr('href');
             jQuery.get(url)

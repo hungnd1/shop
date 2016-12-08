@@ -33,10 +33,10 @@ class ReportRevenuesForm extends Model
         return [
             [['from_date', 'to_date', 'content', 'site_id', 'service_id', 'to_month', 'from_month', 'type'], 'safe'],
             [['from_date'], 'required',
-                'message' => 'Thông tin không hợp lệ, Ngày bắt đầu không được để trống',
+                'message' =>Yii::t('app','Thông tin không hợp lệ, Ngày bắt đầu không được để trống'),
             ],
             [['to_date'], 'required',
-                'message' => 'Thông tin không hợp lệ, Ngày kết thúc không được để trống',
+                'message' =>Yii::t('app', 'Thông tin không hợp lệ, Ngày kết thúc không được để trống'),
             ],
         ];
     }
@@ -44,13 +44,13 @@ class ReportRevenuesForm extends Model
     public function attributeLabels()
     {
         return [
-            'to_date' => 'Đến ngày',
-            'from_date' => 'Từ ngày',
-            'service_id' => 'Gói cước',
-            'to_month' => 'Đến tháng',
-            'from_month' => 'Từ tháng',
-            'type' => 'Loại báo cáo',
-            'site_id' => 'Nhà cung cấp dịch vụ'
+            'to_date' => Yii::t('app','Đến ngày'),
+            'from_date' =>Yii::t('app', 'Từ ngày'),
+            'service_id' =>Yii::t('app', 'Gói cước'),
+            'to_month' => Yii::t('app','Đến tháng'),
+            'from_month' => Yii::t('app','Từ tháng'),
+            'type' => Yii::t('app','Loại báo cáo'),
+            'site_id' => Yii::t('app','Nhà cung cấp dịch vụ')
         ];
     }
 

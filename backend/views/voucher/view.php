@@ -8,7 +8,7 @@ use kartik\detail\DetailView;
 /* @var $model common\models\Voucher */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Vouchers', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Quản lý Vouchers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attributes' => [
                         'id',
                         [
-                            'label' => 'Ảnh đại diện',
+                            'label' => Yii::t('app','Ảnh đại diện'),
                             'format' => 'html',
                             'value' => $model->image?Html::img(Yii::getAlias('@web') . "/" . Yii::getAlias('@voucher_image') . "/" .$model->image, ['width' => '200px']):'',
                         ],
@@ -52,7 +52,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [
                             'attribute' => 'status',
-                            'label' => 'Trạng thái',
                             'format' => 'raw',
                             'value' => ($model->status == Voucher::STATUS_ACTIVE) ?
                                 '<span class="label label-success">' . $model->getStatusName() . '</span>' :
@@ -75,12 +74,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [                      // the owner name of the model
                             'attribute' => 'created_at',
-                            'label' => 'Ngày tham gia',
                             'value' => date('d/m/Y H:i:s', $model->created_at),
                         ],
                         [                      // the owner name of the model
                             'attribute' => 'updated_at',
-                            'label' => 'Ngày thay đổi thông tin',
                             'value' => date('d/m/Y H:i:s', $model->updated_at),
                         ],
                     ],

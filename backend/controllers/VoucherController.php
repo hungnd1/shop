@@ -79,7 +79,7 @@ class VoucherController extends Controller
             }
 
             if ($finished_at < $started_at) {
-                Yii::$app->getSession()->setFlash('error', 'Ngày kết thúc không được nhỏ hơn ngày bắt đầu');
+                Yii::$app->getSession()->setFlash('error',Yii::t('app', 'Ngày kết thúc không được nhỏ hơn ngày bắt đầu'));
                 return $this->render('create', [
                     'model' => $model,
                 ]);
@@ -90,7 +90,7 @@ class VoucherController extends Controller
                 if ($thumbnail->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@voucher_image') . "/" . $file_name)) {
                     $model->image = $file_name;
                 } else {
-                    Yii::$app->getSession()->setFlash('error', 'Không thành công, vui lòng thử lại');
+                    Yii::$app->getSession()->setFlash('error',Yii::t('app','Không thành công, vui lòng thử lại'));
                     return $this->render('create', [
                         'model' => $model,
                     ]);
@@ -99,12 +99,12 @@ class VoucherController extends Controller
             $model->start_date = $started_at;
             $model->end_date = $finished_at;
             if ($model->save()) {
-                Yii::$app->getSession()->setFlash('success', ' Thêm mới voucher thành công');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app',' Thêm mới voucher thành công'));
                 $this->redirect(['view', 'id' => $model->id]);
 
             } else {
                 Yii::error($model->getErrors());
-                Yii::$app->getSession()->setFlash('error', 'Không thành công, vui lòng thử lại');
+                Yii::$app->getSession()->setFlash('error',Yii::t('app', 'Không thành công, vui lòng thử lại'));
             }
         } else {
             return $this->render('create', [
@@ -135,7 +135,7 @@ class VoucherController extends Controller
             }
 
             if ($finished_at < $started_at) {
-                Yii::$app->getSession()->setFlash('error', 'Ngày kết thúc không được nhỏ hơn ngày bắt đầu');
+                Yii::$app->getSession()->setFlash('error', Yii::t('app','Ngày kết thúc không được nhỏ hơn ngày bắt đầu'));
                 return $this->render('create', [
                     'model' => $model,
                 ]);
@@ -146,7 +146,7 @@ class VoucherController extends Controller
                 if ($thumbnail->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@voucher_image') . "/" . $file_name)) {
                     $model->image = $file_name;
                 } else {
-                    Yii::$app->getSession()->setFlash('error', 'Không thành công, vui lòng thử lại');
+                    Yii::$app->getSession()->setFlash('error', Yii::t('app','Không thành công, vui lòng thử lại'));
                     return $this->render('create', [
                         'model' => $model,
                     ]);
@@ -155,12 +155,12 @@ class VoucherController extends Controller
             $model->start_date = $started_at;
             $model->end_date = $finished_at;
             if ($model->save()) {
-                Yii::$app->getSession()->setFlash('success', ' Cập nhật mới voucher thành công');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app',' Cập nhật mới voucher thành công'));
                 $this->redirect(['view', 'id' => $model->id]);
 
             } else {
                 Yii::error($model->getErrors());
-                Yii::$app->getSession()->setFlash('error', 'Không thành công, vui lòng thử lại');
+                Yii::$app->getSession()->setFlash('error',Yii::t('app', 'Không thành công, vui lòng thử lại'));
             }
         } else {
             return $this->render('update', [
@@ -194,7 +194,7 @@ class VoucherController extends Controller
         if (($model = Voucher::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app','Không tồn tại trang yêu cầu'));
         }
     }
 }

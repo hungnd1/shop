@@ -19,7 +19,7 @@ use common\models\AuthRule;
 
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Tạo' : 'Cập nhật',
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app','Tạo') : Yii::t('app','Cập nhật'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

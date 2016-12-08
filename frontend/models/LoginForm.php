@@ -1,7 +1,7 @@
 <?php
 namespace frontend\models;
 
-use common\models\Subscriber;
+use common\models\Subcriber;
 use common\models\User;
 use Yii;
 use yii\base\Model;
@@ -83,7 +83,7 @@ class LoginForm extends Model
     {
         if ($this->_user === false) {
 //            $this->_user = User::findSPByUsername($this->username);
-            $this->_user = User::findOne(['username' => $this->username]);
+            $this->_user = Subcriber::findOne(['username' => $this->username]);
         }
 
         return $this->_user;

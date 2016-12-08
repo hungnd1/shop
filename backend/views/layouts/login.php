@@ -12,6 +12,7 @@ AppAsset::register($this);
 MetronicLoginAsset::register($this);
 $this->registerJs("Metronic.init();");
 $this->registerJs("Layout.init();");
+$tilte = Yii::t('app',"Shop - Đăng nhập");
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -23,7 +24,7 @@ $this->registerJs("Layout.init();");
     <meta content="" name="description"/>
     <meta content="" name="author"/>
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= $tilte ?></title>
     <?php $this->head() ?>
 </head>
 <body class="login">

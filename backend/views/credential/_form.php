@@ -66,9 +66,9 @@ $this->registerJs('updateForm();',View::POS_READY);
 <div class="form-actions">
     <div class="row">
         <div class="col-md-offset-3 col-md-9">
-            <?= Html::submitButton($model->isNewRecord ? 'Tạo API Key' : 'Cập nhật',
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('app','Tạo API Key') : Yii::t('app','Cập nhật'),
                 ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            <?= Html::a('Quay lại', ['index'], ['class' => 'btn btn-default']) ?>
+            <?= Html::a(Yii::t('app','Quay lại'), ['index'], ['class' => 'btn btn-default']) ?>
         </div>
     </div>
 </div>

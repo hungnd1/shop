@@ -82,7 +82,7 @@ $this->registerJs($js, View::POS_END);
     </div>
 
     <div class="portlet-body">
-        <h3 class="form-section">Nhóm quyền</h3>
+        <h3 class="form-section"><?= Yii::t('app','Nhóm quyền') ?></h3>
         <?= GridView::widget([
             'id' => $authItemGridId,
             'dataProvider' => $model->getAuthItemProvider(AuthItem::ACC_TYPE_BACKEND),
@@ -128,7 +128,7 @@ $this->registerJs($js, View::POS_END);
                         'revoke' => function ($url, $model1, $key) {
                             return Html::button('<i class="glyphicon glyphicon-remove-circle"></i> Xóa quyền', [
                                 'type' => 'button',
-                                'title' => 'Xóa quyền',
+                                'title' => Yii::t('app','Xóa quyền'),
                                 'class' => 'btn btn-danger',
                                 'onclick' => "revokeItem('$model1->name');"
                             ]);
@@ -155,7 +155,7 @@ $this->registerJs($js, View::POS_END);
                     'name' => 'addItems',
                     'data' => $data,
                     'options' => [
-                        'placeholder' => 'Chọn...',
+                        'placeholder' => Yii::t('app','Chọn...'),
                         'multiple' => true,
                     ],
                 ]);
@@ -163,7 +163,7 @@ $this->registerJs($js, View::POS_END);
         </div>
 
         <div class="form-group">
-            <?= Html::submitButton('Thêm quyền',['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton(Yii::t('app','Thêm quyền'),['class' => 'btn btn-primary']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

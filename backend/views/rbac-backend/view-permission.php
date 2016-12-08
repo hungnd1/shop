@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\AuthItem */
 
 $this->title =  $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý quyền backend', 'url' => ['permission']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Quản lý quyền backend'), 'url' => ['permission']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('Xóa', ['delete-permission', 'name' => $model->name], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => 'Are you sure you want to delete this item?',
+                    'confirm' => Yii::t('app','Bạn chắc chắn muốn xóa?'),
                     'method' => 'post',
                 ],
             ]) ?>

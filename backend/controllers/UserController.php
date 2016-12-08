@@ -200,7 +200,7 @@ class UserController extends BaseBEController
             $model->setPassword($model->password);
             $model->generateAuthKey();
             if($model->update()){
-                Yii::$app->session->setFlash('success', 'Khôi phục mật khẩu thành công');
+                Yii::$app->session->setFlash('success',Yii::t('app', 'Khôi phục mật khẩu thành công'));
                 return $this->redirect(['view', 'id' => $model->id]);
             }
             Yii::$app->getSession()->setFlash('error', Message::MSG_FAIL);
@@ -289,12 +289,12 @@ class UserController extends BaseBEController
                 $model->generateAuthKey();
                 $model->old_password = $model->new_password;
                 if($model->update()){
-                    Yii::$app->session->setFlash('success', 'Đổi mật khẩu thành công');
+                    Yii::$app->session->setFlash('success', Yii::t('app','Đổi mật khẩu thành công'));
                     return $this->redirect(['info']);
                 }
                 Yii::$app->getSession()->setFlash('error', Message::MSG_FAIL);
             }else{
-                Yii::$app->getSession()->setFlash('error', 'Mật khẩu cũ không đúng');
+                Yii::$app->getSession()->setFlash('error', Yii::t('app','Mật khẩu cũ không đúng'));
             }
 
         }
@@ -315,12 +315,12 @@ class UserController extends BaseBEController
 
         $model=$this->findModel($id);
         if($model->id == Yii::$app->user->getId()){
-            Yii::$app->session->setFlash('error', 'Bạn không thể thực hiện chức năng này!');
+            Yii::$app->session->setFlash('error',Yii::t('app', 'Bạn không thể thực hiện chức năng này!'));
             return $this->redirect(['index']);
         }
         $model->status=User::STATUS_DELETED;
         if($model->save()){
-            Yii::$app->session->setFlash('success', 'Xóa thành công');
+            Yii::$app->session->setFlash('success', Yii::t('app','Xóa thành công'));
             return $this->redirect(['index']);
         }
         var_dump($model->getFirstErrors());exit;
@@ -341,7 +341,7 @@ class UserController extends BaseBEController
         if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app','Không tìm thấy trang yêu cầu'));
         }
     }
 
@@ -365,12 +365,12 @@ class UserController extends BaseBEController
             if ($mapping) {
                 if ($mapping->delete()) {
                     $success = true;
-                    $message = "Đã xóa quyền '$item' khỏi user '$user'!";
+                    $message = Yii::t('app',"Đã xóa quyền '$item' khỏi user '$user'!");
                 } else {
-                    $message = "Lỗi hệ thống, vui lòng thử lại sau";
+                    $message = Yii::t('app',"Lỗi hệ thống, vui lòng thử lại sau");
                 }
             } else {
-                $message = "Quyền '$item' chưa được cấp cho user '$user'!";
+                $message = Yii::t('app',"Quyền '$item' chưa được cấp cho user '$user'!");
             }
 
         }
@@ -394,7 +394,7 @@ class UserController extends BaseBEController
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $success = false;
-        $message = "User/nhóm quyền không tồn tại'";
+        $message = Yii::t('app',"User/nhóm quyền không tồn tại'");
 
         if ($model) {
             $post = Yii::$app->request->post();
@@ -417,7 +417,7 @@ class UserController extends BaseBEController
 
                 if ($count >0) {
                     $success = true;
-                    $message = "Đã thêm $count nhóm quyền cho người dùng '$model->username'";
+                    $message = Yii::t('app',"Đã thêm $count nhóm quyền cho người dùng '$model->username'");
 
                 }
             }

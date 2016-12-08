@@ -10,7 +10,7 @@ use yii\helpers\Html;
 /* @var $searchModel common\models\ContentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Nội dung';
+$this->title = Yii::t('app','Nội dung');
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerJs('UITree.init();');
 
@@ -28,19 +28,20 @@ $deleteStatus = \common\models\Content::STATUS_DELETE;
 
 <?php
 $updateLink = \yii\helpers\Url::to(['content/update-status-content']);
-
+$m1 = Yii::t('app','Chưa chọn nội dung! Xin vui lòng chọn ít nhất một nội dung để cập nhật.');
+$m2 = Yii::t('app','Bạn chắc chắn muốn xóa?');
 $js = <<<JS
     function updateStatusContent(newStatus){
 
         feedbacks = $("#content-index-grid").yiiGridView("getSelectedRows");
         if(feedbacks.length <= 0){
-            alert("Chưa chọn nội dung! Xin vui lòng chọn ít nhất một nội dung để cập nhật.");
+            alert('{$m1}');
             return;
         }
         var delConfirm = true;
 
         if(newStatus == 2){
-            delConfirm = confirm('Bạn có muốn xóa không?');
+            delConfirm = confirm('{$m2}');
         }
 
         if(delConfirm){
@@ -87,14 +88,14 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
         <div class="portlet light">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-cogs font-green-sharp"></i><?= "Tìm kiếm" ?>
+                    <i class="fa fa-cogs font-green-sharp"></i><?= Yii::t('app',"Tìm kiếm") ?>
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse"> </a>
                 </div>
             </div>
             <div class="portlet-body clearfix">
-                <?= $form->field($searchModel, 'keyword')->textInput(['placeholder' => 'Tìm kiếm theo keyword', 'class' => 'input-circle']); ?>
+                <?= $form->field($searchModel, 'keyword')->textInput(['placeholder' => Yii::t('app','Tìm kiếm theo từ khóa'), 'class' => 'input-circle']); ?>
             </div>
         </div>
 
@@ -102,7 +103,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-cogs font-green-sharp"></i>
-                    <span class="caption-subject font-green-sharp bold uppercase">Danh sách danh mục</span>
+                    <span class="caption-subject font-green-sharp bold uppercase"><?= Yii::t('app','Danh sách danh mục') ?></span>
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
@@ -150,7 +151,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                 <div class="caption">
                     <i class="fa fa-cogs font-green-sharp"></i>
                     <span
-                        class="caption-subject font-green-sharp bold uppercase"> Danh sách nội dung </span>
+                        class="caption-subject font-green-sharp bold uppercase"><?= Yii::t('app','Danh sách nội dung') ?> </span>
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
@@ -187,7 +188,6 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                         'format' => 'raw',
                         'class' => '\kartik\grid\DataColumn',
                         'width' => '15%',
-                        'label' => 'Ngày tạo',
                         'filterType' => GridView::FILTER_DATE,
                         'attribute' => 'created_at',
                         'value' => function ($model) {
@@ -201,7 +201,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                         'refreshGrid' => true,
                         'editableOptions' => function ($model, $key, $index) {
                             return [
-                                'header' => 'Trạng thái',
+                                'header' => Yii::t('app','Trạng thái'),
                                 'size' => 'md',
                                 'displayValueConfig' => \common\models\Content::getListStatus('filter'),
                                 'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
@@ -218,7 +218,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                             'pluginOptions' => ['allowClear' => true],
                         ],
 
-                        'filterInputOptions' => ['placeholder' => 'Tất cả'],
+                        'filterInputOptions' => ['placeholder' => Yii::t('app','Tất cả')],
                     ],
 
                 ];
@@ -231,7 +231,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                             return Html::a('<span class="glyphicon glyphicon-trash"></span>',
                                 Yii::$app->urlManager->createUrl(['content/delete', 'id' => $model->id]), [
                                     'title' => Yii::t('yii', 'Delete'),
-                                    'data-confirm' => Yii::t('yii', 'Bạn có chắc chắn xóa nội dung này?'),
+                                    'data-confirm' => Yii::t('app', 'Bạn có chắc chắn xóa nội dung này?'),
                                     'data-method' => 'post',
                                     'data-pjax' => '0',
                                 ]);
@@ -253,7 +253,7 @@ $this->registerJs($js, \yii\web\View::POS_HEAD);
                     'hover' => true,
                     'panel' => [
                         'type' => GridView::TYPE_PRIMARY,
-                        'heading' => 'Danh sách Nội dung'
+                        'heading' => Yii::t('app','Danh sách Nội dung')
                     ],
                     'toolbar' => [
                         [

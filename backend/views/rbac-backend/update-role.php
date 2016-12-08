@@ -10,8 +10,8 @@ use yii\web\View;
 /* @var $this yii\web\View */
 /* @var $model common\models\AuthItem */
 
-$this->title = 'Cập nhật nhóm quyền: ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý nhóm quyền backend', 'url' => ['role']];
+$this->title = Yii::t('app','Cập nhật nhóm quyền: ') . ' ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Quản lý nhóm quyền backend'), 'url' => ['role']];
 //$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view-role', 'name' => $model->name]];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -30,7 +30,7 @@ ToastAsset::config($this, [
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-globe"></i>
-                    Thông tin chung
+                    <?= Yii::t('app','Thông tin chung') ?>
                 </div>
             </div>
             <div class="portlet-body">
@@ -47,10 +47,12 @@ ToastAsset::config($this, [
     $childrenGridId ='rbac-role-children';
 
     $revokeUrl = \yii\helpers\Url::to(['rbac-backend/role-revoke-auth-item']);
-
+    $m1 = Yii::t('app','Bạn có thực sự muốn xóa quyền');
+    $m2 = Yii::t('app','khỏi nhóm quyền');
+    $m3 = Yii::t('app','không?');
     $js = <<<JS
 function revokeItem(item){
-    if(confirm("Bạn có thực sự muốn xóa quyền '" + item + "' khỏi nhóm quyền '" + "$model->name" + "' không?")){
+    if(confirm('{$m1}' + item + '{$m2}' + "$model->name" + '{$m3}')){
     jQuery.post(
         '{$revokeUrl}'
         ,{ parent: "$model->name", child:item}
@@ -104,7 +106,7 @@ JS;
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-globe"></i>
-                    Quyền và nhóm quyền
+                    <?= Yii::t('app','Quyền và nhóm quyền') ?>
                 </div>
             </div>
             <div class="portlet-body">
@@ -132,7 +134,7 @@ JS;
                         'description',
                     ],
                 ]); ?>
-                <h3>Quyền/nhóm quyền con</h3>
+                <h3><?= Yii::t('app','Quyền/nhóm quyền con') ?></h3>
                 <?= GridView::widget([
                     'id' => $childrenGridId,
                     'dataProvider' => $model->getChildrenProvider(),
@@ -179,7 +181,7 @@ JS;
                                 'revoke' => function ($url, $model1, $key) {
                                     return Html::button('<i class="glyphicon glyphicon-remove-circle"></i> Revoke', [
                                         'type' => 'button',
-                                        'title' => 'Xóa quyền',
+                                        'title' => Yii::t('app','Xóa quyền'),
                                         'class' => 'btn btn-danger',
                                         'onclick' => "revokeItem('$model1->name');"
                                     ]);
@@ -189,7 +191,7 @@ JS;
                     ],
                 ]); ?>
 
-                <h3>Thêm quyền/nhóm quyền con</h3>
+                <h3><?= Yii::t('app','Thêm quyền/nhóm quyền con') ?></h3>
                 <?php
 
                 $form = ActiveForm::begin([
@@ -203,12 +205,12 @@ JS;
 
                 $roles = \yii\helpers\ArrayHelper::map($model->getMissingRoles(), "name", "description");
                 $permissions = \yii\helpers\ArrayHelper::map($model->getMissingPermissions(), "name", "description");
-                $data = ["Nhóm quyền" => $roles,"Quyền" => $permissions];
+                $data = [Yii::t('app',"Nhóm quyền") => $roles,Yii::t('app',"Quyền") => $permissions];
                 echo Select2::widget([
                     'name' => 'addItems',
                     'data' => $data,
                     'options' => [
-                        'placeholder' => 'Chọn quyền/nhóm quyền ...',
+                        'placeholder' => Yii::t('app','Chọn quyền/nhóm quyền ...'),
                         'multiple' => true
                     ],
                 ]);
@@ -216,7 +218,7 @@ JS;
                 </div>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Thêm quyền',
+                    <?= Html::submitButton(Yii::t('app','Thêm quyền'),
                         ['class' => 'btn btn-primary']) ?>
                 </div>
 

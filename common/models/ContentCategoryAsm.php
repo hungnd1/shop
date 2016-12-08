@@ -45,10 +45,10 @@ class ContentCategoryAsm extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'content_id' => Yii::t('app', 'Content ID'),
-            'category_id' => Yii::t('app', 'Category ID'),
-            'description' => Yii::t('app', 'Description'),
-            'created_at' => Yii::t('app', 'Created At'),
+            'content_id' => Yii::t('app', 'ID Sản phẩm'),
+            'category_id' => Yii::t('app', 'ID Danh mục'),
+            'description' => Yii::t('app', 'Mô tả'),
+            'created_at' => Yii::t('app', 'Ngày tạo'),
         ];
     }
 

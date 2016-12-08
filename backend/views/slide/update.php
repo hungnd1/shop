@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Slide */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
+$this->title = Yii::t('app', 'Cập nhật {modelClass}: ', [
     'modelClass' => 'Slide Content',
 ]) . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'QL Slide'), 'url' => ['index']];
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Cập nhật');
         <div class="portlet box green">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-gift"></i>Cập nhật Slide
+                    <i class="fa fa-gift"></i><?= Yii::t('app','Cập nhật Slide') ?>
                 </div>
             </div>
             <div class="portlet-body form">

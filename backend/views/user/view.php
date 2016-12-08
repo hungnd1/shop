@@ -8,8 +8,8 @@ use common\models\User;
 /* @var $model common\models\User */
 /* @var $active int */
 
-$this->title = "Thông tin tài khoản";
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý người dùng', 'url' => ['index']];
+$this->title = Yii::t('app',"Thông tin tài khoản");
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Quản lý người dùng'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <ul class="nav nav-tabs ">
                         <li class="<?= ($active == 1) ? 'active' : '' ?>">
                             <a href="#tab1" data-toggle="tab" >
-                                Thông tin chung</a>
+                                <?= Yii::t('app','Thông tin chung') ?></a>
                         </li>
                         <li class=" <?= ($active == 2) ? 'active' : '' ?>">
                             <a href="#tab2" data-toggle="tab" >

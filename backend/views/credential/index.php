@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="caption">
                     <i class="fa fa-cogs font-green-sharp"></i>
                     <span
-                        class="caption-subject font-green-sharp bold uppercase">Danh sách API KEY</span>
+                        class="caption-subject font-green-sharp bold uppercase"><?= Yii::t('app','Danh sách API KEY') ?></span>
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'filterWidgetOptions' => [
                                 'pluginOptions' => ['allowClear' => true],
                             ],
-                            'filterInputOptions' => ['placeholder' => "Tất cả"],
+                            'filterInputOptions' => ['placeholder' => Yii::t('app',"Tất cả")],
                         ],
                         [
                             'class' => 'kartik\grid\ActionColumn',

@@ -77,7 +77,7 @@ $form = ActiveForm::begin([
     <div class="form-actions">
         <div class="row">
             <div class="col-md-offset-3 col-md-9">
-                <?= Html::submitButton('Cập nhật',
+                <?= Html::submitButton(Yii::t('app','Cập nhật'),
                     ['class' => 'btn btn-primary']) ?>
             </div>
         </div>

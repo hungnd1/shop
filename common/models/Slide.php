@@ -33,10 +33,23 @@ class Slide extends \yii\db\ActiveRecord
     const SLIDE_CATEGORY = 1;
     const SLIDE_HOME  = 2;
 
-    public static $slide_status = [
-        self::STATUS_ACTIVE => 'Active',
-        self::STATUS_INACTIVE => "Disable"
-    ];
+    public static function getSlideStatus()
+    {
+        $ls = [
+            self::STATUS_ACTIVE => Yii::t('app','Hoạt động'),
+            self::STATUS_INACTIVE => Yii::t('app',"Disable")
+        ];
+        return $ls;
+    }
+
+    public function getSlideStatusName()
+    {
+        $lst = self::getSlideStatus();
+        if (array_key_exists($this->status, $lst)) {
+            return $lst[$this->status];
+        }
+        return $this->status;
+    }
 
     public static function getListCategory(){
         $listCategory = Category::find()
@@ -95,7 +108,7 @@ class Slide extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'content_id','type','category_id','created_at','status','updated_at'], 'integer'],
-            [['content_id'], 'required', 'message' => 'Không được để trống sản phẩm làm Banner'],
+            [['content_id'], 'required', 'message' => Yii::t('app','Không được để trống sản phẩm làm Banner')],
             ['content_id', 'validateContent'],
             [['des'], 'string', 'max' => 4000],
         ];
@@ -108,11 +121,11 @@ class Slide extends \yii\db\ActiveRecord
         Yii::info('Validate content');
         $content = Content::findOne($this->content_id);
         if (!$content) {
-            $this->addError($attribute, 'Không tồn tại sản phẩm này');
+            $this->addError($attribute,Yii::t('app', 'Không tồn tại sản phẩm này'));
         }else{
             $images = $content->getImages();
             if(count($images) <= 0){
-                $this->addError($attribute, 'Sản phẩm không có hình ảnh');
+                $this->addError($attribute, Yii::t('app','Sản phẩm không có hình ảnh'));
             }
         }
     }
@@ -127,10 +140,10 @@ class Slide extends \yii\db\ActiveRecord
             'content_id' => Yii::t('app', 'Content ID'),
             'type' => Yii::t('app', 'Type'),
             'category_id' => Yii::t('app', 'Danh mục'),
-            'des' => Yii::t('app', 'Description'),
-            'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'des' => Yii::t('app', 'Mô tả'),
+            'status' => Yii::t('app', 'Trạng thái'),
+            'created_at' => Yii::t('app', 'Ngày tạo'),
+            'updated_at' => Yii::t('app', 'Ngày thay đổi thông tin'),
         ];
     }
 

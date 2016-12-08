@@ -20,7 +20,7 @@ use yii\helpers\ArrayHelper;
                 <div class="caption">
                     <i class="fa fa-cogs font-green-sharp"></i>
                     <span
-                        class="caption-subject font-green-sharp bold uppercase"> Danh sách Feedback</span>
+                        class="caption-subject font-green-sharp bold uppercase"> <?= Yii::t('app','Danh sách Feedback') ?></span>
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
@@ -43,18 +43,16 @@ use yii\helpers\ArrayHelper;
                     ],
                     [
                         'attribute' => 'content',
-                        'label' => 'Nhận xét',
+                        'label' => Yii::t('app','Nhận xét'),
                         'format' => 'html',
                     ],
                     [
                         'attribute' => 'created_at',
-                        'label' => 'Ngày tạo',
                         'format' => 'datetime',
                     ],
                     [
                         'class' => 'kartik\grid\EditableColumn',
                         'attribute' => 'status',
-                        'label' => 'Trạng thái',
                         'width' => '200px',
                         'refreshGrid' => true,
                         'value'=> function ($model, $key, $index, $widget) {
@@ -64,7 +62,7 @@ use yii\helpers\ArrayHelper;
                         },
                         'editableOptions' => function ($model, $key, $index) {
                             return [
-                                'header' => 'Trạng thái',
+                                'header' => Yii::t('app','Trạng thái'),
                                 'size' => 'md',
                                 'displayValueConfig' => \common\models\ContentFeedback::$listStatus,
                                 'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,

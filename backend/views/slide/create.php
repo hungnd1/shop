@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\SlideContent */
 
-$this->title = Yii::t('app', 'Create Slide Content');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Slide Contents'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Tạo Slide');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Quản lý slide'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">

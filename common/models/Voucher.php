@@ -30,8 +30,8 @@ class Voucher extends \yii\db\ActiveRecord
     public static function getListStatus()
     {
         return [
-            self::STATUS_ACTIVE   => 'Hoạt động',
-            self::STATUS_INACTIVE => 'Tạm khóa',
+            self::STATUS_ACTIVE   => Yii::t('app','Hoạt động'),
+            self::STATUS_INACTIVE => Yii::t('app','Tạm khóa'),
         ];
     }
 
@@ -69,10 +69,10 @@ class Voucher extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sale'], 'number','message'=>'Vui lòng nhập số'],
+            [['sale'], 'number','message'=>Yii::t('app','Vui lòng nhập số')],
             [['date_start','date_end'], 'safe'],
-            ['sale','required','message'=>'Sale không được để trống'],
-            ['name','required','message'=>'Tên không được để trống'],
+            ['sale','required','message'=>Yii::t('app','Sale không được để trống')],
+            ['name','required','message'=>Yii::t('app','Tên không được để trống')],
             [['status', 'start_date', 'end_date', 'created_at', 'updated_at'], 'integer'],
             [['name','image'], 'string', 'max' => 255],
         ];
@@ -84,15 +84,15 @@ class Voucher extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Tên',
-            'image' => 'Hình ảnh',
-            'sale' => 'Sale',
-            'status' => 'Trạng thái',
-            'start_date' => 'Thời gian bắt đầu',
-            'end_date' => 'Thời gian kết thúc',
-            'created_at' => 'Ngày tạo',
-            'updated_at' => 'Ngày thay đổi thông tin',
+            'id' => Yii::t('app','ID'),
+            'name' => Yii::t('app','Tên'),
+            'image' => Yii::t('app','Hình ảnh'),
+            'sale' => Yii::t('app','Sale'),
+            'status' => Yii::t('app','Trạng thái'),
+            'start_date' => Yii::t('app','Thời gian bắt đầu'),
+            'end_date' => Yii::t('app','Thời gian kết thúc'),
+            'created_at' => Yii::t('app','Ngày tạo'),
+            'updated_at' => Yii::t('app','Ngày thay đổi thông tin'),
         ];
     }
 }

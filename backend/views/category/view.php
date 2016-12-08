@@ -8,7 +8,7 @@ use kartik\detail\DetailView;
 /* @var $model common\models\Category */
 
 $this->title = $model->display_name;
-$this->params['breadcrumbs'][] = ['label' => 'Danh mục ', 'url' => Yii::$app->urlManager->createUrl(['category/index'])];
+$this->params['breadcrumbs'][] = ['label' =>Yii::t('app', 'Danh mục '), 'url' => Yii::$app->urlManager->createUrl(['category/index'])];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attributes' => [
                         'id',
                         [
-                            'label' => 'Ảnh đại diện',
+                            'label' =>Yii::t('app', 'Ảnh đại diện'),
                             'format' => 'html',
                             'value' => $model->images?Html::img(Yii::getAlias('@web') . "/" . Yii::getAlias('@category_image') . "/" .$model->images, ['width' => '200px']):'',
                         ],
@@ -49,7 +49,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'description:ntext',
                         [
                             'attribute' => 'status',
-                            'label' => 'Trạng thái',
                             'format' => 'raw',
                             'value' => ($model->status == Category::STATUS_ACTIVE) ?
                                 '<span class="label label-success">' . $model->getStatusName() . '</span>' :
@@ -64,12 +63,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [                      // the owner name of the model
                             'attribute' => 'created_at',
-                            'label' => 'Ngày tham gia',
                             'value' => date('d/m/Y H:i:s', $model->created_at),
                         ],
                         [                      // the owner name of the model
                             'attribute' => 'updated_at',
-                            'label' => 'Ngày thay đổi thông tin',
                             'value' => date('d/m/Y H:i:s', $model->updated_at),
                         ],
                     ],

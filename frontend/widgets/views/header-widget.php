@@ -50,7 +50,7 @@ use yii\widgets\ActiveForm;
                             <?php
                         }else{
                             ?>
-                            <li><a class="uppercase" href="<?= Url::to(['user/info']) ?>"><?= Yii::$app->user->identity->fullname?Yii::$app->user->identity->fullname:Yii::$app->user->identity->username ?></a></li>
+                            <li><a class="uppercase" href="<?= Url::to(['subcriber/info']) ?>"><?= Yii::$app->user->identity->fullname?Yii::$app->user->identity->fullname:Yii::$app->user->identity->username ?></a></li>
                             <li><a href="<?= Url::to(['#']) ?>">Đơn hàng</a></li>
                             <?php
                         }

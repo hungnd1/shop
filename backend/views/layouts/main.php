@@ -13,6 +13,7 @@ use yii\widgets\Breadcrumbs;
 AppAsset::register($this);
 $this->registerJs("Metronic.init();");
 $this->registerJs("Layout.init();");
+$tilte = Yii::t('app',"Shop - Trang quản trị");
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -21,7 +22,7 @@ $this->registerJs("Layout.init();");
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= $tilte ?></title>
     <?php $this->head() ?>
 </head>
 <body class="page-header-menu-fixed">
@@ -47,7 +48,7 @@ NavBar::begin([
 if (Yii::$app->user->isGuest) {
     $rightItems[] = [
         'encode' => false,
-        'label' => '<i class="icon-user"></i><span class="username username-hide-on-mobile">Đăng nhập</span>',
+        'label' => '<i class="icon-user"></i><span class="username username-hide-on-mobile">'.Yii::t('app','Đăng nhập').'</span>',
         'url' => Yii::$app->urlManager->createUrl("site/login"),
         'options' => [
             'class' => 'dropdown dropdown-user'
@@ -72,12 +73,12 @@ if (Yii::$app->user->isGuest) {
         'items' => [
             [
                 'encode' => false,
-                'label' => '<i class="icon-user"></i> Thông tin tài khoàn </a>',
+                'label' => '<i class="icon-user"></i> '.Yii::t('app','Thông tin tài khoàn').' </a>',
                 'url' => ['user/info']
             ],
             [
                 'encode' => false,
-                'label' => '<i class="icon-key"></i> Đăng xuất',
+                'label' => '<i class="icon-key"></i> '.Yii::t('app','Đăng xuất'),
                 'url' => ['/site/logout'],
                 'linkOptions' => ['data-method' => 'post'],
             ],
@@ -109,20 +110,20 @@ NavBar::begin([
 ]);
 $menuItems = [
     [
-        'label' => 'Quản lý API Keys',
+        'label' => Yii::t('app','Quản lý API Keys'),
         'url' => 'javascript:;',
         'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
         'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
         'items' => [
             [
                 'encode' => false,
-                'label' => '<i class="icon-list"></i>Danh mục API keys',
+                'label' => '<i class="icon-list"></i>'.Yii::t('app','Danh mục API keys'),
                 'url' => ['credential/index'],
                 'require_auth' => true,
             ],
             [
                 'encode' => false,
-                'label' => '<i class="icon-key"></i>Tạo API Key',
+                'label' => '<i class="icon-key"></i>'.Yii::t('app','Tạo API Key'),
                 'url' => ['credential/create'],
                 'require_auth' => true,
             ],
@@ -136,7 +137,7 @@ $menuItems = [
         'items' => [
             [
                 'encode' => false,
-                'label' => '<i class="fa fa-server"></i> Danh mục',
+                'label' => '<i class="fa fa-server"></i>'.Yii::t('app','Danh mục'),
                 'url' => ['category/index'],
                 'require_auth' => true,
             ],
@@ -151,13 +152,13 @@ $menuItems = [
         'items' => [
             [
                 'encode' => false,
-                'label' => '<i class="fa fa-server"></i> Nội dung',
+                'label' => '<i class="fa fa-server"></i>'. Yii::t('app','Nội dung'),
                 'url' => ['content/index'],
                 'require_auth' => true,
             ],
             [
                 'encode' => false,
-                'label' => '<i class="fa fa-gift"></i> Voucher',
+                'label' => '<i class="fa fa-gift"></i>'.Yii::t('app','Voucher'),
                 'url' => ['voucher/index'],
                 'require_auth' => true,
             ],
@@ -172,13 +173,13 @@ $menuItems = [
         'items' => [
             [
                 'encode' => false,
-                'label' => '<i class="fa fa-server"></i> Slide trang chủ',
+                'label' => '<i class="fa fa-server"></i> '.Yii::t('app','Slide trang chủ'),
                 'url' => ['slide/index','type'=>\common\models\Slide::SLIDE_HOME],
                 'require_auth' => true,
             ],
             [
                 'encode' => false,
-                'label' => '<i class="fa fa-gift"></i> Slide trang danh mục',
+                'label' => '<i class="fa fa-gift"></i>'.Yii::t('app',' Slide trang danh mục'),
                 'url' => ['slide/index','type'=>\common\models\Slide::SLIDE_CATEGORY],
                 'require_auth' => true,
             ],
@@ -186,34 +187,40 @@ $menuItems = [
         ]
     ],
     [
-        'label' => 'Hệ thống',
+        'label' => Yii::t('app','Hệ thống'),
         'url' => 'javascript:;',
         'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
         'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
         'items' => [
             [
                 'encode' => false,
-                'label' => '<i class="icon-users"></i> QL người dùng',
+                'label' => '<i class="icon-users"></i> '.Yii::t('app','QL người dùng'),
                 'url' => ['user/index'],
                 'require_auth' => true,
             ],
             [
-                'label' => 'QL quyền',
+                'encode' => false,
+                'label' => '<i class="icon-users"></i> '.Yii::t('app','QL khách hàng'),
+                'url' => ['subcriber/index'],
+                'require_auth' => true,
+            ],
+            [
+                'label' => Yii::t('app','QL quyền'),
                 'items' => [
                     [
                         'encode' => false,
-                        'label' => '<i class="icon-key"></i> QL quyền trang backend',
+                        'label' => '<i class="icon-key"></i>'.Yii::t('app','QL quyền trang backend'),
                         'url' => ['rbac-backend/permission'],
                         'require_auth' => true,
                     ],
                 ]
             ],
             [
-                'label' => 'QL nhóm quyền',
+                'label' => Yii::t('app','QL nhóm quyền'),
                 'items' => [
                     [
                         'encode' => false,
-                        'label' => '<i class="icon-lock-open"></i> QL nhóm quyền trang backend',
+                        'label' => '<i class="icon-lock-open"></i>'.Yii::t('app','QL nhóm quyền trang backend'),
                         'url' => ['rbac-backend/role'],
                         'require_auth' => true,
                     ],

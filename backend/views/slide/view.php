@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Slide */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'QL Slide'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Quản lý Slide'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -27,7 +27,7 @@ $attributes = [
 $attributes[] = 'des:ntext';
 $attributes[] = [
     'attribute' => 'status',
-    'value' => ($model->status) ? Yii::t('app', 'Active') : Yii::t('app', 'Disable')
+    'value' => ($model->status) ? Yii::t('app', 'Hoạt động') : Yii::t('app', 'Tạm khóa')
 ];
 $attributes[] = 'created_at:datetime';
 $attributes[] = 'updated_at:datetime';
@@ -53,7 +53,7 @@ $attributes[] = 'updated_at:datetime';
                     <?= Html::a(Yii::t('app', 'Xóa'), ['delete', 'id' => $model->id], [
                         'class' => 'btn btn-danger',
                         'data' => [
-                            'confirm' => Yii::t('app', 'Are you want to delete this content?'),
+                            'confirm' => Yii::t('app', 'Bạn chắc chắn muốn xóa?'),
                             'method' => 'post',
                         ],
                     ]) ?>
