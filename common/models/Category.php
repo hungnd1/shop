@@ -14,11 +14,13 @@ use yii\web\NotFoundHttpException;
  * This is the model class for table "{{%category}}".
  *
  * @property integer $id
+ * @property integer $is_news
  * @property integer $show_on_portal
  * @property string $display_name
  * @property string $ascii_name
  * @property string $description
  * @property integer $status
+ * @property integer $location_image
  * @property integer $order_number
  * @property integer $parent_id
  * @property string $path
@@ -47,6 +49,14 @@ class Category extends \yii\db\ActiveRecord
     const TYPE_MENU_ABOVE = 2;
     const TYPE_NONE = 0;
 
+    // type tin tức không hiển thị trong body index
+    const TYPE_NEWS_BODY = 3;
+
+    // vị trí hiển thị ảnh
+    const NO_IMAGE = 0;
+    const LOCATION_TOP = 1;
+    const LOCATION_LEFT = 2;
+    const LOCATION_BOTTOM = 3;
 
     /**
      * @inheritdoc
@@ -72,7 +82,9 @@ class Category extends \yii\db\ActiveRecord
                     'child_count',
                     'created_at',
                     'updated_at',
-                    'type'
+                    'type',
+                    'location_image',
+                    'is_news',
                 ],
                 'integer',
             ],
@@ -106,8 +118,11 @@ class Category extends \yii\db\ActiveRecord
             'level'            => Yii::t('app', 'Level'),
             'child_count'      => Yii::t('app', 'Child Count'),
             'images'           => Yii::t('app', 'Ảnh đại diện'),
-            'created_at'       => Yii::t('app', 'Created At'),
-            'updated_at'       => Yii::t('app', 'Updated At'),
+            'created_at'       => Yii::t('app', 'Ngày tạo'),
+            'updated_at'       => Yii::t('app', 'Ngày thay đổi thông tin'),
+            'type'             => Yii::t('app', 'Kiểu menu'),
+            'location_image'   => Yii::t('app', 'Vị trí hiển thị ảnh'),
+            'is_news'   => Yii::t('app', 'Dạng tin tức'),
         ];
     }
 
@@ -137,13 +152,22 @@ class Category extends \yii\db\ActiveRecord
 
     }
 
-    public static  $getListType = [
-        self::TYPE_NONE => 'Menu bình thường',
-        self::TYPE_MENU_ABOVE => 'Menu trên',
-        self::TYPE_MENU_RIGHT => 'Menu trái'
-    ];
+    public static  function getListType(){
+        return $getListType = [
+            self::TYPE_NONE => Yii::t('app','Menu bình thường'),
+            self::TYPE_MENU_ABOVE => Yii::t('app','Menu trên'),
+            self::TYPE_MENU_RIGHT => Yii::t('app','Menu trái'),
+        ];
+    }
 
-
+    public static  function getLocationImage(){
+        return $getLocationImage = [
+            self::NO_IMAGE => Yii::t('app','Không có ảnh'),
+            self::LOCATION_TOP => Yii::t('app','Hiển thị bên trên'),
+            self::LOCATION_LEFT => Yii::t('app','Hiển thị bên trái'),
+            self::LOCATION_BOTTOM => Yii::t('app','Hiển thị bên dưới'),
+        ];
+    }
 
 
     /**
@@ -230,11 +254,13 @@ class Category extends \yii\db\ActiveRecord
 
     public function getImageLink()
     {
-        return $this->images ? Url::to(Yii::getAlias('@web') . DIRECTORY_SEPARATOR . Yii::getAlias('@cat_image') . DIRECTORY_SEPARATOR . $this->images, true) : '';
-        // return $this->images ? Url::to('@web/' . Yii::getAlias('@cat_image') . DIRECTORY_SEPARATOR . $this->images, true) : '';
+        $cat_image=  Yii::getAlias('@cat_image');
+        return $this->images ? Url::to('@web/'.$cat_image.'/'.$this->images, true) : '';
     }
-
-
+    public static function getImageLinkFE($images)
+    {
+        return $images?Url::to('@web/staticdata/category_image/'. $images, true) : '';
+    }
 
 
     /**

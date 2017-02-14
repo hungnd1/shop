@@ -2,13 +2,14 @@
 
 namespace common\models;
 
-use api\models\Content;
+use common\models\Content;
 use api\models\ListContentSlider;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\data\ActiveDataProvider;
 use yii\helpers\FileHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "slide".
@@ -265,6 +266,18 @@ class Slide extends \yii\db\ActiveRecord
          * TODO: Neu loai la content thi viet ham lay image link image slide
          */
         return  $this->content->getFirstImageLink();
+    }
+
+    public static function getSlideHomeFe($id){
+        $model = Content::findOne($id);
+        $listImages = Content::convertJsonToArray($model->images);
+        $link = '';
+        foreach ($listImages as $key => $row) {
+            if ($row['type'] == Content::IMAGE_TYPE_SLIDECATEGORY) {
+                $link = Url::to('@web/staticdata/content_images/'. $row['name'], true);
+            }
+        }
+        return $link;
     }
     public static function getSlider($sp){
         $query = ListContentSlider::find()

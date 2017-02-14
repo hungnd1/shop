@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Category;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 
@@ -78,7 +79,33 @@ $this->params['breadcrumbs'][] = $this->title;
                             'filterInputOptions' => ['placeholder' => Yii::t('app','Tất cả')],
                         ],
                         [
-
+                            'class' => 'kartik\grid\DataColumn',
+                            'attribute' => 'type',
+                            'value' => function ($model, $key, $index) {
+                                return Category::getListType()[$model->type];
+                            },
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filter' => Category::getListType(),
+                            'filterWidgetOptions' => [
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                            'filterInputOptions' => ['placeholder' => Yii::t('app','Tất cả')],
+                        ],
+                        [
+                            'class' => 'kartik\grid\DataColumn',
+                            'attribute' => 'location_image',
+                            'value' => function ($model, $key, $index, $widget) {
+                                /** @var $model Category*/
+                                return Category::getLocationImage()[$model->location_image];
+                            },
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filter' => Category::getLocationImage(),
+                            'filterWidgetOptions' => [
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                            'filterInputOptions' => ['placeholder' => Yii::t('app','Tất cả')],
+                        ],
+                        [
                             'format'=>'raw',
                             'label'=>Yii::t('app','Sắp xếp'),
                             'attribute' => 'order_number',

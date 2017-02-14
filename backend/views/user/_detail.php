@@ -26,7 +26,6 @@ use common\models\User;
                 'value' =>  $model->getRolesName(),
             ],
             'email:email',
-//                        'role',
             [
                 'attribute'=>'status',
                 'format'=>'raw',
@@ -49,11 +48,6 @@ use common\models\User;
                 'attribute'=>'updated_at',
                 'value' => date('d/m/Y H:i:s',$model->updated_at),
             ],
-
-//                        'type',
-//                        'site_id',
-//                        'content_provider_id',
-//                        'parent_id',
         ],
     ]) ?>
 

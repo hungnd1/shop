@@ -173,7 +173,7 @@ class ContentController extends BaseBEController
             if(!$model->honor){
                 $model->honor = 0;
             }
-            if ($model->save()) {
+            if ($model->save(false)) {
                 $model->createCategoryAsm();
 
                 // lưu loại is_slide để lọc bên quản lý slide
@@ -185,7 +185,7 @@ class ContentController extends BaseBEController
                         $model->is_slide = 1;
                         $model->save();
                     }
-                    if($row['type' == Content::IMAGE_TYPE_SLIDECATEGORY]){
+                    if($row['type'] == Content::IMAGE_TYPE_SLIDECATEGORY){
                         $model->is_slide_category = 1;
                         $model->save();
 

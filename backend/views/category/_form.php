@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Category;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
 use yii\helpers\Html;
@@ -44,20 +45,21 @@ $showPreview = !$model->isNewRecord && !empty($model->images);
             'showUpload' => false,
             'showPreview' => (!$showPreview) ? true : false,
         ]
-    ]); ?>
-    <div class="row">
-        <div class="form-group field-content-price" style="padding-left: 27%;color: red;font-size: 15px;">
-            <p><?= Yii::t('app','Ảnh danh mục cấp 1 có ảnh tỉ lệ 1.2 chính xác 16x13') ?> </p>
-            <p><?= Yii::t('app','Yêu cầu up nội dung chính xác.') ?></p>
-        </div>
-    </div>
-    <br><br>
-    <?= $form->field($model, 'status')->dropDownList(
-        \common\models\Category::getListStatus(), ['class' => 'input-circle']
+    ])->hint(Yii::t('app','Ảnh danh mục cấp 1 có ảnh tỉ lệ 1.2 chính xác 16x13, Yêu cầu up nội dung chính xác.')); ?>
+
+    <?= $form->field($model, 'location_image')->dropDownList(
+        Category::getLocationImage(), ['class' => 'input-circle']
     ) ?>
-    <?php $listCheckbox = \common\models\Category::$getListType; ?>
+
+    <?= $form->field($model, 'status')->dropDownList(
+        Category::getListStatus(), ['class' => 'input-circle']
+    ) ?>
+
+    <?= $form->field($model, 'is_news')->checkbox() ?>
+
+    <?php $listCheckbox = \common\models\Category::getListType(); ?>
     <?= $form->field($model, 'type')->dropDownList($listCheckbox)->label(Yii::t('app','Vị trí menu')) ?>
-    ?>
+
     <?php
     $dataList = \common\models\Category::getTreeCategories();
     $disableId = false;
@@ -67,11 +69,9 @@ $showPreview = !$model->isNewRecord && !empty($model->images);
     echo $form->field($model, 'parent_id')->dropDownList($dataList,
         [
             'prompt' => Yii::t('app','-Chọn nhóm cha-'),
-            'options' => \common\models\Category::getAllChildCats( $model->id) + [$model->id => ['disabled' => true]]
+            'options' => \common\models\Category::getAllChildCats($model->id) + [$model->id => ['disabled' => true]]
         ]);
     ?>
-
-
 </div>
 <div class="form-actions">
     <div class="row">

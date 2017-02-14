@@ -1,7 +1,8 @@
 <?php
 
+use common\models\Subcriber;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use kartik\detail\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Subcriber */
@@ -42,18 +43,40 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'user_name',
             'full_name',
-            'gender',
-            'status',
-            'auth_key',
+            [
+                'attribute'=>'gender',
+                'format'=>'raw',
+                'value'=>$model->getGenderName(),
+                'type'=>DetailView::INPUT_SWITCH,
+            ],
+            [
+                'attribute'=>'status',
+                'format'=>'raw',
+                'value'=>($model->status ==Subcriber::STATUS_ACTIVE)  ?
+                    '<span class="label label-success">'.$model->getStatusName().'</span>' :
+                    '<span class="label label-danger">'.$model->getStatusName().'</span>',
+                'type'=>DetailView::INPUT_SWITCH,
+                'widgetOptions' => [
+                    'pluginOptions' => [
+                        'onText' => 'Active',
+                        'offText' => 'Delete',
+                    ]
+                ]
+            ],
             'password_hash',
-            'password_reset_token',
             'email:email',
             'address',
             'phone',
             'birthday',
             'about',
-            'created_at',
-            'updated_at',
+            [                      // the owner name of the model
+                'attribute'=>'created_at',
+                'value' => date('d/m/Y H:i:s',$model->created_at),
+            ],
+            [                      // the owner name of the model
+                'attribute'=>'updated_at',
+                'value' => date('d/m/Y H:i:s',$model->updated_at),
+            ],
         ],
     ]) ?>
             </div>

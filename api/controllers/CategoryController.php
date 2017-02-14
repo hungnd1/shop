@@ -37,6 +37,14 @@ class CategoryController extends ApiController
             'view',
             'root-category',
             'test',
+            'get-level-1',
+            'get-level-info',
+            'get-menu-top',
+            'get-menu-top-all',
+            'get-menu-right',
+            'get-menu-right-all',
+            'check-image-level-1',
+            'get-image',
         ];
 
         return $behaviors;
@@ -46,6 +54,14 @@ class CategoryController extends ApiController
     {
         return [
             'index' => ['GET'],
+            'get-menu-top' => ['GET'],
+            'get-menu-top-all' => ['GET'],
+            'get-level-1' => ['POST'],
+            'get-menu-right' => ['GET'],
+            'get-menu-right-all' => ['GET'],
+            'get-level-info' => ['POST'],
+            'get-image' => ['POST'],
+            'check-image-level' => ['POST'],
         ];
     }
 
@@ -53,6 +69,103 @@ class CategoryController extends ApiController
     public function actionIndex($type = 0)
     {
 
+    }
+
+    // menu top
+    public function actionGetMenuTop(){
+        $query = Category::find()
+            ->select(['id','parent_id','display_name','child_count'])
+            ->andWhere(['status' => Category::STATUS_ACTIVE])
+            ->andWhere(['type'=> Category::TYPE_MENU_ABOVE]);
+        $menu = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $menu;
+    }
+
+    public function actionGetMenuTopAll(){
+        $query = Category::find()
+            ->select(['id','parent_id','display_name','child_count'])
+            ->andWhere(['status' => Category::STATUS_ACTIVE])
+            ->andWhere(['type'=> Category::TYPE_MENU_ABOVE])
+            ->andWhere("parent_id != :parent_id")->addParams([':parent_id'=>null]);
+        $menu = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $menu;
+    }
+
+    public function actionGetLevel1(){
+        $id = Yii::$app->request->post('id');
+        $query   = Category::find()
+            ->select(['id','parent_id','display_name','child_count'])
+            ->andWhere(['status'=>Category::STATUS_ACTIVE])
+            ->andWhere(['parent_id' => $id]);
+        $cat = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $cat;
+    }
+
+    public function actionGetLevelInfo(){
+        $id = Yii::$app->request->post('id');
+        $query   = Category::find()
+            ->select(['id','display_name', 'parent_id','child_count'])
+            ->andWhere(['status'=>Category::STATUS_ACTIVE])
+            ->andWhere(['id'=>$id]);
+        $cat = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $cat;
+    }
+
+    public function actionGetImage(){
+        $id = Yii::$app->request->post('id');
+        $model = Category::findOne($id);
+        $link = Category::getImageLinkFE($model->images);
+        return $link;
+    }
+
+    public function actionCheckImageLevel1(){
+        $id = Yii::$app->request->post('id');
+        $model = Category::findOne($id);
+        if($model->location_image == Category::LOCATION_LEFT){
+            return 1;
+        }
+        if($model->location_image == Category::LOCATION_TOP){
+            return  2;
+        }
+        if($model->location_image == Category::NO_IMAGE){
+            return 3;
+        }
+        if($model->location_image == Category::LOCATION_BOTTOM){
+            return 4;
+        }
+    }
+
+    // get menu right
+
+    public function actionGetMenuRight(){
+        $query = Category::find()
+            ->select(['id','parent_id','display_name','child_count'])
+            ->andWhere(['status' => Category::STATUS_ACTIVE])
+            ->andWhere(['parent_id'=> null])
+            ->andWhere(['type'=> Category::TYPE_MENU_RIGHT]);
+        $menu = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $menu;
+    }
+    public function actionGetMenuRightAll(){
+        $query = Category::find()
+            ->select(['id','parent_id','display_name','child_count'])
+            ->andWhere(['status' => Category::STATUS_ACTIVE])
+            ->andWhere("parent_id != :parent_id")->addParams([':parent_id'=>null])
+            ->andWhere(['type'=> Category::TYPE_MENU_RIGHT]);
+        $menu = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $menu;
     }
 
 
@@ -76,8 +189,6 @@ class CategoryController extends ApiController
         return $data;
 
     }
-
-
 
     public function actionTest()
     {

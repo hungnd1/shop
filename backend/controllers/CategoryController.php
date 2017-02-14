@@ -117,7 +117,7 @@ class CategoryController extends BaseBEController
             $image                   = UploadedFile::getInstance($model, 'images');
             if ($image) {
                 $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
-                $tmp       = Yii::getAlias('@backend') . '/web/' . Yii::getAlias('@cat_image') . '/';
+                $tmp       = Yii::getAlias('@backend') . '/web/' . Yii::getAlias('@category_image') . '/';
                 if (!file_exists($tmp)) {
                     mkdir($tmp, 0777, true);
                 }
@@ -131,9 +131,10 @@ class CategoryController extends BaseBEController
             $model->updated_at = time();
             // $model->site_id     = Yii::$app->user->id;
             // $model->order_number = $model->order_number !== null ? $model->order_number : 0;
-            if($model->parent_id && $model->type !=  Category::TYPE_NONE ){
-                \Yii::$app->getSession()->setFlash('error',Yii::t('app', 'Phải chọn menu bình thường nếu là danh mục con'));
-            }else if ($model->save()) {
+//            if($model->parent_id && $model->type !=  Category::TYPE_NONE ){
+//                \Yii::$app->getSession()->setFlash('error',Yii::t('app', 'Phải chọn menu bình thường nếu là danh mục con'));
+//            }else
+                if ($model->save()) {
                 if ($model->parent_id != null) {
                     $modelParent = $model->parent;
                     ++$modelParent->child_count;
@@ -148,9 +149,7 @@ class CategoryController extends BaseBEController
                     $maxOrder           = Category::find()
                         ->select(['max(order_number) as `order`'])
                         ->where('level=0')
-                        // ->andWhere(['site_id' => Yii::$app->user->id])
                         ->scalar();
-                    // $model->order_number = $maxOrder + 1;
                 }
 
                 $model->order_number = $model->id;
@@ -198,7 +197,7 @@ class CategoryController extends BaseBEController
             $image                   = UploadedFile::getInstance($model, 'images');
             if ($image) {
                 $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
-                $tmp       = Yii::getAlias('@backend') . '/web/' . Yii::getAlias('@cat_image') . '/';
+                $tmp       = Yii::getAlias('@backend') . '/web/' . Yii::getAlias('@category_image') . '/';
                 if (!file_exists($tmp)) {
                     mkdir($tmp, 0777, true);
                 }
@@ -243,17 +242,29 @@ class CategoryController extends BaseBEController
     public function actionDelete($id)
     {
         $model  = $this->findModel($id);
-        $model->status = Category::STATUS_INACTIVE;
-        $model->save(false);
-        $catParent  = Category::findAll(['parent_id'=>$id]);
-        foreach($catParent as $item){
-            /** @var $item Category */
-            $model_parent = $this->findModel($item->id);
-            $model_parent->status = Category::STATUS_INACTIVE;
-            $model_parent->save(false);
+//        $model->status = Category::STATUS_INACTIVE;
+//        $model->save(false);
+//        $catParent  = Category::findAll(['parent_id'=>$id]);
+//        foreach($catParent as $item){
+//            /** @var $item Category */
+//            $model_parent = $this->findModel($item->id);
+//            $model_parent->status = Category::STATUS_INACTIVE;
+//            $model_parent->save(false);
+//        }
+        if($model->status == Category::STATUS_ACTIVE){
+            \Yii::$app->getSession()->setFlash('error',Yii::t('app', 'Không được xóa danh mục đang hoạt động!'));
+            return $this->redirect(['view','id'=>$id]);
+        }else{
+            $catParent  = Category::findAll(['parent_id'=>$id]);
+            if(isset($catParent) && $catParent != null){
+                \Yii::$app->getSession()->setFlash('error',Yii::t('app', 'Không được xóa danh mục đang chứa danh mục con!'));
+                return $this->redirect(['view','id'=>$id]);
+            }else{
+                $model->delete();
+                \Yii::$app->getSession()->setFlash('success',Yii::t('app', 'Xóa thành công'));
+                return $this->redirect(['index']);
+            }
         }
-        \Yii::$app->getSession()->setFlash('success',Yii::t('app', 'Xóa thành công'));
-        return $this->redirect(['index']);
     }
 
     /**

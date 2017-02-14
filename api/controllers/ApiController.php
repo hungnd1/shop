@@ -62,9 +62,9 @@ class ApiController extends Controller
 
         $language = Yii::$app->request->headers->get(static::HEADER_LANGUAGE);
 
-        if(!array_key_exists($language, Languages::$language)){
-            throw new UnauthorizedHttpException('Not support language: '.$language);
-        }
+//        if(!array_key_exists($language, Languages::$language)){
+//            throw new UnauthorizedHttpException('Not support language: '.$language);
+//        }
         $this->language = $language;
 
         /** Sửa lại phần beforeAction vì code đang sai */
@@ -78,7 +78,6 @@ class ApiController extends Controller
             if (!$credential) {
                 throw new UnauthorizedHttpException('Invalid api key');
             }
-
 
                 /** Set site_id để dùng cho tiện */
                 switch ($credential->type) {

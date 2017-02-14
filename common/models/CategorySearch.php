@@ -18,7 +18,7 @@ class CategorySearch extends Category
     public function rules()
     {
         return [
-            [['id', 'site_id', 'type', 'status', 'order_number', 'parent_id', 'level', 'child_count', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'site_id', 'type','location_image', 'status', 'order_number', 'parent_id', 'level', 'child_count', 'created_at', 'updated_at'], 'integer'],
             [['display_name', 'ascii_name', 'description', 'path', 'images', 'admin_note'], 'safe'],
         ];
     }
@@ -59,6 +59,7 @@ class CategorySearch extends Category
             'id' => $this->id,
             'site_id' => $this->site_id,
             'type' => $this->type,
+            'location_image' => $this->location_image,
             'status' => $this->status,
             'order_number' => $this->order_number,
             'parent_id' => $this->parent_id,

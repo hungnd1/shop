@@ -16,7 +16,7 @@ use yii\web\View;
 /* @var $this yii\web\View */
 /* @var $model common\models\Slide */
 /* @var $form yii\widgets\ActiveForm */
-$showPreview = !$model->isNewRecord && !empty($model->banner) && ($model->type == Slide::SLIDE_TYPE_BANNER);
+$showPreview = !$model->isNewRecord && !empty($model->banner) && ($model->type == Slide::SLIDE_HOME);
 ?>
 
 <?php $form = ActiveForm::begin([

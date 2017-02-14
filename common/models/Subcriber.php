@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\helpers\Url;
 
 /**
@@ -71,6 +72,17 @@ class Subcriber extends \yii\db\ActiveRecord
             return $lst[$this->gender];
         }
         return $this->gender;
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+            ],
+        ];
     }
 
     /**

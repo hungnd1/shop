@@ -82,6 +82,7 @@ class SiteController extends Controller
 
         $model = Subcriber::find()->where(['id_facebook'=>$attributes['id']])->one();
             if(!empty($model)){
+                $session = Yii::$app->session;
                 Yii::$app->user->login($model);
             }else{
                 // save to database

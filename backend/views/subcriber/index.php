@@ -1,7 +1,8 @@
 <?php
 
+use common\models\Subcriber;
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\SubcriberSearch */
@@ -33,33 +34,61 @@ $this->params['breadcrumbs'][] = $this->title;
                     'filterModel' => $searchModel,
                     'columns' => [
 //                        ['class' => 'yii\grid\SerialColumn'],
-
-                        'id',
                         [
-                            'attribute' => 'username',
+                            'attribute' => 'id',
+                            'width'=>'50px'
+                        ],
+                        [
+                            'attribute' => 'user_name',
                             'format' => 'raw',
                             'value' => function ($model, $key, $index, $widget) {
                                 /**
                                  * @var $model \common\models\Subcriber
                                  */
-                                $res = Html::a('<kbd>'.$model->user_name.'</kbd>', ['subcriber/view', 'id' => $model->id ]);
-                                return $res;
-
+                                if($model->user_name != null){
+                                    $res = Html::a('<kbd>'.$model->user_name.'</kbd>', ['subcriber/view', 'id' => $model->id ]);
+                                    return $res;
+                                }else{
+                                    $res = Html::a('<kbd>'.$model->full_name.'</kbd>', ['subcriber/view', 'id' => $model->id ]);
+                                    return $res;
+                                }
                             },
                         ],
-                        'full_name',
-                        'gender',
-                        'status',
-                        // 'auth_key',
-                        // 'password_hash',
-                        // 'password_reset_token',
-                        // 'email:email',
-                        // 'address',
-                        // 'phone',
-                        // 'birthday',
-                        // 'about',
-                        // 'created_at',
-                        // 'updated_at',
+                        [
+                            'attribute' => 'gender',
+                            'class' => '\kartik\grid\DataColumn',
+                            'width'=>'200px',
+                            'value' => function ($model, $key, $index, $widget) {
+                                /**
+                                 * @var $model \common\models\Subcriber
+                                 */
+                                return $model->getGenderName();
+                            },
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filter' => Subcriber::listGender(),
+                            'filterWidgetOptions' => [
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                            'filterInputOptions' => ['placeholder' => Yii::t('app', 'Tất cả')],
+                        ],
+                        [
+                            'attribute' => 'status',
+                            'class' => '\kartik\grid\DataColumn',
+                            'width'=>'200px',
+                            'value' => function ($model, $key, $index, $widget) {
+                                /**
+                                 * @var $model \common\models\Subcriber
+                                 */
+                                return $model->getStatusName();
+                            },
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filter' => Subcriber::listStatus(),
+                            'filterWidgetOptions' => [
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                            'filterInputOptions' => ['placeholder' => Yii::t('app', 'Tất cả')],
+                        ],
+                         'phone',
 
                         ['class' => 'yii\grid\ActionColumn'],
                     ],

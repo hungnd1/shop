@@ -12,7 +12,8 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'aliases' => [
-        '@image_avatar'=>'image_avatar',
+        '@content_image'=>'staticdata\content_image',
+        '@category_image'=>'staticdata\category_image',
     ],
     'components' => [
         'user' => [

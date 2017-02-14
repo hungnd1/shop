@@ -2,7 +2,6 @@
 namespace frontend\models;
 
 use common\models\Subcriber;
-use common\models\User;
 use Yii;
 use yii\base\Model;
 
@@ -77,7 +76,7 @@ class LoginForm extends Model
     /**
      * Finds user by [[username]]
      *
-     * @return User|null
+     * @return Subcriber|null
      */
     public function getUser()
     {

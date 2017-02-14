@@ -334,6 +334,7 @@ class Content extends \yii\db\ActiveRecord
             'started_at' => Yii::t('app','Thời gian bắt đầu'),
             'ended_at' => Yii::t('app','Thời gian kết thúc'),
             'order' => Yii::t('app','Sắp xếp'),
+            'slide_category' => Yii::t('app','Ảnh slide Danh mục'),
         ];
     }
 
