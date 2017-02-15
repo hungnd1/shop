@@ -279,6 +279,7 @@ class Slide extends \yii\db\ActiveRecord
         }
         return $link;
     }
+
     public static function getSlider($sp){
         $query = ListContentSlider::find()
             ->andWhere(['slide_content.service_provider_id'=>$sp])

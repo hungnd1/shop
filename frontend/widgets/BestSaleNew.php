@@ -8,6 +8,8 @@
 namespace frontend\widgets;
 
 use common\models\Category;
+use common\models\Content;
+use DateTime;
 use yii\base\Widget;
 use Yii;
 
@@ -22,12 +24,38 @@ class BestSaleNew extends Widget{
 
     public  function run()
     {
-//        $pro = Category::find()
-//            ->andWhere(['status' => Category::STATUS_ACTIVE])
-//            ->andWhere(['type'=> Category::TYPE_MENU_ABOVE])
-//            ->all();
+        // tạo khoảng thời gian
+        $date = (new DateTime('now'))->setTime(23, 59, 59)->format('Y-m-d H:i:s');
+        $date_from = (new DateTime('now'))->modify('-30 days')->setTime(0, 0)->format('Y-m-d H:i:s');
+        $now = strtotime($date);
+        $from = strtotime($date_from);
+        // lấy 6 sản phẩm được tạo trong vòng 1 tháng gần thời điểm hiện tại nhất
+        $product_news = Content::find()
+            ->andWhere(['status'=>Content::STATUS_ACTIVE])
+            ->andWhere(['type'=>Content::TYPE_NEWEST])
+            ->andWhere(['>=','created_at',$from])
+            ->andWhere(['<=','created_at',$now])
+            ->orderBy(['created_at'=>'DESC'])
+            ->limit(6)
+            ->all();
+        // sản phẩm sale
+        $product_sales = Content::find()
+            ->andWhere(['status'=>Content::STATUS_ACTIVE])
+            ->andWhere(['type'=>Content::TYPE_PRICEPROMO])
+            ->orderBy(['created_at'=>'DESC'])
+            ->limit(6)
+            ->all();
+        // sản phẩm hot
+        $product_hots = Content::find()
+            ->andWhere(['status'=>Content::STATUS_ACTIVE])
+            ->andWhere(['type'=>Content::TYPE_SELLER])
+            ->orderBy(['created_at'=>'DESC'])
+            ->limit(6)
+            ->all();
         return $this->render('best-sale-new',[
-//            'menu'=>$menu
+            'product_news'=>$product_news,
+            'product_sales'=>$product_sales,
+            'product_hots'=>$product_hots,
         ]);
     }
 }

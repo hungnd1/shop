@@ -162,6 +162,12 @@ $menuItems = [
                 'url' => ['voucher/index'],
                 'require_auth' => true,
             ],
+            [
+                'encode' => false,
+                'label' => '<i class="fa fa-gift"></i>'.Yii::t('app','Ưu đãi'),
+                'url' => ['program-suppost/index'],
+                'require_auth' => true,
+            ],
 
         ]
     ],

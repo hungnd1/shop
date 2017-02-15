@@ -158,9 +158,9 @@ class Content extends \yii\db\ActiveRecord
     {
         return array_merge([
             [['display_name', 'code', 'status', 'list_cat_id', 'price','expired_at'], 'required', 'on' => 'adminModify', 'message' => '{attribute} không được để trống'],
-            [['started_at', 'ended_at'], 'required', 'message' => '{attribute} không được để trống', 'on' => 'adminModifyLiveContent'],
+            [['started_at', 'ended_at'], 'required', 'message' => Yii::t('app','{attribute} không được để trống'), 'on' => 'adminModifyLiveContent'],
             [['ended_at'], 'validEnded', 'on' => 'adminModifyLiveContent'],
-            [['display_name', 'code'], 'required', 'message' => '{attribute} không được để trống'],
+            [['display_name', 'code'], 'required', 'message' => Yii::t('app','{attribute} không được để trống')],
             [
                 [
                     'type',
@@ -194,11 +194,11 @@ class Content extends \yii\db\ActiveRecord
             [['tags', 'address'], 'string', 'max' => 500],
             [['version'], 'string', 'max' => 64],
             [['language'], 'string', 'max' => 10],
-            [['code'], 'unique', 'message' => '{attribute} đã tồn tại trên hệ thống. Vui lòng thử lại'],
+            [['code'], 'unique', 'message' => Yii::t('app','{attribute} đã tồn tại trên hệ thống. Vui lòng thử lại')],
             [['thumbnail', 'screenshoot', 'slide','slide_category'],
                 'file',
-                'tooBig' => '{attribute} vượt quá dung lượng cho phép. Vui lòng thử lại',
-                'wrongExtension' => '{attribute} không đúng định dạng',
+                'tooBig' => Yii::t('app','{attribute} vượt quá dung lượng cho phép. Vui lòng thử lại'),
+                'wrongExtension' => Yii::t('app','{attribute} không đúng định dạng'),
                 'extensions' => 'png, jpg, jpeg, gif',
                 'maxSize' => self::MAX_SIZE_UPLOAD],
             [['thumbnail','slide_category'], 'validateThumb', 'on' => ['adminModify', 'adminModifyLiveContent']],
@@ -206,7 +206,7 @@ class Content extends \yii\db\ActiveRecord
             [['thumbnail','screenshoot', 'slide','slide_category'], 'image', 'extensions' => 'png,jpg,jpeg,gif',
 //                'minWidth' => 1, 'maxWidth' => 512,
 //                'minHeight' => 1, 'maxHeight' => 512,
-                'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'Ảnh show  vượt quá dung lượng cho phép. Vui lòng thử lại',
+                'maxSize' => 1024 * 1024 * 10, 'tooBig' => Yii::t('app','Ảnh show  vượt quá dung lượng cho phép. Vui lòng thử lại'),
             ],
             [['image_tmp', 'list_cat_id'], 'safe'],
         ], $this->getValidAttr());
@@ -676,7 +676,26 @@ class Content extends \yii\db\ActiveRecord
             if ($row['type'] == self::IMAGE_TYPE_THUMBNAIL_EPG) {
                 $link = Url::to(Url::base() . DIRECTORY_SEPARATOR . Yii::getAlias('@content_images') . DIRECTORY_SEPARATOR . $row['name'], true);
             }
+        }
 
+        return $link;
+    }
+
+    public function getFirstImageLinkFE()
+    {
+        // var_dump(Url::base());die;
+        $link = '';
+        if (!$this->images) {
+            return;
+        }
+        $listImages = self::convertJsonToArray($this->images);
+        foreach ($listImages as $key => $row) {
+            if ($row['type'] == self::IMAGE_TYPE_THUMBNAIL) {
+                $link = Url::to(Url::base() . '/' . Yii::getAlias('@content_images') . '/' . $row['name'], true);
+            }
+            if ($row['type'] == self::IMAGE_TYPE_THUMBNAIL_EPG) {
+                $link = Url::to(Url::base() . '/' . Yii::getAlias('@content_images') . '/' . $row['name'], true);
+            }
         }
 
         return $link;
@@ -775,5 +794,20 @@ class Content extends \yii\db\ActiveRecord
             default:
                 return 'label label-primary';
         }
+    }
+
+    public static function substr($str, $length, $minword = 3)
+    {
+        $sub = '';
+        $len = 0;
+        foreach (explode(' ', $str) as $word) {
+            $part = (($sub != '') ? ' ' : '') . $word;
+            $sub .= $part;
+            $len += strlen($part);
+            if (strlen($word) > $minword && strlen($sub) >= $length) {
+                break;
+            }
+        }
+        return $sub . (($len < strlen($str)) ? '...' : '');
     }
 }

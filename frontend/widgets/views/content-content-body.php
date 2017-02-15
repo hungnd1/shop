@@ -5,6 +5,8 @@
  * Date: 1/5/2017
  * Time: 8:27 AM
  */
+use common\models\Content;
+
 ?>
 <?php
 if($content){
@@ -16,13 +18,13 @@ if($content){
             data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4}}'>
             <?php
             foreach($content as $item) {
-                /** @var $value \common\models\Content */
+                /** @var $item \common\models\Content */
                 ?>
                     <li>
                         <div class="left-block">
                             <a href="#">
-                                <img class="img-responsive" alt="product"
-                                     src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/data/01_blue-dress.jpg"/></a>
+                                <img style="height: 300px" class="img-responsive" alt="product"
+                                     src="<?= $item->getFirstImageLinkFE() ?>"/></a>
                             <div class="quick-view">
                                 <a title="Add to my wishlist" class="heart" href="#"></a>
                                 <a title="Add to compare" class="compare" href="#"></a>
@@ -33,10 +35,10 @@ if($content){
                             </div>
                         </div>
                         <div class="right-block">
-                            <h5 class="product-name"><a href="#"><?= $item->display_name ?></a></h5>
+                            <h5 class="product-name"><a href="#"><?= Content::substr($item->display_name,25) ?></a></h5>
                             <div class="content_price">
-                                <span class="price product-price"><?= $item->price ?> VND</span>
-                                <span class="price old-price"><?= $item->price_promotion ?> VND</span>
+                                <span class="price product-price"><?= $item->price_promotion ?> VND</span>
+                                <span class="price old-price"><?= $item->price ?> VND</span>
                             </div>
                             <div class="product-star">
                                 <i class="fa fa-star"></i>
