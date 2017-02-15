@@ -88,4 +88,11 @@ class ProgramSuppost extends \yii\db\ActiveRecord
             'status' => Yii::t('app','Trạng thái'),
         ];
     }
+
+    public function getImageLink(){
+        if(empty($this->image)){
+            return Yii::t('app', 'Hình ảnh không tìm thấy');
+        }
+        return Yii::getAlias('@web') . '/' . Yii::getAlias('@voucher_images') . '/'.$this->image;
+    }
 }

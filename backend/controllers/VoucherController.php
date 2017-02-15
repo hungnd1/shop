@@ -122,7 +122,7 @@ class VoucherController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $thumbnail_old  =  $model->image;
         if ($model->load(Yii::$app->request->post())) {
             $started_at = 0;
             $finished_at = 0;
@@ -151,6 +151,8 @@ class VoucherController extends Controller
                         'model' => $model,
                     ]);
                 }
+            }else{
+                $model->image= $thumbnail_old;
             }
             $model->start_date = $started_at;
             $model->end_date = $finished_at;

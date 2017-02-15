@@ -103,7 +103,7 @@ class ProgramSuppostController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $old_image = $model->image;
         if ($model->load(Yii::$app->request->post())) {
             $thumbnail = UploadedFile::getInstance($model, 'image');
             if ($thumbnail) {
@@ -116,6 +116,8 @@ class ProgramSuppostController extends Controller
                         'model' => $model,
                     ]);
                 }
+            }else{
+                $model->image = $old_image ;
             }
             if ($model->update()) {
                 Yii::$app->getSession()->setFlash('success', Yii::t('app',' Cập nhật mới ưu đãi thành công'));

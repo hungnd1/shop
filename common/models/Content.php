@@ -810,4 +810,13 @@ class Content extends \yii\db\ActiveRecord
         }
         return $sub . (($len < strlen($str)) ? '...' : '');
     }
+
+
+    public static function formatNumber($number)
+    {
+        $formatter = new \yii\i18n\Formatter();
+        $formatter->thousandSeparator = '.';
+        $formatter->decimalSeparator = '.';
+        return $formatter->asInteger($number);
+    }
 }

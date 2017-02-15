@@ -48,8 +48,8 @@ use common\models\Content;
                                     <div class="right-block">
                                         <h5 class="product-name"><a href="#"><?= Content::substr($item->display_name,25) ?></a></h5>
                                         <div class="content_price">
-                                            <span class="price product-price"><?= $item->price_promotion ?> VND</span>
-                                            <span class="price old-price"><?= $item->price ?> VND</span>
+                                            <span class="price product-price"><?= Content::formatNumber($item->price_promotion) ?> VND</span>
+                                            <span class="price old-price"><?= Content::formatNumber($item->price) ?> VND</span>
                                         </div>
                                         <div class="product-star">
                                             <i class="fa fa-star"></i>
@@ -89,8 +89,8 @@ use common\models\Content;
                                         <div class="right-block">
                                             <h5 class="product-name"><a href="#"><?= Content::substr($item->display_name,25) ?></a></h5>
                                             <div class="content_price">
-                                                <span class="price product-price"><?= $item->price_promotion ?> VND</span>
-                                                <span class="price old-price"><?= $item->price ?> VND</span>
+                                                <span class="price product-price"><?= Content::formatNumber($item->price_promotion) ?> VND</span>
+                                                <span class="price old-price"><?= Content::formatNumber($item->price) ?> VND</span>
                                             </div>
                                             <div class="product-star">
                                                 <i class="fa fa-star"></i>
@@ -130,8 +130,8 @@ use common\models\Content;
                                         <div class="right-block">
                                             <h5 class="product-name"><a href="#"><?= Content::substr($item->display_name,25) ?></a></h5>
                                             <div class="content_price">
-                                                <span class="price product-price"><?= $item->price_promotion ?> VND</span>
-                                                <span class="price old-price"><?= $item->price ?> VND</span>
+                                                <span class="price product-price"><?= Content::formatNumber($item->price_promotion) ?> VND</span>
+                                                <span class="price old-price"><?= Content::formatNumber($item->price) ?> VND</span>
                                             </div>
                                             <div class="product-star">
                                                 <i class="fa fa-star"></i>
