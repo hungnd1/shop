@@ -41,8 +41,8 @@ use common\models\Category;
                 <div class="product-featured clearfix">
                     <div class="banner-featured">
                         <div class="featured-text"><span>featured</span></div>
-                        <div class="banner-img">
-                            <a href="#"><img alt="<?=$item->display_name ?>" src="<?= Category::getImageLinkFE($item->images) ?>"/></a>
+                        <div class="banner-img text-center">
+                            <a href="#"><img style="height: 300px" alt="<?=$item->display_name ?>" src="<?= Category::getImageLinkFE($item->images) ?>"/></a>
                         </div>
                     </div>
                     <div class="product-featured-content">

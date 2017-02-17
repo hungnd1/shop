@@ -840,4 +840,23 @@ class Content extends \yii\db\ActiveRecord
         $formatter->decimalSeparator = '.';
         return $formatter->asInteger($number);
     }
+
+    // tìm breadcrumb
+    public static function GetBreadcrumb($id){
+        $category = ContentCategoryAsm::findOne(['content_id'=>$id]);
+        $id_cat1 = $category->category_id;
+        $category1 = Category::findOne(['id'=>$id_cat1]);
+        if($category1->parent_id != null){
+            $id_cat2 = $category1->parent_id;
+        }else{
+
+        }
+    }
+
+    public function getAllCate($id){
+        $category1 = Category::findOne(['id'=>$id_cat1]);
+        if($category1->parent_id != null){
+
+        }
+    }
 }
