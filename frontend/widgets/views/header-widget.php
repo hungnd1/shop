@@ -78,21 +78,7 @@ use yii\widgets\ActiveForm;
             <div class="col-xs-12 col-sm-3 logo">
                 <a href="<?= Url::to(['site/index']) ?>"><img alt="Kute shop - GFXFree.Net" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/images/logo.png" /></a>
             </div>
-            <div class="col-xs-7 col-sm-7 header-search-box">
-                <form class="form-inline">
-                    <div class="form-group form-category">
-                        <select class="select-category">
-                            <option value="2">All Categories</option>
-                            <option value="1">Men</option>
-                            <option value="2">Women</option>
-                        </select>
-                    </div>
-                    <div class="form-group input-serach">
-                        <input type="text"  placeholder="Keyword here...">
-                    </div>
-                    <button type="submit" class="pull-right btn-search"></button>
-                </form>
-            </div>
+            <?= \frontend\widgets\SearchCategory::widget() ?>
             <div id="cart-block" class="col-xs-5 col-sm-2 shopping-cart-box">
                 <a class="cart-link" href="order.html">
                     <span class="title">Shopping cart</span>

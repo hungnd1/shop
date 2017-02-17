@@ -31,25 +31,37 @@ class BestSaleNew extends Widget{
         $from = strtotime($date_from);
         // lấy 6 sản phẩm được tạo trong vòng 1 tháng gần thời điểm hiện tại nhất
         $product_news = Content::find()
-            ->andWhere(['status'=>Content::STATUS_ACTIVE])
-            ->andWhere(['type'=>Content::TYPE_NEWEST])
-            ->andWhere(['>=','created_at',$from])
-            ->andWhere(['<=','created_at',$now])
-            ->orderBy(['created_at'=>'DESC'])
+            ->select('content.id,content.display_name,content.type,content.short_description,content.price,content.images,content.price_promotion')
+            ->innerJoin('content_category_asm','content_category_asm.content_id = content.id')
+            ->innerJoin('category','content_category_asm.category_id = category.id')
+            ->andWhere('category.is_news <> :is_news',['is_news'=>1])
+            ->andWhere(['content.status'=>Content::STATUS_ACTIVE])
+            ->andWhere(['content.type'=>Content::TYPE_NEWEST])
+            ->andWhere(['>=','content.created_at',$from])
+            ->andWhere(['<=','content.created_at',$now])
+            ->orderBy(['content.created_at'=>'DESC'])
             ->limit(6)
             ->all();
         // sản phẩm sale
         $product_sales = Content::find()
-            ->andWhere(['status'=>Content::STATUS_ACTIVE])
-            ->andWhere(['type'=>Content::TYPE_PRICEPROMO])
-            ->orderBy(['created_at'=>'DESC'])
+            ->select('content.id,content.display_name,content.type,content.short_description,content.price,content.images,content.price_promotion')
+            ->innerJoin('content_category_asm','content_category_asm.content_id = content.id')
+            ->innerJoin('category','content_category_asm.category_id = category.id')
+            ->andWhere('category.is_news <> :is_news',['is_news'=>1])
+            ->andWhere(['content.status'=>Content::STATUS_ACTIVE])
+            ->andWhere(['content.type'=>Content::TYPE_PRICEPROMO])
+            ->orderBy(['content.created_at'=>'DESC'])
             ->limit(6)
             ->all();
         // sản phẩm hot
         $product_hots = Content::find()
-            ->andWhere(['status'=>Content::STATUS_ACTIVE])
-            ->andWhere(['type'=>Content::TYPE_SELLER])
-            ->orderBy(['created_at'=>'DESC'])
+            ->select('content.id,content.display_name,content.type,content.short_description,content.price,content.images,content.price_promotion')
+            ->innerJoin('content_category_asm','content_category_asm.content_id = content.id')
+            ->innerJoin('category','content_category_asm.category_id = category.id')
+            ->andWhere('category.is_news <> :is_news',['is_news'=>1])
+            ->andWhere(['content.status'=>Content::STATUS_ACTIVE])
+            ->andWhere(['content.type'=>Content::TYPE_SELLER])
+            ->orderBy(['content.created_at'=>'DESC'])
             ->limit(6)
             ->all();
         return $this->render('best-sale-new',[

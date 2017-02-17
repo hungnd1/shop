@@ -9,10 +9,11 @@ namespace frontend\widgets;
 
 use common\models\Category;
 use common\models\Content;
+use DateTime;
 use yii\base\Widget;
 use Yii;
 
-class ContentBody extends Widget{
+class ForYou extends Widget{
 
     public $message;
 
@@ -24,11 +25,12 @@ class ContentBody extends Widget{
     public  function run()
     {
         $category = Category::find()
-            ->andWhere(['status' => Category::STATUS_ACTIVE])
-            ->andWhere(['parent_id' => null])
-            ->andWhere("hide != :parent_id")->addParams([':parent_id'=>1])
+            ->select('id,display_name,images,description')
+            ->andWhere(['status'=>Category::STATUS_ACTIVE])
+            ->andWhere(['parent_id'=>null])
+            ->andWhere(['hide'=>0])
             ->all();
-        return $this->render('content-body',[
+        return $this->render('for-you',[
             'category'=>$category,
         ]);
     }

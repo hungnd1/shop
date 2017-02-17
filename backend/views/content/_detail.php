@@ -37,6 +37,11 @@ $grid = [
                 'value' =>"<span class='label label-primary'>" . Content::$list_honorDetail[$model->honor]."</span>"
             ],
             [
+                'attribute' => 'type',
+                'format'=>'html',
+                'value' =>"<span class='label label-primary'>" . Content::$list_type[$model->type]."</span>"
+            ],
+            [
                 'attribute' => 'type_status',
                 'format'=>'html',
                 'value' =>"<span class='label label-primary'>" . Content::$listTypeStatus[$model->type_status] ."</span>"

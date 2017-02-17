@@ -12,7 +12,7 @@ use common\models\Content;
 use yii\base\Widget;
 use Yii;
 
-class ContentBody extends Widget{
+class SearchCategory extends Widget{
 
     public $message;
 
@@ -28,7 +28,7 @@ class ContentBody extends Widget{
             ->andWhere(['parent_id' => null])
             ->andWhere("hide != :parent_id")->addParams([':parent_id'=>1])
             ->all();
-        return $this->render('content-body',[
+        return $this->render('search-category',[
             'category'=>$category,
         ]);
     }

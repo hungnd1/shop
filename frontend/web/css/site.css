@@ -130,3 +130,8 @@ a.desc:after {
         min-height: 320px;
     }
 }
+.tp_fix_fonts{
+    text-transform: uppercase;
+    padding: 20px;
+    font-weight: bold;
+}

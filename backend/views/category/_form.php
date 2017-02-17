@@ -56,6 +56,7 @@ $showPreview = !$model->isNewRecord && !empty($model->images);
     ) ?>
 
     <?= $form->field($model, 'is_news')->checkbox() ?>
+    <?= $form->field($model, 'hide')->checkbox() ?>
 
     <?php $listCheckbox = \common\models\Category::getListType(); ?>
     <?= $form->field($model, 'type')->dropDownList($listCheckbox)->label(Yii::t('app','Vị trí menu')) ?>

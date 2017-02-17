@@ -27,26 +27,26 @@ class ContentContentBody extends Widget{
 
     public function getContentByCategory($id){
         // trong day se lay toan bo content cua danh muc cap cha, con cap 1, con cap 2
-        $content_ = Content::find()
-            ->select('display_name,price,price_promotion,images')
+        $content=[];
+        $content_c = Content::find()
+            ->select('content.id,display_name,price,price_promotion,images')
             ->innerJoin('content_category_asm','content_category_asm.content_id = content.id')
             ->andWhere(['content_category_asm.category_id'=>$id])
             ->andWhere(['content.status'=>Content::STATUS_ACTIVE])
             ->orderBy(['updated_at' => SORT_ASC])
             ->limit(3)
             ->all();
-        foreach($content_ as $c) {
+        foreach($content_c as $c) {
             $content[] = $c;
         }
         $cat_level_1 = Category::findAll(['parent_id'=>$id]);
-        $content=[];
 
         if(isset($cat_level_1) && !empty($cat_level_1)){
             foreach ($cat_level_1 as $key => $item) {
 
                 // content cua danh muc cap 1
                 $content_p = Content::find()
-                    ->select('display_name,price,price_promotion,images')
+                    ->select('content.id,display_name,price,price_promotion,images')
                     ->innerJoin('content_category_asm','content_category_asm.content_id = content.id')
                     ->andWhere(['content_category_asm.category_id'=>$item->id])
                     ->andWhere(['content.status'=>Content::STATUS_ACTIVE])
@@ -60,7 +60,7 @@ class ContentContentBody extends Widget{
                 $cat_level_2 = Category::findAll(['parent_id'=>$item->id]);
                 foreach($cat_level_2 as $value){
                     $content_p2 = Content::find()
-                        ->select('display_name,price,price_promotion,images')
+                        ->select('content.id,display_name,price,price_promotion,images')
                         ->innerJoin('content_category_asm','content_category_asm.content_id = content.id')
                         ->andWhere(['content_category_asm.category_id'=>$value->id])
                         ->andWhere(['content.status'=>Content::STATUS_ACTIVE])

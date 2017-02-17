@@ -6,6 +6,7 @@
  * Time: 8:27 AM
  */
 use common\models\Content;
+use yii\helpers\Url;
 
 ?>
 <?php
@@ -22,7 +23,7 @@ if($content){
                 ?>
                     <li>
                         <div class="left-block">
-                            <a href="#">
+                            <a href="<?= Url::to(['content/detail','id'=>$item->id]) ?>">
                                 <img style="height: 300px" class="img-responsive" alt="product"
                                      src="<?= $item->getFirstImageLinkFE() ?>"/></a>
                             <div class="quick-view">
@@ -35,7 +36,11 @@ if($content){
                             </div>
                         </div>
                         <div class="right-block">
-                            <h5 class="product-name"><a href="#"><?= Content::substr($item->display_name,25) ?></a></h5>
+                            <h5 class="product-name">
+                                <a href="<?= Url::to(['content/detail','id'=>$item->id]) ?>">
+                                    <?= Content::substr($item->display_name,25) ?>
+                                </a>
+                            </h5>
                             <div class="content_price">
                                 <span style="font-size: 15px" class="price product-price"><?= Content::formatNumber($item->price_promotion) ?> VND</span>
                                 <span style="font-size: small" class="price old-price"><?= Content::formatNumber($item->price) ?> VND</span>

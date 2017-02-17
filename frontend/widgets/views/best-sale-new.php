@@ -6,6 +6,7 @@
  * Time: 8:25 AM
  */
 use common\models\Content;
+use yii\helpers\Url;
 
 ?>
 <div class="page-top">
@@ -26,7 +27,7 @@ use common\models\Content;
                                 <?php /** @var \common\models\Content $item  */ ?>
                                 <li>
                                     <div class="left-block">
-                                        <a href="#">
+                                        <a href="<?= Url::to(['content/detail','id'=>$item->id]) ?>">
                                             <img style="height: 327px" class="img-responsive" alt="product" src="<?= $item->getFirstImageLinkFE() ?>" />
                                         </a>
                                         <div class="quick-view">
@@ -46,7 +47,7 @@ use common\models\Content;
                                         </div>
                                     </div>
                                     <div class="right-block">
-                                        <h5 class="product-name"><a href="#"><?= Content::substr($item->display_name,25) ?></a></h5>
+                                        <h5 class="product-name"><a href="<?= Url::to(['content/detail','id'=>$item->id]) ?>"><?= Content::substr($item->display_name,25) ?></a></h5>
                                         <div class="content_price">
                                             <span class="price product-price"><?= Content::formatNumber($item->price_promotion) ?> VND</span>
                                             <span class="price old-price"><?= Content::formatNumber($item->price) ?> VND</span>
@@ -71,8 +72,8 @@ use common\models\Content;
                                 <?php /** @var \common\models\Content $item  */ ?>
                                     <li>
                                         <div class="left-block">
-                                            <a href="#">
-                                                <img class="img-responsive" alt="product" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/data/bs1.jpg" />
+                                            <a href="<?= Url::to(['content/detail','id'=>$item->id]) ?>">
+                                                <img class="img-responsive" alt="product" src="<?= $item->getFirstImageLinkFE() ?>" />
                                             </a>
                                             <div class="quick-view">
                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
@@ -87,7 +88,7 @@ use common\models\Content;
                                             </div>
                                         </div>
                                         <div class="right-block">
-                                            <h5 class="product-name"><a href="#"><?= Content::substr($item->display_name,25) ?></a></h5>
+                                            <h5 class="product-name"><a href="<?= Url::to(['content/detail','id'=>$item->id]) ?>"><?= Content::substr($item->display_name,25) ?></a></h5>
                                             <div class="content_price">
                                                 <span class="price product-price"><?= Content::formatNumber($item->price_promotion) ?> VND</span>
                                                 <span class="price old-price"><?= Content::formatNumber($item->price) ?> VND</span>
@@ -112,8 +113,8 @@ use common\models\Content;
                                     <?php /** @var \common\models\Content $item  */ ?>
                                     <li>
                                         <div class="left-block">
-                                            <a href="#">
-                                                <img class="img-responsive" alt="product" src="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/data/bs1.jpg" />
+                                            <a href="<?= Url::to(['content/detail','id'=>$item->id]) ?>">
+                                                <img class="img-responsive" alt="product" src="<?= $item->getFirstImageLinkFE() ?>" />
                                             </a>
                                             <div class="quick-view">
                                                 <a title="Add to my wishlist" class="heart" href="#"></a>
@@ -128,7 +129,7 @@ use common\models\Content;
                                             </div>
                                         </div>
                                         <div class="right-block">
-                                            <h5 class="product-name"><a href="#"><?= Content::substr($item->display_name,25) ?></a></h5>
+                                            <h5 class="product-name"><a href="<?= Url::to(['content/detail','id'=>$item->id]) ?>"><?= Content::substr($item->display_name,25) ?></a></h5>
                                             <div class="content_price">
                                                 <span class="price product-price"><?= Content::formatNumber($item->price_promotion) ?> VND</span>
                                                 <span class="price old-price"><?= Content::formatNumber($item->price) ?> VND</span>

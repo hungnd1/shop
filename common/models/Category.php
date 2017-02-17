@@ -15,6 +15,7 @@ use yii\web\NotFoundHttpException;
  *
  * @property integer $id
  * @property integer $is_news
+ * @property integer $hide
  * @property integer $show_on_portal
  * @property string $display_name
  * @property string $ascii_name
@@ -85,6 +86,7 @@ class Category extends \yii\db\ActiveRecord
                     'type',
                     'location_image',
                     'is_news',
+                    'hide',
                 ],
                 'integer',
             ],
@@ -122,7 +124,8 @@ class Category extends \yii\db\ActiveRecord
             'updated_at'       => Yii::t('app', 'Ngày thay đổi thông tin'),
             'type'             => Yii::t('app', 'Kiểu menu'),
             'location_image'   => Yii::t('app', 'Vị trí hiển thị ảnh'),
-            'is_news'   => Yii::t('app', 'Dạng tin tức'),
+            'hide'   => Yii::t('app', 'Không hiện trên trang chủ chỉ hiện trên menu'),
+            'is_news'   => Yii::t('app', 'Danh mục dành riêng cho loại tin tức'),
         ];
     }
 

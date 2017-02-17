@@ -293,7 +293,7 @@ class Content extends \yii\db\ActiveRecord
             'code' => Yii::t('app','Mã code'),
             'ascii_name' => Yii::t('app','Ascii Name'),
             'title_short' => Yii::t('app','Tên hiển thị ngắn'),
-            'type' => Yii::t('app','Type'),
+            'type' => Yii::t('app','Kiểu hàng sắp xếp'),
             'tags' => Yii::t('app','Tags'),
             'type_status'=>Yii::t('app','Tình trạng hàng'),
             'availability'=>Yii::t('app','Trạng thái hàng'),
@@ -698,6 +698,27 @@ class Content extends \yii\db\ActiveRecord
             }
         }
 
+        return $link;
+    }
+
+    public function getImageLinkFE()
+    {
+        // var_dump(Url::base());die;
+        $link = [];
+        if (!$this->images) {
+            return;
+        }
+        $listImages = self::convertJsonToArray($this->images);
+        foreach ($listImages as $key => $row) {
+            if ($row['type'] == self::IMAGE_TYPE_SCREENSHOOT) {
+                $link1 = Url::to(Url::base() . '/' . Yii::getAlias('@content_images') . '/' . $row['name'], true);
+                $link[] = $link1;
+            }
+            if ($row['type'] == self::IMAGE_TYPE_THUMBNAIL) {
+                $link1 = Url::to(Url::base() . '/' . Yii::getAlias('@content_images') . '/' . $row['name'], true);
+                $link[] = $link1;
+            }
+        }
         return $link;
     }
 
