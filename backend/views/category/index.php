@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'class' => 'kartik\grid\DataColumn',
                             'attribute' => 'type',
                             'value' => function ($model, $key, $index) {
-                                return Category::getListType()[$model->type];
+                                return $model->type?Category::getListType()[$model->type]:'';
                             },
                             'filterType' => GridView::FILTER_SELECT2,
                             'filter' => Category::getListType(),
