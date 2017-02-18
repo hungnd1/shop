@@ -9,20 +9,13 @@ use common\models\Content;
 use yii\helpers\Url;
 
 ?>
+<?php /** @var \common\models\Content $content*/ ?>
 <div class="columns-container">
     <div class="container" id="columns">
         <!-- breadcrumb -->
-        <div class="breadcrumb clearfix">
-            <a class="home" href="<?= Url::to(['site/index']) ?>" title="Pando Shop"><?= Yii::t('app','Trang chủ') ?></a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <a href="#" title="Return to Home">Fashion</a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <a href="#" title="Return to Home">Women</a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <a href="#" title="Return to Home">Dresses</a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <span class="navigation_page">Maecenas consequat mauris</span>
-        </div>
+        <?php if(isset($content)){ ?>
+        <?= \frontend\widgets\FindBreadcrumb::getBreadcrumb($content->id) ?>
+        <?php } ?>
         <!-- ./breadcrumb -->
         <!-- row -->
         <div class="row">
@@ -61,7 +54,6 @@ use yii\helpers\Url;
             <div class="center_column col-xs-12 col-sm-9" id="center_column">
                 <!-- Product -->
                 <?php if(isset($content)){ ?>
-                <?php /** @var \common\models\Content $content*/ ?>
                 <div id="product">
                     <div class="primary-box row">
                         <div class="pb-left-column col-xs-12 col-sm-6">
