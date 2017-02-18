@@ -11,7 +11,7 @@ use common\models\Category;
 use yii\base\Widget;
 use Yii;
 
-class CategoryLeft extends Widget{
+class CategoryChildLeft extends Widget{
 
     public $message;
 
@@ -22,11 +22,16 @@ class CategoryLeft extends Widget{
 
     public  function run()
     {
+
+    }
+
+    public static function getCateChildLeft($id){
         $menu = Category::find()
             ->andWhere(['status' => Category::STATUS_ACTIVE])
-            ->andWhere(['parent_id' => null])
+            ->andWhere(['parent_id' => $id])
             ->all();
-        return $this->render('category-left',[
+        $dy = new CategoryLeft();
+        return $dy->render('category-child-left',[
             'menu'=>$menu
         ]);
     }

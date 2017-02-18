@@ -17,16 +17,8 @@
                     if(isset($menu)){$i=0;foreach($menu as $item){ /** @var \common\models\Category $item */
                     ?>
                     <li class="<?= $i==0?'active':'' ?>">
-                        <span></span><a href="#"><?= $item->display_name?></a>
-                        <ul>
-                            <li><span></span><a href="#">T-shirts</a></li>
-                            <li><span></span><a href="#">Dresses</a></li>
-                            <li><span></span><a href="#">Casual</a></li>
-                            <li><span></span><a href="#">Evening</a></li>
-                            <li><span></span><a href="#">Summer</a></li>
-                            <li><span></span><a href="#">Bags & Shoes</a></li>
-                            <li><span></span><a href="#"><span></span>Blouses</a></li>
-                        </ul>
+                        <span></span><a href="<?= \yii\helpers\Url::to(['category','id'=>$item->id])?>"><?= $item->display_name?></a>
+                        <?= \frontend\widgets\CategoryChildLeft::getCateChildLeft($item->id) ?>
                     </li>
                     <?php $i++;} }?>
                 </ul>
