@@ -34,6 +34,13 @@ if($content){
                             <div class="add-to-cart">
                                 <a title="Add to Cart" href="#">Thêm vào giỏ hàng</a>
                             </div>
+                            <div class="group-price">
+                                <?php if($item->price != $item->price_promotion && $item->price_promotion != 0){ ?>
+                                    <span class="product-sale">Sale</span>
+                                <?php } if($item->type == Content::TYPE_NEWEST){ ?>
+                                    <span class="product-new">NEW</span>
+                                <?php } ?>
+                            </div>
                         </div>
                         <div class="right-block">
                             <h5 class="product-name">

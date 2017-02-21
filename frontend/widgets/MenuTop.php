@@ -10,6 +10,7 @@ namespace frontend\widgets;
 use common\models\Category;
 use yii\base\Widget;
 use Yii;
+use yii\helpers\Url;
 
 class MenuTop extends Widget{
 
@@ -40,9 +41,9 @@ class MenuTop extends Widget{
             {
                 if($item['parent_id'] == 0){
                     if($item['child_count'] > 0){
-                        echo '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">'.$item['display_name'].'</a>';
+                        echo '<li class="dropdown"><a href="'.Url::to(['category/index','id'=>$item['id']]).'" class="dropdown-toggle" data-toggle="dropdown">'.$item['display_name'].'</a>';
                     }else{
-                        echo '<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">'.$item['display_name'].'</a></li>';
+                        echo '<li><a href="'.Url::to(['category/index','id'=>$item['id']]).'" class="dropdown-toggle" data-toggle="dropdown">'.$item['display_name'].'</a></li>';
                     }
                 }
                 // Xóa dm đã lặp
@@ -78,12 +79,12 @@ class MenuTop extends Widget{
                                     <li class="block-container col-sm-3">
                                         <ul class="block">
                                             <li class="img_container">
-                                                <a href="#">
+                                                <a href="'.Url::to(['category/index','id'=>$item->id]).'">
                                                       <img style="height:200px" class="img-responsive" src="' . Category::getImageLinkFE($item->images) . '" alt="' . $item->display_name . '">
                                                 </a>
                                             </li>
                                             <li class="link_container group_header">
-                                                 <a href="#">' . $item->display_name . '</a>
+                                                 <a href="'.Url::to(['category/index','id'=>$item->id]).'">' . $item->display_name . '</a>
                                             </li>';
                                             self::getAllChild($item->id);
 
@@ -102,7 +103,7 @@ class MenuTop extends Widget{
                     '<li class="block-container col-sm-3">
                         <ul class="block">
                             <li class="link_container group_header">
-                                <a href="#">'.$item->display_name.'</a>
+                                <a href="'.Url::to(['category/index','id'=>$item->id]).'">'.$item->display_name.'</a>
                             </li>';
             self::getAllChild($item->id);
             echo            '</ul>
@@ -127,7 +128,7 @@ class MenuTop extends Widget{
         $cat1 = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])->andWhere(['parent_id' => $id])->all();
         /** @var  $item Category */
         foreach ($cat1 as $item) {
-            echo '<li class="link_container"><a href="#">'.$item->display_name.'</a></li>';
+            echo '<li class="link_container"><a href="'.Url::to(['category/index','id'=>$item->id]).'">'.$item->display_name.'</a></li>';
         }
         echo '        </ul>
                   </li>
@@ -141,7 +142,7 @@ class MenuTop extends Widget{
             // Nếu là chuyên mục con thì hiển thị
             if ($item->parent_id == $id)
             {
-                echo '<li class="link_container"><a href="#">'.$item->display_name.'</a></li>';
+                echo '<li class="link_container"><a href="'.Url::to(['category/index','id'=>$item->id]).'">'.$item->display_name.'</a></li>';
                 // Xóa dm đã lặp
                 unset($categories[$key]);
                 // Chay tim con cap 1 co hinh anh

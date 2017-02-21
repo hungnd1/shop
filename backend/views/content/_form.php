@@ -73,12 +73,6 @@ $this->registerJs($js, \yii\web\View::POS_END);
     </div>
     <div class="row">
         <div class="col-md-12">
-            <?php $listCheckbox = Content::$list_honor; ?>
-            <?= $form->field($model, 'honor')->dropDownList($listCheckbox,['prompt'=>'Chọn loại sản phẩm'])->label(Yii::t('app','Loại sản phẩm')) ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
             <?php $listCheckbox = Content::$list_type; ?>
             <?= $form->field($model, 'type')->dropDownList($listCheckbox,['prompt'=>'Chọn kiểu sản phẩm'])->label(Yii::t('app','Kiểu sản phẩm')) ?>
         </div>

@@ -13,6 +13,7 @@ use Yii;
 use common\models\User;
 use common\models\UserSearch;
 use yii\behaviors\TimestampBehavior;
+use yii\data\Pagination;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Response;
@@ -60,10 +61,12 @@ class CategoryController extends Controller
                 $content[] = $item2;
             }
         }
+        $pagination = new Pagination(['totalCount' => count($content), 'pageSize'=>1]);
         return $this->render('index',[
             'content'=>$content,
             'banner'=>$banner,
-            'cat'=>$cat
+            'cat'=>$cat,
+            'pagination'=>$pagination,
         ]);
     }
 

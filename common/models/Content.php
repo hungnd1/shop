@@ -103,6 +103,7 @@ class Content extends \yii\db\ActiveRecord
     const TYPE_PRICEPROMO = 2;
     const TYPE_NEWEST = 3;
     const TYPE_DEAL = 4;
+    const TYPE_FORYOU = 5;
 
     const MAX_SIZE_UPLOAD = 10485760; // 10 * 1024 * 1024
 
@@ -110,7 +111,8 @@ class Content extends \yii\db\ActiveRecord
         self::TYPE_SELLER => 'Bán chạy nhất',
         self::TYPE_NEWEST => 'Mới nhất',
         self::TYPE_DEAL => 'Lastest Deal',
-        self::TYPE_PRICEPROMO => 'Giảm giá'
+        self::TYPE_PRICEPROMO => 'Giảm giá',
+        self::TYPE_FORYOU => 'Dành cho bạn'
     ];
 
     public static $list_honor = [

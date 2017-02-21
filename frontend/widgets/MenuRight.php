@@ -10,6 +10,7 @@ namespace frontend\widgets;
 use common\models\Category;
 use yii\base\Widget;
 use Yii;
+use yii\helpers\Url;
 
 class MenuRight extends Widget{
 
@@ -42,9 +43,9 @@ class MenuRight extends Widget{
                 if($item->parent_id == 0){
                     if($item['child_count'] > 0){
                         echo '<li>
-                                <a class="parent" href="#"><img height="30px" class="icon-menu" alt="'.$item->display_name.'" src="'.Category::getImageLinkFE($item->images).'">'.$item->display_name.'</a>';
+                                <a class="parent" href="'.Url::to(['category/index','id'=>$item->id]).'"><img height="30px" class="icon-menu" alt="'.$item->display_name.'" src="'.Category::getImageLinkFE($item->images).'">'.$item->display_name.'</a>';
                     }else{
-                        echo '<li><a href="#"><img height="30px" class="icon-menu" alt="'.$item->display_name.'" src="'.Category::getImageLinkFE($item->images).'">'.$item->display_name.'</a></li>';
+                        echo '<li><a href="'.Url::to(['category/index','id'=>$item->id]).'"><img height="30px" class="icon-menu" alt="'.$item->display_name.'" src="'.Category::getImageLinkFE($item->images).'">'.$item->display_name.'</a></li>';
                     }
                 }
                 // Xóa dm đã lặp
@@ -80,7 +81,7 @@ class MenuRight extends Widget{
                          <ul class="group-link-default">';
             self::getAllChild($item->id);
             echo        '</ul>
-                        <a href="#"><img height="284px" src="'.Category::getImageLinkFE($item->images).'" alt="'.$item->display_name.'"></a>
+                        <a href="'.Url::to(['category/index','id'=>$item->id]).'"><img height="284px" src="'.Category::getImageLinkFE($item->images).'" alt="'.$item->display_name.'"></a>
                      </div>';
 
         }
@@ -95,7 +96,7 @@ class MenuRight extends Widget{
         $cat1 = Category::find()->andWhere(['status'=>Category::STATUS_ACTIVE])->andWhere(['parent_id' => $id])->all();
         /** @var  $item Category */
         foreach ($cat1 as $item) {
-            echo '<li class="link_container"><a href="#">'.$item->display_name.'</a></li>';
+            echo '<li class="link_container"><a href="'.Url::to(['category/index','id'=>$item->id]).'">'.$item->display_name.'</a></li>';
         }
         echo '        </ul>
                   </li>
@@ -109,7 +110,7 @@ class MenuRight extends Widget{
             // Nếu là chuyên mục con thì hiển thị
             if ($item->parent_id == $id)
             {
-                echo '<li><a href="#">'.$item->display_name.'</a></li>';
+                echo '<li><a href="'.Url::to(['category/index','id'=>$item->id]).'">'.$item->display_name.'</a></li>';
                 // Xóa dm đã lặp
                 unset($categories[$key]);
                 // Chay tim con cap 1 co hinh anh

@@ -24,11 +24,6 @@ class BestSaleNew extends Widget{
 
     public  function run()
     {
-        // tạo khoảng thời gian
-        $date = (new DateTime('now'))->setTime(23, 59, 59)->format('Y-m-d H:i:s');
-        $date_from = (new DateTime('now'))->modify('-30 days')->setTime(0, 0)->format('Y-m-d H:i:s');
-        $now = strtotime($date);
-        $from = strtotime($date_from);
         // lấy 6 sản phẩm được tạo trong vòng 1 tháng gần thời điểm hiện tại nhất
         $product_news = Content::find()
             ->select('content.id,content.display_name,content.type,content.short_description,content.price,content.images,content.price_promotion')
@@ -37,8 +32,6 @@ class BestSaleNew extends Widget{
             ->andWhere('category.is_news <> :is_news',['is_news'=>1])
             ->andWhere(['content.status'=>Content::STATUS_ACTIVE])
             ->andWhere(['content.type'=>Content::TYPE_NEWEST])
-            ->andWhere(['>=','content.created_at',$from])
-            ->andWhere(['<=','content.created_at',$now])
             ->orderBy(['content.created_at'=>'DESC'])
             ->limit(6)
             ->all();

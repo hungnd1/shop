@@ -435,7 +435,11 @@ use yii\helpers\Url;
                                             <a title="Add to Cart" href="#">Thêm vào giỏ hàng</a>
                                         </div>
                                         <div class="group-price">
-                                            <span class="product-new">NEW</span>
+                                            <?php if($item->price != $item->price_promotion && $item->price_promotion != 0){ ?>
+                                                <span class="product-sale">Sale</span>
+                                            <?php } if($item->type == Content::TYPE_NEWEST){ ?>
+                                                <span class="product-new">NEW</span>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                     <div class="right-block">
@@ -462,18 +466,7 @@ use yii\helpers\Url;
                 <div class="sortPagiBar">
                     <div class="bottom-pagination">
                         <nav>
-                            <ul class="pagination">
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">
-                                        <span aria-hidden="true">Next &raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <?= \yii\widgets\LinkPager::widget([ 'pagination' => $pagination,  ]); ?>
                         </nav>
                     </div>
                     <div class="show-product-item">

@@ -39,10 +39,10 @@ use yii\helpers\Url;
                                             <a title="Add to Cart" href="#">Thêm vào giỏ hàng</a>
                                         </div>
                                         <div class="group-price">
-                                            <?php if($item->price != $item->price_promotion){ ?>
-                                            <span class="product-sale">Sale</span>
-                                            <?php }else{ ?>
-                                            <span class="product-new">NEW</span>
+                                            <?php if($item->price != $item->price_promotion && $item->price_promotion != 0){ ?>
+                                                <span class="product-sale">Sale</span>
+                                            <?php } if($item->type == Content::TYPE_NEWEST){ ?>
+                                                <span class="product-new">NEW</span>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -84,7 +84,11 @@ use yii\helpers\Url;
                                                 <a title="Add to Cart" href="#">Thêm vào giỏ hàng</a>
                                             </div>
                                             <div class="group-price">
-                                                <span class="product-sale">Sale</span>
+                                                <?php if($item->price != $item->price_promotion && $item->price_promotion != 0){ ?>
+                                                    <span class="product-sale">Sale</span>
+                                                <?php } if($item->type == Content::TYPE_NEWEST){ ?>
+                                                    <span class="product-new">NEW</span>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                         <div class="right-block">
@@ -125,7 +129,11 @@ use yii\helpers\Url;
                                                 <a title="Add to Cart" href="#">Thêm vào giỏ hàng</a>
                                             </div>
                                             <div class="group-price">
-                                                <span class="product-new">NEW</span>
+                                                <?php if($item->price != $item->price_promotion && $item->price_promotion != 0){ ?>
+                                                    <span class="product-sale">Sale</span>
+                                                <?php } if($item->type == Content::TYPE_NEWEST){ ?>
+                                                    <span class="product-new">NEW</span>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                         <div class="right-block">
