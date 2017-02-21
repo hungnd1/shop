@@ -27,6 +27,17 @@ class FindBreadcrumb extends Widget{
     {
     }
 
+    public static function getBreadcrumbCate($id){
+        $cat_parent = FindBreadcrumb::getCateParent($id);
+        if(isset($cat_parent) && !empty($cat_parent)) {
+            $st = new FindBreadcrumb();
+            return $st->render('find-breadcrumb', [
+                'cat_parent' => $cat_parent,
+                'id_cate_old'=>$id
+            ]);
+        }
+    }
+
     public static function getBreadcrumb($id){
         $cat = ContentCategoryAsm::findOne(['content_id'=>$id]);
         $cat_parent = FindBreadcrumb::getCateParent($cat->category_id);
@@ -63,7 +74,6 @@ class FindBreadcrumb extends Widget{
                 ]);
             }
         }
-
     }
 
     public static function getBreadcrumbChild1($id_content){
@@ -76,4 +86,32 @@ class FindBreadcrumb extends Widget{
             'content'=>$content,
         ]);
     }
+
+    public static function getCateChild($id,$id_cate_old){
+        $cat = Category::findAll(['status'=>Category::STATUS_ACTIVE,'parent_id'=>$id]); // cat to nhat
+        if($cat){
+            foreach($cat as $item){
+                if($item->id == $id_cate_old){
+                    $st = new FindBreadcrumb();
+                    return $st->render('find-breadcrumb-child', [
+                        'cat_parent' => $item,
+                    ]);
+                }else{
+                    $cat1 = Category::findAll(['status'=>Category::STATUS_ACTIVE,'parent_id'=>$item->id]);
+                    if($cat1){
+                        foreach($cat1 as $item1){
+                            if($item1->id == $id_cate_old){
+                                $st = new FindBreadcrumb();
+                                return $st->render('find-breadcrumb-child', [
+                                    'cat_parent' => $item1,
+                                ]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 }

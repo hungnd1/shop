@@ -97,3 +97,7 @@ div.required label.control-label:after {
     content: " (*)";
     color: red;
 }
+
+.file-preview-image{
+    width: 300px;
+}

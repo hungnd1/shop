@@ -28,15 +28,7 @@ use yii\helpers\Url;
                 <?= \frontend\widgets\WidgetNewContent::widget() ?>
                 <!-- ./block best sellers  -->
                 <!-- left silide -->
-                <?php if(isset($product_hots)){ ?>
-                <div class="col-left-slide left-module">
-                    <ul class="owl-carousel owl-style2" data-loop="true" data-nav = "false" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-items="1" data-autoplay="true">
-                        <?php foreach($product_hots as $item){ /** @var  Content $item */?>
-                        <li><a href="<?= \yii\helpers\Url::to(['content/detail','id'=>$item->id]) ?>"><img style="height: 346px" src="<?= $item->getFirstImageLinkFE() ?>" alt="<?= $item->display_name ?>"></a></li>
-                        <?php  }?>
-                    </ul>
-                </div>
-                <?php } ?>
+                <?= \frontend\widgets\SlideLeft::getSlideLeft($content->id) ?>
                 <!--./left silde-->
                 <!-- block best sellers -->
                 <?= \frontend\widgets\WidgetSaleContent::widget() ?>

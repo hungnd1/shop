@@ -17,7 +17,7 @@
                     if(isset($menu)){$i=0;foreach($menu as $item){ /** @var \common\models\Category $item */
                     ?>
                     <li class="<?= $i==0?'active':'' ?>">
-                        <span></span><a href="<?= \yii\helpers\Url::to(['category','id'=>$item->id])?>"><?= $item->display_name?></a>
+                        <span></span><a href="<?= \yii\helpers\Url::to(['category/index','id'=>$item->id])?>"><?= $item->display_name?></a>
                         <?= \frontend\widgets\CategoryChildLeft::getCateChildLeft($item->id) ?>
                     </li>
                     <?php $i++;} }?>
